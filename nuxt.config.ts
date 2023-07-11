@@ -5,10 +5,14 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
   ],
+  devServer: {
+    https: true
+  },
   app: {
     head: {
       title: 'Vocaject',
-      meta: [],
+      meta: [
+      ],
       bodyAttrs: {
         class: 'bg-slate-100 font-poppins'
       }
