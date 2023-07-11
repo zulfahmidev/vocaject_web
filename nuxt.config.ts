@@ -3,27 +3,16 @@ export default defineNuxtConfig({
   // devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/google-fonts'
+    'nuxt-icon',
   ],
   app: {
     head: {
+      title: 'Vocaject',
+      meta: [],
       bodyAttrs: {
-        class: 'bg-light font-poppins'
+        class: 'bg-slate-100 font-poppins'
       }
     }
+    
   },
-  googleFonts: {
-    families: {
-      Poppins: true,
-    }
-  },
-  tailwindcss: {
-    cssPath: '~/assets/css/tailwind.css',
-    configPath: 'tailwind.config',
-    exposeConfig: false,
-    exposeLevel: 2,
-    config: {},
-    injectPosition: 'first',
-    viewer: true,
-  }
 })

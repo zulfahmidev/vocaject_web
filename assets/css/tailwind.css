@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .hover-comp {
+    @apply hover:bg-light border border-white hover:border-primary/30;
+  }
+  /* ... */
+}
