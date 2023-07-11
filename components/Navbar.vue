@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow-sm">
-    <div class="container mx-auto h-14 flex items-center justify-between">
+    <div class="container mx-auto h-14 flex items-center justify-between px-3 md:px-0">
       <nuxt-link to="/">
         <img src="/logo_with_text.png" alt="vocaject logo" class="h-12">
       </nuxt-link>

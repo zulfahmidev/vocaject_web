@@ -1,53 +1,53 @@
 <template>
   <div class="container mx-auto my-4">
-    <div class="grid grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 md:gap-4 px-3 md:px-0">
       <div>
-        <div class="relative">
+        <div class="relative mb-2">
           <input type="text" placeholder="Cari proyek..." class="pl-4 pr-12 py-2 shadow rounded outline-none focus:shadow-lg w-full">
           <Icon name="fa6-solid:magnifying-glass" class="absolute right-4 top-3 text-gray-400" />
         </div>
-        <div class="py-2">
+        <div class="py-2 hidden md:block">
           Kategori Proyek
         </div>
-        <div class="">
-          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp hover-comp">
+        <div class="flex gap-2 justify-center md:block">
+          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp hover-comp justify-center md:justify-start">
             <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
               <Icon name="fa6-solid:code" />
             </div>
-            <div class="">Website</div>
+            <div class="hidden md:block">Website</div>
           </NuxtLink>
-          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp">
+          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center md:justify-start">
             <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
               <Icon name="fa6-solid:mobile" />
             </div>
-            <div class="">Aplikasi Seluler</div>
+            <div class="hidden md:block">Aplikasi Seluler</div>
           </NuxtLink>
-          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp">
+          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center md:justify-start">
             <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
               <Icon name="fa6-solid:gamepad" />
             </div>
-            <div class="">Pengembang Permainan</div>
+            <div class="hidden md:block">Pengembang Permainan</div>
           </NuxtLink>
-          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp">
+          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center md:justify-start">
             <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
               <Icon name="fa6-solid:paintbrush" />
             </div>
-            <div class="">Desain Grafis</div>
+            <div class="hidden md:block">Desain Grafis</div>
           </NuxtLink>
-          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp">
+          <NuxtLink to="/" class="bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center md:justify-start">
             <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
               <Icon name="fa6-solid:file-video" />
             </div>
-            <div class="">Pengeditan Video</div>
+            <div class="hidden md:block">Pengeditan Video</div>
           </NuxtLink>
         </div>
       </div>
       <div class="col-span-2">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Project v-for="(v, i) in projects" :key="i" :picture="v.company.picture" :title="v.title" :company_name="v.company.name" :budget="v.budget" :category="v.category.name"  />
         </div>
       </div>
-      <div class="">
+      <div class="hidden md:block">
         <div class="p-3 bg-white rounded shadow">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 rounded-full bg-gray-200">
