@@ -5,9 +5,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-icon',
   ],
-  devServer: {
-    https: true
-  },
   app: {
     head: {
       title: 'Vocaject',

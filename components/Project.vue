@@ -1,6 +1,6 @@
 <template>
   <NuxtLink to="/" class="bg-white shadow rounded flex hover-comp">
-    <div class="h-24 w-24 m-3 mr-0 rounded bg-gray-100" v-if="picture">
+    <div class="w-24 m-3 mr-0 rounded overflow-hidden" v-if="picture">
       <img :src="picture" :alt="company_name">
     </div>
     <div class="py-3 pl-4">
@@ -13,11 +13,6 @@
         {{ category }}
       </div>
     </div>
-    <!-- <div class="p-3 mr-0 mx-auto">
-      <div class="w-6 h-6 rounded-full flex items-center justify-center active:bg-slate-100 cursor-pointer">
-        <Icon name="fa6-solid:ellipsis" />
-      </div>
-    </div> -->
   </NuxtLink>
 </template>
 
