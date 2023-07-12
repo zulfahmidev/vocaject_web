@@ -6,12 +6,12 @@
         <div class="ml-4">Kembali</div>
       </NuxtLink>
       <div class="p-3">
-        <div class="flex justify-between">
+        <div class="block lg:flex justify-between">
           <div class="w-full">
             <div class="text-2xl font-black">Vocaject Project</div>
             <div class="text-lg text-primary capitalize">Aplikasi seluler</div>
           </div>
-          <div class="flex flex-col justify-center">
+          <div class="flex flex-col justify-center border-t mt-2 pt-2 lg:border-none lg:mt-0 lg:pt-2">
             <div class="font-black">Anggaran:</div>
             <div class="">{{ curFormat(140000000) }}</div>
           </div>
