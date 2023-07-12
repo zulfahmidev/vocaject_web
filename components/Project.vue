@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/" class="bg-white shadow rounded flex hover-comp">
+  <NuxtLink to="/project/1" class="bg-white shadow rounded flex hover-comp">
     <div class="w-24 m-3 mr-0 rounded overflow-hidden" v-if="picture">
       <img :src="picture" :alt="company_name">
     </div>

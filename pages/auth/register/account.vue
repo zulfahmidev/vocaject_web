@@ -15,9 +15,9 @@
       <input type="email" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary my-2" placeholder="email">
       <input type="password" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary my-2" placeholder="password">
       <input type="password" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary my-2" placeholder="konfirmasi password">
-      <button class="py-2 px-3 my-2 bg-primary hover:bg-secondary w-full text-white rounded">
+      <NuxtLink to="/auth/register/done" class="py-2 block text-center px-3 my-2 bg-primary hover:bg-secondary w-full text-white rounded">
         Register
-      </button>
+      </NuxtLink>
     </div>
     <div class="my-2">
       Sudah punya akun?

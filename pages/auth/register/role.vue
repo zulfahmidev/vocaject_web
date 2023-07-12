@@ -13,7 +13,7 @@
     </div>
     <div class="flex justify-around my-8">
       <NuxtLink to="/auth/register/identity" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded hover-comp">
-        <Icon name="fa6-solid:building" class="text-7xl text-primary py-2" />
+        <Icon name="fa6-solid:city" class="text-7xl text-primary py-2" />
         <div class="text-sm">Perusahaan</div>
       </NuxtLink>
       <NuxtLink to="/auth/register/identity" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded hover-comp">
