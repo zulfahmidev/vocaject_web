@@ -11,13 +11,7 @@
         </div>
       </div>
       
-      <!-- <Project v-for="(v, i) in projects" :key="i" :picture="v.company.picture" :title="v.title" :company_name="v.company.name" :budget="v.budget" :category="v.category.name"  /> -->
-      <Project picture="/sample.png" title="Vocaject Project" company_name="Google Indonesia" budget="15000000" category="Aplikasi Seluler" />
-      <Project picture="/sample.png" title="Vocaject Project" company_name="Google Indonesia" budget="15000000" category="Aplikasi Seluler" />
-      <Project picture="/sample.png" title="Vocaject Project" company_name="Google Indonesia" budget="15000000" category="Aplikasi Seluler" />
-      <Project picture="/sample.png" title="Vocaject Project" company_name="Google Indonesia" budget="15000000" category="Aplikasi Seluler" />
-      <Project picture="/sample.png" title="Vocaject Project" company_name="Google Indonesia" budget="15000000" category="Aplikasi Seluler" />
-      <Project picture="/sample.png" title="Vocaject Project" company_name="Google Indonesia" budget="15000000" category="Aplikasi Seluler" />
+      <Project v-for="(v, i) in projects" :key="i" :picture="v.company.picture" :title="v.title" :company_name="v.company.name" :budget="v.budget" :category="v.category.name" :project_id="v.id" />
     </div>
   </div>
 </template>
@@ -31,14 +25,11 @@ export default {
     }
   },
   mounted() {
-    // console.log(process)
-    // $fetch('/project', {
-    //   baseURL: 'http://34.101.227.89/api'
-    // })
-    // .then((res) => {
-    //   this.projects = res.data;
-    //   document.querySelector('#loading_projects').style.display = 'none';
-    // })
+    $fetch('http://34.101.227.89/api/project?status=opened')
+    .then((res) => {
+      this.projects = res.data;
+      document.querySelector('#loading_projects').style.display = 'none';
+    })
   },
 }
 </script>

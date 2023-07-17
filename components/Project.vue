@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink to="/project/1" class="bg-white shadow rounded flex hover-comp">
+  <NuxtLink :to="`/project/${project_id}`" class="bg-white shadow rounded flex hover-comp">
     <div class="w-24 m-3 mr-0 rounded overflow-hidden" v-if="picture">
       <img :src="picture" :alt="company_name">
     </div>
@@ -24,6 +24,7 @@ export default {
     company_name: String,
     budget: Number,
     category: String,
+    project_id: Number
   },
   methods: {
     curFormat(number) {
