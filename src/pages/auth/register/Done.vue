@@ -15,7 +15,7 @@
       <b>Pendaftaran selesai</b>! Silahkan periksa email verfikasi di mailbox anda.
     </div>
     <div class="my-2">
-      <NuxtLink to="/auth/register/role" class="text-sm text-primary hover:underline">Kembali ke halaman login!</NuxtLink>
+      <router-link :to="{name: 'Login'}" class="text-sm text-primary hover:underline">Kembali ke halaman login!</router-link>
     </div>
   </div>
 </template>
@@ -27,5 +27,13 @@ export default {
       event.style.height = '5px'; event.style.height = (event.scrollHeight) + "px";
     }
   },
+  mounted() {
+    if (this.$store.state.logged) {
+      this.$router.replace({name: 'Home'});
+    }
+    if (!history.state.success) {
+        this.$router.replace({name: 'Account'});
+    }
+  }
 }
 </script>
