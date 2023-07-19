@@ -2,14 +2,14 @@
   <div class="container mx-auto my-4">
     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-4 px-3 md:px-0">
       <div class="hidden lg:block">
-        <Categories />
+        <Categories @get_project="getProjects" />
       </div>
       <div class="col-span-2">
-        <Loading height="8" class="mt-16" v-if="loading" />
+        <Loading height="6" class="mt-16" v-if="loading" />
         <img src="/ills/page_not_found.svg" alt="page not found" v-if="notFound && !loading" class="w-96 m-auto mt-16">
         <ProjectDetail v-if="!notFound && !loading" :project="project" />
       </div>
-      <MyProject />
+      <MyProject v-if="getLogged" />
     </div>
   </div>
 </template>
@@ -31,6 +31,21 @@ export default {
       project: {},
       notFound: false,
       loading: true,
+    }
+  },
+  computed: {
+    getLogged() {
+      return this.$store.state.logged;
+    },
+  },
+  methods: {
+    getProjects(filter) {
+      this.$router.replace({
+        name: 'Home',
+        state: {
+          filter
+        }
+      })
     }
   },
   mounted() {

@@ -33,7 +33,7 @@
           </div>
         </router-link>
       </div>
-      <div class="border-t my-2 pt-3" v-if="project?.company?.id == getUser().id">
+      <div class="border-t my-2 pt-3" v-if="project?.company?.id == getUser()?.id">
         <div class="font-black text-center">Progress Kerja 50%</div>
         <div class="text-sm text-center text-slate-600">5 Task Selasai dari 10 Task</div>
         <div class="h-6 rounded-full w-full bg-slate-200 mt-2 p-1">
@@ -42,7 +42,7 @@
       </div>
     </div>
   </div>
-  <div v-if="project?.company?.id == getUser().id">
+  <div v-if="project?.company?.id == getUser()?.id">
     <div class="flex py-3 gap-4">
       <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
         <div class="text-3xl text-primary">

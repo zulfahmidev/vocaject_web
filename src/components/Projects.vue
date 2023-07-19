@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4" :class="{'lg:grid-cols-3': !getLogged}">
 
     <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp">
       <div class="w-24 m-3 mr-0 rounded overflow-hidden">
@@ -27,6 +27,11 @@ export default {
   data() {
     return {
       loading: true,
+    }
+  },
+  computed: {
+    getLogged() {
+      return this.$store.state.logged;
     }
   },
   methods: {
