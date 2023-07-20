@@ -6,8 +6,8 @@ import VueAxios from 'vue-axios'
 import axios from 'axios'
 import store from './store.js'
 
-// axios.defaults.baseURL = 'https://api.vocaject.com/api'
-axios.defaults.baseURL = 'http://34.101.227.89/api'
+axios.defaults.baseURL = 'https://api.vocaject.com/api'
+// axios.defaults.baseURL = 'http://34.101.227.89/api'
 // axios.defaults.baseURL = 'http://localhost:8000/api'
 
 let app = createApp(App)
