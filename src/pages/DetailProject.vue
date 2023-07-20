@@ -9,7 +9,7 @@
         <img src="/ills/page_not_found.svg" alt="page not found" v-if="notFound && !loading" class="w-96 m-auto mt-16">
         <ProjectDetail v-if="!notFound && !loading" :project="project" />
       </div>
-      <MyProject v-if="getLogged" />
+      <MyProject @load_project="loadProject" v-if="getLogged" />
     </div>
   </div>
 </template>
@@ -39,25 +39,22 @@ export default {
     },
   },
   methods: {
-    getProjects(filter) {
-      this.$router.replace({
-        name: 'Home',
-        state: {
-          filter
-        }
+    loadProject(id) {
+      this.project = {};
+      this.loading = true;
+      this.axios.get(`/project/${id}`)
+      .then(({data: result}) => {
+        this.loading = false;
+        this.project = result.data;
+      })
+      .catch(e => {
+        this.loading = false;
+        this.notFound = true;
       })
     }
   },
   mounted() {
-    this.axios.get(`/project/${this.$props.id}`)
-    .then(({data: result}) => {
-      this.loading = false;
-      this.project = result.data;
-    })
-    .catch(e => {
-      this.loading = false;
-      this.notFound = true;
-    })
+    this.loadProject(this.$props.id)
   }
 }
 </script>

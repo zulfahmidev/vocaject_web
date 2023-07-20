@@ -19,12 +19,24 @@
       Proyek Saya
     </div>
     <div class="flex flex-col gap-2">
-      <!-- <Project v-for="(v, i) in projects" :key="i" :title="v.title" :company_name="v.company.name" :category="v.category.name" /> -->
-      <Project title="Vocaject Project" company_name="Google Indonesia" category="Aplikasi Seluler" />
-      <Project title="Vocaject Project" company_name="Google Indonesia" category="Aplikasi Seluler" />
-      <Project title="Vocaject Project" company_name="Google Indonesia" category="Aplikasi Seluler" />
-      <Project title="Vocaject Project" company_name="Google Indonesia" category="Aplikasi Seluler" />
-      <Project title="Vocaject Project" company_name="Google Indonesia" category="Aplikasi Seluler" />
+      <router-link :to="{name: 'CreateProject'}" class="bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center mb-2">
+        Buat Proyek Baru
+      </router-link>
+      <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp" @click="$emit('load_project', v.id)">
+        <!-- <div class="w-24 m-3 mr-0 rounded overflow-hidden">
+          <img :src="v.company.picture" :alt="v.name">
+        </div> -->
+        <div class="py-3 pl-4">
+          <div class="font-bold capitalize text-lg">{{ v.title }}</div>
+          <div class="text-sm text-secondary capitalize">{{ v.company.name }}</div>
+          <!-- <div class="text-sm py-1">
+            {{ curFormat(v.budget) }}
+          </div> -->
+          <div class="text-sm capitalize text-gray-400">
+            {{ v.category.name }}
+          </div>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -38,14 +50,13 @@ export default {
     }
   },
   mounted() {
-    // console.log(process)
-    // $fetch('/project', {
-    //   baseURL: 'http://34.101.227.89/api'
-    // })
-    // .then((res) => {
-    //   this.projects = res.data;
-    //   document.querySelector('#loading_projects').style.display = 'none';
-    // })
+    if (this.$store.state.logged) {
+      let user = this.$store.state.user;
+      this.axios.get('/project?company_id='+user.id)
+      .then(({data: result}) => {
+        this.projects = result.data;
+      })
+    }
   },
 }
 </script>

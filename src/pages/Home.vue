@@ -59,6 +59,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$router.params)
     this.getProjects(history.state.filter)
   },
 }

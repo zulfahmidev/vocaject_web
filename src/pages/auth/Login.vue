@@ -16,11 +16,11 @@
     </div>
     <div class="text-left border-b">
       <div class="my-2">
-        <input type="text" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="email" v-model="form.email" @keyup.enter="login">
+        <input type="email" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="email" v-model="form.email" @keyup.enter="login" name="email">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.email" :key="i">{{ v }}</div>
       </div>
       <div class="my-2">
-        <input type="password" v-model="form.password" @keyup.enter="login" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="password">
+        <input type="password" v-model="form.password" @keyup.enter="login" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="password" name="password">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.password" :key="i">{{ v }}</div>
       </div>
       <router-link to="/" class="text-sm hover:underline">

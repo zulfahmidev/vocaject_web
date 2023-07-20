@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow rounded p-3">
-    <div @click="$router.go(-1)" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
+    <div @click="$router.push({name: 'Home'})" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
       <i class="fa fa-arrow-left"></i>
       <div class="ml-4">Kembali</div>
     </div>
@@ -33,16 +33,19 @@
           </div>
         </router-link>
       </div>
-      <div class="border-t my-2 pt-3" v-if="project?.company?.id == getUser()?.id">
-        <div class="font-black text-center">Progress Kerja 50%</div>
-        <div class="text-sm text-center text-slate-600">5 Task Selasai dari 10 Task</div>
+      <div class="border-t my-2 pt-3" v-if="showProgress()">
+        <div class="font-black text-center">Progress Kerja {{getProgress}}%</div>
+        <div class="text-sm text-center text-slate-600">{{ checked_task }} Task Selasai dari {{ total_task }} Task</div>
         <div class="h-6 rounded-full w-full bg-slate-200 mt-2 p-1">
-          <div class="h-4 rounded-full bg-primary" style="width: 50%;"></div>
+          <div class="h-4 rounded-full bg-primary" :style="`width: ${getProgress}%;`"></div>
         </div>
       </div>
     </div>
   </div>
-  <div v-if="project?.company?.id == getUser()?.id">
+  <div class="py-3" v-if="project?.company.id == getUser()?.id && proposal == null">
+    <ProjectProposals @proposal_confirmed="loadProposal" :project_id="project?.id" />
+  </div>
+  <div v-if="showProgress()">
     <div class="flex py-3 gap-4">
       <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
         <div class="text-3xl text-primary">
@@ -64,7 +67,7 @@
       </div>
     </div>
     <ProjectChat v-if="tab==0" />
-    <ProjectTodolist v-if="tab==1" />
+    <ProjectTodolist @update_progress="updateProgress" :project_id="project?.id" v-if="tab==1" />
     <ProjectLogbook v-if="tab==2" />
   </div>
 </template>
@@ -73,6 +76,7 @@
 import ProjectChat from '../../components/project/Chat.vue';
 import ProjectTodolist from '../../components/project/Todolist.vue';
 import ProjectLogbook from '../../components/project/Logbook.vue';
+import ProjectProposals from '../../components/project/Proposals.vue';
 </script>
 
 <script>
@@ -85,7 +89,18 @@ export default {
       tab: 0,
       logbooks: [],
       student_selected_id: -1,
+      checked_task: 0,
+      total_task: 0,
+      proposal: null
     }
+  },
+  computed: {
+    getProgress() {
+      if (this.total_task > 0) {
+        return Math.ceil((100/this.total_task)*this.checked_task);
+      }
+      return 0;
+    },
   },
   methods: {
     curFormat(number) {
@@ -97,9 +112,31 @@ export default {
     },
     getUser() {
       return this.$store?.state?.user;
+    },
+    updateProgress() {
+      this.axios.get(`project/${this.$props.project.id}/task`)
+      .then(({data: result}) => {
+        let checked = 0;
+        result.data.forEach((v) => {
+          if (v.checked) checked++;
+        })
+        this.total_task = result.data.length;
+        this.checked_task = checked;
+      })
+    },
+    showProgress() {
+      return (this.proposal != null) && this.getUser()?.id == this.project?.company?.id;
+    },
+    loadProposal() {
+      this.axios.get(`/project/${this.$props.project.id}/proposal_accepted`)
+      .then(({data: result}) => {
+        this.proposal = result.data;
+        this.updateProgress();
+      })
     }
   },
   mounted() {
+    this.loadProposal();
     // let project_id = this.$route.params.id
     // this.axios.get(`/project/${project_id}`)
     // .then(({data: result}) => {
