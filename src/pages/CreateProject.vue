@@ -1,13 +1,15 @@
 <template>
   <div class="container mx-auto my-4">
     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-4 px-3 md:px-0">
-      <div class="hidden lg:block">
-        <Categories @get_project="getProjects" />
+      <div class="relative hidden lg:block">
+        <Categories class="sticky top-16" @get_project="getProjects" />
       </div>
       <div class="col-span-2">
         <CreateProject />
       </div>
-      <MyProject v-if="getLogged" />
+      <div class="relative hidden lg:block">
+        <MyProject class="sticky top-16" v-if="getLogged" />
+      </div>
     </div>
   </div>
 </template>

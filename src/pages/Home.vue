@@ -16,9 +16,9 @@
         <div class="my-16" v-if="loadingLoadMore">
           <Loading height="6" />
         </div>
-        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore">Muat lebih banyak!</div>
+        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore && !loading">Muat lebih banyak!</div>
       </div>
-      <div class="relative">
+      <div class="relative hidden lg:block">
         <MyProject class="sticky top-16" v-if="getLogged" />
       </div>
     </div>

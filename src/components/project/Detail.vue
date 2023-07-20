@@ -42,17 +42,31 @@
       </div>
     </div>
   </div>
-  <div class="py-3" v-if="project?.company.id == getUser()?.id && proposal == null">
-    <ProjectProposals @proposal_confirmed="loadProposal" :project_id="project?.id" />
-  </div>
-  <div v-if="showProgress()">
+  <div v-if="project?.company.id == getUser()?.id && !proposal" class="lg:hidden">
     <div class="flex py-3 gap-4">
-      <!-- <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
+      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
+        <div class="text-3xl text-primary">
+          <i class="fa fa-file"></i>
+        </div>
+        <div class="font-black text-xl hidden lg:block">Proposal</div>
+      </div>
+      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=1">
         <div class="text-3xl text-primary">
           <i class="fa fa-comment-dots"></i>
         </div>
         <div class="font-black text-xl hidden lg:block">Chat</div>
-      </div> -->
+      </div>
+    </div>
+    <div class="py-3" v-if="proposal == null && tab==0">
+      <ProjectProposals @proposal_confirmed="loadProposal" :project_id="project?.id" />
+    </div>
+    <ProjectChat class="lg:hidden" :project_id="project.id" v-if="tab==1" />
+  </div>
+  <div class="py-3 hidden lg:block" v-if="project?.company.id == getUser()?.id && proposal == null && tab==0">
+    <ProjectProposals @proposal_confirmed="loadProposal" :project_id="project?.id" />
+  </div>
+  <div v-if="showProgress()">
+    <div class="flex py-3 gap-4">
       <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
         <div class="text-3xl text-primary">
           <i class="fa fa-clipboard-list"></i>
@@ -65,9 +79,16 @@
         </div>
         <div class="font-black text-xl hidden lg:block">Log Book</div>
       </div>
+      <div class="bg-white lg:hidden p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=2">
+        <div class="text-3xl text-primary">
+          <i class="fa fa-comment-dots"></i>
+        </div>
+        <div class="font-black text-xl hidden lg:block">Chat</div>
+      </div>
     </div>
     <ProjectTodolist @update_progress="updateProgress" :project_id="project?.id" v-if="tab==0" />
-    <ProjectLogbook v-if="tab==1" />
+    <ProjectLogbook v-if="tab==1" :proposal="proposal" />
+    <ProjectChat class="lg:hidden" :project_id="project.id" v-if="project?.company?.id == getUser()?.id && tab==2" />
   </div>
 </template>
 

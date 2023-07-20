@@ -2,16 +2,18 @@
   <div class="container mx-auto my-4">
     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-4 px-3 md:px-0">
       <div class="hidden lg:block">
-        <Categories @get_project="getProjects" />
+        <Categories class="sticky top-16" @get_project="getProjects" />
       </div>
       <div class="col-span-2">
         <Loading height="6" class="mt-16" v-if="loading" />
         <img src="/ills/page_not_found.svg" alt="page not found" v-if="notFound && !loading" class="w-96 m-auto mt-16">
         <ProjectDetail v-if="!notFound && !loading" :project="project" />
       </div>
-      <div class="">
-        <ProjectChat :project_id="project.id" v-if="project?.company?.id == getUser?.id" />
-        <MyProject @load_project="loadProject" v-if="getLogged" />
+      <div class="hidden md:block">
+        <div class="sticky top-16">
+          <ProjectChat :project_id="project.id" v-if="project?.company?.id == getUser?.id" />
+          <MyProject @load_project="loadProject" v-if="getLogged" />
+        </div>
       </div>
     </div>
   </div>
