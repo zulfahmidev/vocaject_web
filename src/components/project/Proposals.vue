@@ -31,7 +31,7 @@
           </div>
           <div class="flex flex-col">
             <div class="font-bold capitalize">{{proposal?.lecture.name }}</div>
-            <div class="text-sm text-secondary capitalize">{{ proposal?.lecture?.college?.name }}</div>
+            <div class="text-xs text-secondary capitalize">{{ proposal?.lecture?.college?.name }}</div>
           </div>
         </div>
         <div class="py-2 text-sm border-b">{{ proposal?.note }}</div>

@@ -9,7 +9,10 @@
         <img src="/ills/page_not_found.svg" alt="page not found" v-if="notFound && !loading" class="w-96 m-auto mt-16">
         <ProjectDetail v-if="!notFound && !loading" :project="project" />
       </div>
-      <MyProject @load_project="loadProject" v-if="getLogged" />
+      <div class="">
+        <ProjectChat :project_id="7" :lecture_id="project?.id" v-if="project?.company?.id == getUser?.id" />
+        <MyProject @load_project="loadProject" v-if="getLogged" />
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +22,7 @@ import MyProject from '../components/MyProject.vue';
 import ProjectDetail from '../components/project/Detail.vue';
 import Categories from '../components/Categories.vue';
 import Loading from '../components/Loading.vue';
+import ProjectChat from '../components/project/Chat.vue';
 </script>
 
 <script>
@@ -36,6 +40,10 @@ export default {
   computed: {
     getLogged() {
       return this.$store.state.logged;
+    },
+    getUser() {
+      console.log(this.$store.state.user);
+      return this.$store.state.user;
     },
   },
   methods: {

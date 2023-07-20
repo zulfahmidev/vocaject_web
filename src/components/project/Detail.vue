@@ -47,28 +47,27 @@
   </div>
   <div v-if="showProgress()">
     <div class="flex py-3 gap-4">
-      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
+      <!-- <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
         <div class="text-3xl text-primary">
           <i class="fa fa-comment-dots"></i>
         </div>
         <div class="font-black text-xl hidden lg:block">Chat</div>
-      </div>
-      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=1">
+      </div> -->
+      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=0">
         <div class="text-3xl text-primary">
           <i class="fa fa-clipboard-list"></i>
         </div>
         <div class="font-black text-xl hidden lg:block">Todolist</div>
       </div>
-      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=2">
+      <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=1">
         <div class="text-3xl text-primary">
           <i class="fa fa-book"></i>
         </div>
         <div class="font-black text-xl hidden lg:block">Log Book</div>
       </div>
     </div>
-    <ProjectChat v-if="tab==0" />
-    <ProjectTodolist @update_progress="updateProgress" :project_id="project?.id" v-if="tab==1" />
-    <ProjectLogbook v-if="tab==2" />
+    <ProjectTodolist @update_progress="updateProgress" :project_id="project?.id" v-if="tab==0" />
+    <ProjectLogbook v-if="tab==1" />
   </div>
 </template>
 

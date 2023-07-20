@@ -1,27 +1,16 @@
 <template>
   <div class="hidden md:block">
-    <!-- <div class="p-3 bg-white rounded shadow">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-full bg-gray-200">
-
-        </div>
-        <div class="flex flex-col">
-          <div class="font-bold">Zulfahmi</div>
-          <div class="text-sm text-secondary">Mahasiswa</div>
-        </div>
-      </div>
-    </div> -->
-    <div class="relative my-2">
-      <input type="text" placeholder="Cari proyek saya..." class="pl-4 pr-12 py-2 shadow rounded outline-none focus:shadow-lg w-full bg-white">
-      <Icon name="fa6-solid:magnifying-glass" class="absolute right-4 top-3 text-gray-400" />
-    </div>
     <div class="py-2">
       Proyek Saya
     </div>
     <div class="flex flex-col gap-2">
-      <router-link :to="{name: 'CreateProject'}" class="bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center mb-2">
+      <router-link :to="{name: 'CreateProject'}" class="bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center">
         Buat Proyek Baru
       </router-link>
+      <div class="relative my-2">
+        <input type="text" placeholder="Cari proyek saya..." class="pl-4 pr-12 py-2 shadow rounded outline-none focus:shadow-lg w-full bg-white">
+        <Icon name="fa6-solid:magnifying-glass" class="absolute right-4 top-3 text-gray-400" />
+      </div>
       <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp" @click="$emit('load_project', v.id)">
         <!-- <div class="w-24 m-3 mr-0 rounded overflow-hidden">
           <img :src="v.company.picture" :alt="v.name">
