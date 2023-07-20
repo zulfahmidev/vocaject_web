@@ -64,6 +64,8 @@ export default {
         this.$emit('get_project', {
           title: this.title,
           category: this.category,
+          take: 10,
+          offset: 0,
         })
       }
     },

@@ -10,7 +10,7 @@
         <ProjectDetail v-if="!notFound && !loading" :project="project" />
       </div>
       <div class="">
-        <ProjectChat :project_id="7" :lecture_id="project?.id" v-if="project?.company?.id == getUser?.id" />
+        <ProjectChat :project_id="project.id" v-if="project?.company?.id == getUser?.id" />
         <MyProject @load_project="loadProject" v-if="getLogged" />
       </div>
     </div>

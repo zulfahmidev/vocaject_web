@@ -2,7 +2,9 @@
   <div class="container mx-auto my-4">
     <!-- <Navbar /> -->
     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-4 px-3 md:px-0">
-      <Categories @get_project="getProjects" />
+      <div class="relative">
+        <Categories class="sticky top-16" @get_project="getProjects" />
+      </div>
       <div class="col-span-2" :class="{'col-span-3': !getLogged}">
         <div class="my-16" v-if="loading">
           <Loading height="6" />
@@ -11,8 +13,14 @@
           <img src="/ills/empty.svg" alt="page not found" v-if="!loading" class="w-96 m-auto mt-16">
         </div>
         <Projects v-if="!loading" :projects="projects" />
+        <div class="my-16" v-if="loadingLoadMore">
+          <Loading height="6" />
+        </div>
+        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore">Muat lebih banyak!</div>
       </div>
-      <MyProject v-if="getLogged" />
+      <div class="relative">
+        <MyProject class="sticky top-16" v-if="getLogged" />
+      </div>
     </div>
   </div>
 </template>
@@ -33,15 +41,20 @@ export default {
     return {
       projects: [],
       loading: true,
+      loadingLoadMore: false,
+      offset: 0,
+      filter: {}
     }
   },
   methods: {
-    getProjects(filter = {}) {
+    getProjects(filter = {category: '', title: '', take: 10, offset: 0}) {
+      this.filter = filter;
+      this.offset = filter.offset;
       this.loading = true;
       this.axios.request({
         method: 'GET',
         url: '/project',
-        params: filter
+        params: filter,
       })
       .then(({data: result}) => {
         this.projects = result?.data;
@@ -52,6 +65,26 @@ export default {
       })
 
     },
+    loadMore() {
+      this.offset += 10;
+      this.loadingLoadMore = true;
+      this.axios.request({
+        method: 'GET',
+        url: '/project',
+        params: {
+          ...this.filter,
+          take: 10,
+          offset: this.offset,
+        }
+      })
+      .then(({data: result}) => {
+        this.projects = [...this.projects, ...result?.data];
+        this.loadingLoadMore = false;
+      })
+      .catch(e => {
+        this.loadingLoadMore = false;
+      })
+    }
   },
   computed: {
     getLogged() {
@@ -59,7 +92,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$router.params)
     this.getProjects(history.state.filter)
   },
 }
