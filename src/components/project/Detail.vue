@@ -1,8 +1,18 @@
 <template>
   <div class="bg-white shadow rounded p-3">
-    <div @click="$router.push({name: 'Home'})" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
-      <i class="fa fa-arrow-left"></i>
-      <div class="ml-4">Kembali</div>
+    <div class="flex justify-between items-center">
+      <div @click="$router.push({name: 'Home'})" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
+        <i class="fa fa-arrow-left"></i>
+        <div class="ml-4">Kembali</div>
+      </div>
+      <div class="flex gap-2" v-if="project?.company.id == getUser()?.id && !proposal">
+        <router-link :to="{name: 'EditProject', params: {id: project?.id}}" class="w-8 h-8 flex text-slate-400 hover:text-slate-800 items-center justify-center rounded-full cursor-pointer hover:bg-slate-100">
+          <i class="fa fa-edit"></i>
+        </router-link>
+        <div class="w-8 h-8 flex text-slate-400 hover:text-slate-800 items-center justify-center rounded-full cursor-pointer hover:bg-slate-100" @click="deleteProject">
+          <i class="fa fa-trash"></i>
+        </div>
+      </div>
     </div>
     <div class="p-3">
       <div class="block lg:flex justify-between">
@@ -132,6 +142,37 @@ export default {
     },
     getUser() {
       return this.$store?.state?.user;
+    },
+    deleteProject() {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Anda yakin?',
+        text: 'Anda tidak dapat mengembalikannya!',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus',
+        confirmButtonColor: '#20889C',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.axios.delete(`/project/${this.project?.id}`)
+          .then(({data: result}) => {
+            Swal.fire({
+              title: 'Berhasil!',
+              text: 'Anda berhasil menghapus proyek ini.',
+              icon: 'success',
+              confirmButtonColor: '#20889C',
+            }).then(() => {
+              this.$router.replace({name: 'Home'});
+            })
+          })
+          .catch(() => {
+            Swal.fire(
+              'Gagal!',
+              'Suatu masalah sudah terjadi.',
+              'error'
+            )
+          })
+        }
+      })
     },
     updateProgress() {
       this.axios.get(`project/${this.$props.project.id}/task`)

@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Home from './pages/Home.vue';
 import DetailProject from './pages/DetailProject.vue';
 import CreateProject from './pages/CreateProject.vue';
+import EditProject from './pages/EditProject.vue';
 import Login from './pages/auth/Login.vue';
 import Role from './pages/auth/register/Role.vue';
 import Account from './pages/auth/register/Account.vue';
@@ -15,15 +16,21 @@ const routes = [
     props: true,
   },
   {
-    path: '/project/:id',
+    path: '/project/show/:id',
     component: DetailProject,
     name: 'DetailProject',
     props: true,
   },
   {
-    path: '/create_project',
+    path: '/project/create',
     component: CreateProject,
     name: 'CreateProject',
+    props: true,
+  },
+  {
+    path: '/project/edit/:id',
+    component: EditProject,
+    name: 'EditProject',
     props: true,
   },
   {

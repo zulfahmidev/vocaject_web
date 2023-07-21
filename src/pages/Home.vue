@@ -16,7 +16,7 @@
         <div class="my-16" v-if="loadingLoadMore">
           <Loading height="6" />
         </div>
-        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore && !loading">Muat lebih banyak!</div>
+        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore && !loading && projects.length == (offset+1)*take">Muat lebih banyak!</div>
       </div>
       <div class="relative hidden lg:block">
         <MyProject class="sticky top-16" v-if="getLogged" />
@@ -43,6 +43,7 @@ export default {
       loading: true,
       loadingLoadMore: false,
       offset: 0,
+      take: 10,
       filter: {}
     }
   },
@@ -63,18 +64,17 @@ export default {
       .catch(e => {
         this.loading = false;
       })
-
     },
     loadMore() {
-      this.offset += 10;
+      this.offset++;
       this.loadingLoadMore = true;
       this.axios.request({
         method: 'GET',
         url: '/project',
         params: {
           ...this.filter,
-          take: 10,
-          offset: this.offset,
+          take: this.take,
+          offset: this.offset*this.take,
         }
       })
       .then(({data: result}) => {

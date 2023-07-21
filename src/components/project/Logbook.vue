@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <div :class="{'hidden': logbooks != null}" class="lg:block">
-      <div class="bg-white rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" v-for="(v, i) in proposal?.members" :key="i" @click="selectStudent(v.id)">
+      <div class="bg-white rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" v-for="(v, i) in proposal?.members" :key="i" @click="selectStudent(v.id)" :class="{'border-primary/30 bg-light': selected==v.id}">
         <div class="flex items-center gap-4">
           <div class="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
             <img :src="v.picture" :alt="v.name">
@@ -25,7 +25,7 @@
     <div v-if="logbooks != null" class="lg:block lg:col-span-2">
 
       <div class="bg-white my-2 rounded p-1 shadow lg:hidden">
-        <div class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 cursor-pointer" @click="logbooks=null">
+        <div class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 cursor-pointer" @click="logbooks, selected=null">
           <div class="mr-2">
             <i class="fa fa-arrow-left"></i>
           </div>

@@ -1,9 +1,16 @@
 <template>
-  <div class="bg-white shadow rounded p-3">
-    <div @click="$router.go(-1)" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
+  <!-- Loading -->
+  <Loading height="6" v-if="loading" />
+
+  <!-- Not Found -->
+  <img src="/ills/page_not_found.svg" alt="page not found" v-if="notFound && !loading" class="w-96 m-auto mt-16">
+
+  <!-- Content -->
+  <div class="bg-white shadow rounded p-3" v-if="!loading">
+    <router-link :to="{name: 'DetailProject', params: {id: project?.id}}" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
       <i class="fa fa-arrow-left"></i>
       <div class="ml-4">Kembali</div>
-    </div>
+    </router-link>
     <div class="p-3">
       <div class="my-2">
         <div class="text-xs text-primary mb-1" >Judul Proyek:</div>
@@ -38,9 +45,9 @@
         <input type="date" v-model="form.expired_at" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" name="expired_at">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.expired_at" :key="i">{{ v }}</div>
       </div>
-      <button class="py-2 outline-none px-3 block text-center bg-primary hover:bg-secondary w-full text-white rounded" @click="create">
-        <div v-if="!loading">Buat Proyek</div>
-        <Loading height="6" v-if="loading" />
+      <button class="py-2 outline-none px-3 block text-center bg-primary hover:bg-secondary w-full text-white rounded" @click="edit">
+        <div v-if="!button_loading">Simpan Perubahan</div>
+        <Loading height="6" v-if="button_loading" />
       </button>
     </div>
   </div>
@@ -70,15 +77,18 @@ export default {
         deadline_at: [],
         expired_at: [],
       },
+      project: null,
       loading: false,
+      button_loading: false,
+      notfound: false,
       categories: []
     }
   },
   methods: {
-    create() {
+    edit() {
       let deadline_at = this.form.deadline_at.split('-')
       let expired_at = this.form.expired_at.split('-')
-      this.loading = true;
+      this.button_loading = true;
       this.errors = {
         title: [],
         description: [],
@@ -88,7 +98,7 @@ export default {
         expired_at: [],
       }
       this.error = '';
-      this.axios.post(`/project/`, {
+      this.axios.post(`/project/${this.project.id}/update`, {
         company_id: this.$store.state.user.id,
         title: this.form.title,
         description: this.form.description,
@@ -98,7 +108,7 @@ export default {
         expired_at: `${expired_at[1]}-${expired_at[2]}-${expired_at[0]}`,
       })
       .then(({data: result}) => {
-        this.loading = false;
+        this.button_loading = false;
         this.form = {
           title: '',
           description: '',
@@ -109,7 +119,7 @@ export default {
         }
         Swal.fire({
           title: 'Berhasil!',
-          text: 'Anda berhasil menambahkan proyek.',
+          text: 'Perubahan berhasil disimpan.',
           icon: 'success',
           confirmButtonColor: '#20889C',
         }).then(() => {
@@ -127,12 +137,30 @@ export default {
           }
         }
       })
+    },
+    loadProject(project_id) {
+      this.loading = true;
+      this.axios.get(`/project/${project_id}`)
+      .then(({data: result}) => {
+        this.loading = false;
+        this.project = result.data;
+        for (const key in this.form) {
+          this.form[key] = result.data[key];
+        }
+        this.form['category_id'] = result.data.category.id
+      })
+      .catch(() => {
+        this.loading = false;
+        this.notfound = true;
+      })
     }
   },
   mounted() {
+    let project_id = this.$route.params?.id;
     if (!this.$store.state.logged) {
-      this.$router.replace({name: 'Home'});
+      this.$router.replace({name: 'DetailProject', params: {id: project_id}});
     }
+    this.loadProject(project_id);
     this.axios.get('/project/category/all')
     .then(({data: result}) => {
       this.categories = result.data;

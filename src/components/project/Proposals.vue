@@ -2,20 +2,20 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <div class="col-span-3 text-center text-sm text-slate-400 py-5" v-if="proposals.length == 0">Belum ada proposal yang di ajukan.</div>
     <div :class="{'hidden lg:block':selected != null}">
-      <div class="bg-white rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" @click="selectProposal(i)" v-for="(v, i) in proposals" :key="i">
+      <div class="bg-white rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" @click="selectProposal(i)" v-for="(v, i) in proposals" :key="i" :class="{'border-primary/30 bg-light': selected==i}">
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+          <!-- <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
             <img :src="v.lecture.picture" :alt="v.lecture.name">
-          </div>
+          </div> -->
           <div class="flex flex-col">
-            <div class="font-bold capitalize">{{v.lecture.name }}</div>
-            <div class="text-sm text-secondary capitalize">{{ v?.lecture?.college?.name }}</div>
+            <div class="font-bold text-sm capitalize">{{v.lecture.name }}</div>
+            <div class="text-xs text-secondary capitalize">{{ v?.lecture?.college?.name }}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="text-sm text-gray-400 text-center lg:col-span-2 py-7" v-if="selected == null && proposals.length > 0" >
-      Belum Dipilih
+      Pilih dosen untuk menampilkan proposal.
     </div>
     <div :class="{'hidden':selected == null}" v-if="selected != null" class="lg:block lg:col-span-2">
       <div class="bg-white my-2 rounded p-1 shadow lg:hidden">
@@ -83,7 +83,6 @@ export default {
   },
   methods: {
     selectProposal(index) {
-      console.log(index);
       this.selected = index;
     },
     getIcon(type) {
@@ -92,9 +91,27 @@ export default {
       return 'fa-file'
     },
     confirmProposal(proposal_id) {
-      this.axios.post(`/project/${this.project_id}/proposal/${proposal_id}`)
-      .then(({data: result}) => {
-        this.$emit('proposal_confirmed');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Anda yakin?',
+        text: 'Anda tidak dapat mengembalikannya!',
+        showCancelButton: true,
+        confirmButtonText: 'Terima',
+        confirmButtonColor: '#20889C',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.axios.post(`/project/${this.project_id}/proposal/${proposal_id}`)
+          .then(({data: result}) => {
+            Swal.fire({
+              title: 'Berhasil!',
+              text: 'Anda berhasil menerima proposal ini, maka proposal lainnya telah ditolak. Anda juga tidak dapat mengubah atau menghapus proyek ini.',
+              icon: 'success',
+              confirmButtonColor: '#20889C',
+            }).then(() => {
+              this.$emit('proposal_confirmed');
+            })
+          })
+        }
       })
     }
   },
