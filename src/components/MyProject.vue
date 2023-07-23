@@ -10,7 +10,7 @@
       <input type="text" placeholder="Cari proyek saya..." class="pl-4 pr-12 py-2 shadow rounded outline-none focus:shadow-lg w-full bg-white">
       <Icon name="fa6-solid:magnifying-glass" class="absolute right-4 top-3 text-gray-400" />
     </div>
-    <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp" @click="$emit('load_project', v.id)">
+    <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp" @click="$emit('load_project', v.id)" :class="{'border-primary/30 bg-light': isSelected(v.id)}">
       <!-- <div class="w-24 m-3 mr-0 rounded overflow-hidden">
         <img :src="v.company.picture" :alt="v.name">
       </div> -->
@@ -20,7 +20,7 @@
         <!-- <div class="text-sm py-1">
           {{ curFormat(v.budget) }}
         </div> -->
-        <div class="text-sm capitalize text-gray-400">
+        <div class="text-xs mt-2 capitalize text-gray-400">
           {{ v.category.name }}
         </div>
       </div>
@@ -34,6 +34,16 @@ export default {
   data() {
     return {
       projects: [],
+    }
+  },
+  methods: {
+    isSelected(project_id) {
+      if (['DetailProject', 'EditProject'].includes(this.$route.name)) {
+        if (this.$route.params?.id == project_id) {
+          return true;
+        }
+      }
+      return false;
     }
   },
   mounted() {

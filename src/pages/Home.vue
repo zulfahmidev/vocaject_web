@@ -55,7 +55,10 @@ export default {
       this.axios.request({
         method: 'GET',
         url: '/project',
-        params: filter,
+        params: {
+          ...filter,
+          status: 'opened',
+        },
       })
       .then(({data: result}) => {
         this.projects = result?.data;

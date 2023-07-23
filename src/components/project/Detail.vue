@@ -20,9 +20,22 @@
           <div class="text-2xl font-black capitalize">{{ project?.title }}</div>
           <div class="text-lg text-primary capitalize">{{ project?.category?.name }}</div>
         </div>
-        <div class="flex flex-col justify-center border-t mt-2 pt-2 lg:border-none lg:mt-0 lg:pt-2">
-          <div class="font-black">Anggaran:</div>
-          <div class="">{{ curFormat(project?.budget) }}</div>
+        <div class="">
+          <div class="flex gap-2 border-t mt-2 pt-2 lg:border-none lg:mt-0 lg:pt-2">
+            <div class="text-xs text-slate-500">
+              <i class="fa fa-tags"></i> 
+              <!-- <div class="text-xs ">Anggaran:</div> -->
+            </div>
+            <div class="text-xs">{{ curFormat(project?.budget) }}</div>
+          </div>
+
+          <div class="flex gap-2 border-t mt-2 pt-2 lg:border-none lg:mt-0 lg:pt-2">
+            <div class="text-xs text-slate-500">
+              <i class="far fa-calendar"></i>
+              <!-- <div class="">Deadline:</div> -->
+            </div>
+            <div class="text-xs">{{ getDate(project?.deadline_at) }}</div>
+          </div>
         </div>
       </div>
       <div class="text-sm text-justify py-3 border-y my-2">{{ project?.description }}</div>
@@ -139,6 +152,11 @@ export default {
         currency: 'IDR',
       })
       return n.format(number);
+    },
+    getDate(submited_at) {
+      let date = new Date(submited_at);
+      let months = ['jan', 'feb', 'mar', 'apr', 'mei', "jun", 'jul', 'sept', 'okt', 'nov', 'des'];
+      return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
     },
     getUser() {
       return this.$store?.state?.user;
