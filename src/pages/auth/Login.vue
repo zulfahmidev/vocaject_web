@@ -62,7 +62,7 @@ export default {
   methods: {
     login() {
       this.loading = true;
-      this.axios.post('/auth/login', {
+      this.axios.post('/auth/login?platform=web', {
         email: this.form.email,
         password: this.form.password,
       })

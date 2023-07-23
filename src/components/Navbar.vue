@@ -22,10 +22,10 @@
                 <div class="text-primary font-bold text-base capitalize">{{ user?.name }}</div>
                 <div class="text-slate-500 capitalize">{{ user?.role }}</div>
               </div>
-              <a href="#" class="text-gray-400 hover:bg-slate-50 px-4 flex items-center py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">
+              <router-link :to="{name: 'Profile', params: {id: user?.id}}" class="text-gray-400 hover:bg-slate-50 px-4 flex items-center py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" @click="showProfileMenu=false">
                 <i class="fa fa-user fa-fw"></i> 
                 <div class="ml-3 text-slate-800">Akun Saya</div>
-              </a>
+              </router-link>
               <div class="text-gray-400 hover:bg-slate-50 px-4 flex items-center cursor-pointer py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" @click="logout">
                 <i class="fa fa-sign-out-alt fa-fw"></i> 
                 <div class="ml-3 text-slate-800">Keluar</div>
@@ -57,6 +57,7 @@ export default {
     logout() {
       this.axios.post('/auth/logout')
       .then(() => {
+        this.showProfileMenu = false;
         this.$store.commit('setLogout');
       })
     }

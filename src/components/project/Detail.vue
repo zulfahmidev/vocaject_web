@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white shadow rounded p-3">
     <div class="flex justify-between items-center">
-      <div @click="$router.push({name: 'Home'})" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
+      <div @click="$router.go(-1)" class="flex items-center p-2 rounded hover:bg-slate-100 active:bg-slate-200 w-fit cursor-pointer">
         <i class="fa fa-arrow-left"></i>
         <div class="ml-4">Kembali</div>
       </div>
@@ -40,12 +40,14 @@
       </div>
       <div class="text-sm text-justify py-3 border-y my-2">{{ project?.description }}</div>
       <div class="flex">
-        <router-link to="/" class="flex">
+        <router-link :to="{name: 'Profile', params: {id: project?.company.id}}" class="flex hover:underline">
           <div class="w-24 mr-0 rounded overflow-hidden">
             <img :src="project?.company?.picture" :alt="project?.company?.name">
           </div>
           <div class="pl-4 flex flex-col justify-center">
-            <div class="font-bold capitalize text-lg hover:underline cursor-pointer">{{ project?.company?.name }}</div>
+            <div class="font-bold capitalize text-lg cursor-pointer">
+              {{ project?.company?.name }}
+            </div>
             <div class="text-primary capitalize">{{ project?.company?.address }}</div>
             <div class="text-xs text-slate-400 flex items-center">
               <div class="mr-1">

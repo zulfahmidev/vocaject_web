@@ -2,7 +2,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <div class="col-span-3 text-center text-sm text-slate-400 py-5" v-if="proposals.length == 0">Belum ada proposal yang di ajukan.</div>
     <div :class="{'hidden lg:block':selected != null}">
-      <div class="bg-white rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" @click="selectProposal(i)" v-for="(v, i) in proposals" :key="i" :class="{'border-primary/30 bg-light': selected==i}">
+      <div :class="{'border-primary/30 bg-light': selected==i, 'bg-white': selected!=i}" class="rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" @click="selectProposal(i)" v-for="(v, i) in proposals" :key="i">
         <div class="flex items-center gap-4">
           <!-- <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
             <img :src="v.lecture.picture" :alt="v.lecture.name">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="bg-white rounded p-4 shadow">
-        <div class="flex items-center gap-4 border-b pb-2">
+        <router-link :to="{name: 'Profile', params: {id: proposal?.lecture.id}}" class="flex items-center gap-4 border-b pb-2 hover:underline">
           <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
             <img :src="proposal?.lecture.picture" :alt="proposal?.lecture.name">
           </div>
@@ -33,7 +33,7 @@
             <div class="font-bold capitalize">{{proposal?.lecture.name }}</div>
             <div class="text-xs text-secondary capitalize">{{ proposal?.lecture?.college?.name }}</div>
           </div>
-        </div>
+        </router-link>
         <div class="py-2 text-sm border-b">{{ proposal?.note }}</div>
         <div class="border-b py-2">
           <div class="text-xs">Lampiran:</div>
@@ -49,12 +49,12 @@
         <div class="border-b py-2">
           <div class="text-xs">Anggota Tim:</div>
           <div class="flex flex-wrap gap-2 my-2">
-            <div class="rounded border border-slate-200 py-2 px-3 w-fit flex items-center hover-comp cursor-pointer" v-for="(v, i) in proposal?.members" :key="i">
+            <router-link :to="{name: 'Profile', params: {id: v.id}}" class="rounded border border-slate-200 py-2 px-3 w-fit flex items-center hover-comp cursor-pointer" v-for="(v, i) in proposal?.members" :key="i">
               <div class="pr-2 mr-2 text-primary border-r">
                 <i class="fa fa-user fa-fw"></i>
               </div>
               <div class="text-xs capitalize">{{ v.name }}</div>
-            </div>
+            </router-link>
           </div>
         </div>
         <button class="bg-primary text-white hover:bg-secondary p-2 shadow rounded text-center mt-2 w-full" @click="confirmProposal(proposal?.id)">
