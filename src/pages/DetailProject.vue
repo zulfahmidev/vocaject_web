@@ -12,7 +12,7 @@
       <div class="hidden md:block">
         <div class="sticky top-16">
           <ProjectChat :project_id="project.id" v-if="project?.company?.id == getUser?.id" />
-          <MyProject @load_project="loadProject" v-if="getLogged" />
+          <MyProject v-if="getLogged" />
         </div>
       </div>
     </div>
@@ -25,9 +25,11 @@ import ProjectDetail from '../components/project/Detail.vue';
 import Categories from '../components/Categories.vue';
 import Loading from '../components/Loading.vue';
 import ProjectChat from '../components/project/Chat.vue';
+import { watchEffect } from 'vue';
 </script>
 
 <script>
+import { watchEffect } from 'vue';
 export default {
   props: {
     id: Number,
@@ -64,7 +66,9 @@ export default {
     }
   },
   mounted() {
-    this.loadProject(this.$props.id)
+    watchEffect(() => {
+      this.loadProject(this.$props.id)
+    })
   }
 }
 </script>

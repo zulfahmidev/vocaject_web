@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <div :class="{'hidden': logbooks != null}" class="lg:block">
-      <div class="bg-white rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" v-for="(v, i) in proposal?.members" :key="i" @click="selectStudent(v)" :class="{'border-primary/30 bg-light': selected?.id==v.id}">
+      <div class="rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" v-for="(v, i) in proposal?.members" :key="i" @click="selectStudent(v)" :class="{'border-primary/30 bg-light': selected?.id==v.id, 'bg-white': selected?.id!=v.id}">
         <div class="flex items-center gap-4">
           <div class="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
             <img :src="v.picture" :alt="v.name">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="lg:block lg:col-span-2 text-center text-sm text-slate-400 py-5" v-if="logbooks == null && !loading">
+    <div class="lg:block lg:col-span-2 text-center text-sm text-slate-400 py-5" v-if="selected == null && !loading">
       Pilih mahasiswa untuk melihat logbook.
     </div>
     <div class="lg:col-span-2 py-5" v-if="loading">
@@ -40,11 +40,11 @@
         
       </div>
 
-      <div class="lg:block lg:col-span-2 text-center text-sm text-slate-400 py-5" v-if="logbooks?.length == 0 && !loading">
+      <div class="lg:block lg:col-span-2 text-center text-sm text-slate-400 py-5" v-if="logbooks?.length == 0 && !loading && selected != null">
         Belum ada logbook yang tersedia.
       </div>
       
-      <div class="bg-white rounded p-4 shadow" v-for="(v, i) in logbooks" :key="i">
+      <div class="bg-white rounded mb-2 p-4 shadow" v-if="selected != null && !loading" v-for="(v, i) in logbooks" :key="i">
         <div class="text-sm text-primary font-black capitalize">{{ getDay(v.submited_at) }}</div>
         <div class="text-sm font-black capitalize">{{ getDate(v.submited_at) }}</div>
         <div class="py-2 text-sm">{{ v.description }}</div>

@@ -29,22 +29,30 @@
           <Loading height="6" />
         </div>
         <div class="" v-for="(v, i) in messages" :key="i">
-          <div class="flex my-2" v-if="!isSender(v.sender)">
-            <div class="rounded-full mr-3 w-10 h-10 overflow-hidden border">
-              <img :src="v.project.company.picture" :alt="v.project.company.name">
-            </div>
-            <div class="py-2 px-3 bg-slate-700 w-fit h-fit rounded-lg rounded-bl-none text-white text-sm max-w-xs lg:max-w-md">
-              <div class="text-blue-300 text-xs">{{ (v.sender == 'company') ? v.project.company.name : v.lecture.name }}</div>
-              <div class="">{{ v.message }}</div>
+          <div class="text-xs my-4 py-1 px-2 bg-slate-200 w-fit rounded m-auto text-slate-600" v-if="getDate(messages[i-1]?.created_at) != getDate(v.created_at)">{{ getDate(v.created_at) }}</div>
+          <div class="flex my-2 items-end gap-2" v-if="!isSender(v.sender)">
+            <router-link :to="{name: 'Profile', params: {id: v.lecture.id}}">
+              <img :src="v.lecture.picture" :alt="v.lecture.name" class="rounded-full w-10 h-10 overflow-hidden border">
+            </router-link>
+            <div class="">
+              <div class="py-2 px-3 bg-slate-700 w-fit h-fit rounded-lg rounded-bl-none text-white text-sm max-w-xs lg:max-w-md">
+                <div class="text-blue-300 text-xs">{{ v.lecture.name }}</div>
+                <div class="">{{ v.message }}</div>
+              </div>
+              <div class="text-xs">{{ getTime(v.created_at) }}</div>
             </div>
           </div>
-          <div class="flex justify-end my-2" v-if="isSender(v.sender)">
-            <div class="py-2 px-3 bg-primary w-fit h-fit rounded-lg rounded-br-none text-white text-sm max-w-xs">
-              <div class="">{{ v.message }}</div>
+
+          <div class="flex justify-end items-end my-2 gap-2" v-if="isSender(v.sender)">
+            <div>
+              <div class="py-2 px-3 bg-primary w-fit h-fit rounded-lg rounded-br-none text-white max-w-xs">
+                <div class="">{{ v.message }}</div>
+              </div>
+              <div class="text-xs text-right">{{ getTime(v.created_at) }}</div>
             </div>
-            <div class="rounded-full ml-3 w-10 h-10 overflow-hidden border">
-              <img :src="v.project.company.picture" :alt="v.project.company.name">
-            </div>
+            <router-link :to="{name: 'Profile', params: {id: v.project.company.id}}">
+              <img :src="v.project.company.picture" :alt="v.project.company.name" class="w-10 h-10 rounded-full border">
+            </router-link>
           </div>
         </div>
       </div>
@@ -52,7 +60,10 @@
       <div class="flex items-center gap-2 pt-3 border-t">
         <input type="text" class="py-2 px-3 bg-white rounded border w-full focus:shadow-lg focus:border-primary outline-none" placeholder="Type here..." v-model="message" @keyup.enter="sendMessage">
         <button class="py-2 px-5 rounded bg-primary h-fit hover:bg-secondary outline-none text-white" @click="sendMessage">
-          <i class="fa fa-paper-plane"></i>
+          <Loading height="6" v-if="sendLoading" />
+          <div class=""  v-if="!sendLoading">
+            <i class="fa fa-paper-plane"></i>
+          </div>
         </button>
       </div>
     </div>
@@ -79,7 +90,8 @@ export default {
       lecture_id: null,
       pusher: null,
       channel: null,
-      loading: true
+      loading: true,
+      sendLoading: false,
     }
   },
   methods: {
@@ -93,6 +105,23 @@ export default {
           this.scrollToBottom()
         }, 1);
       })
+    },
+    addZero(number) {
+      if (number < 10 && number > -10) {
+        return `0${number}`;
+      }
+      return number;
+    },
+    getTime(created_at) {
+      let date = new Date(created_at);
+      return `${this.addZero(date.getHours())}:${this.addZero(date.getMinutes())}`;
+    },
+    getDate(created_at) {
+      if (created_at) {
+        let date = new Date(created_at);
+        return `${this.addZero(date.getDate())}/${this.addZero(date.getMonth()+1)}/${date.getFullYear()}`;
+      }
+      return created_at;
     },
     openMessage(lecture_id) {
       this.messages = [];
@@ -115,17 +144,21 @@ export default {
     },
     sendMessage() {
       if (this.message.trim().length > 0) {
-
+        this.sendLoading = true;
         this.axios.post(`/project/${this.project_id}/message/${this.lecture_id}`, {
           sender: 'company',
           message: this.message,
         })
         .then(({data: result}) => {
+          this.sendLoading = false;
           this.messages.push(result.data);
           this.message = '';
           setTimeout(() => {
             this.scrollToBottom();
           }, 500);
+        })
+        .catch(() => {
+          this.sendLoading = false;
         })
       }
     },

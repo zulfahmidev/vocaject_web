@@ -26,6 +26,10 @@
                 <i class="fa fa-user fa-fw"></i> 
                 <div class="ml-3 text-slate-800">Akun Saya</div>
               </router-link>
+              <router-link :to="{name: 'EditProfile', params: {id: user?.id}}" class="text-gray-400 hover:bg-slate-50 px-4 flex items-center py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" @click="showProfileMenu=false">
+                <i class="fa fa-user-cog fa-fw"></i> 
+                <div class="ml-3 text-slate-800">Edit Profile</div>
+              </router-link>
               <div class="text-gray-400 hover:bg-slate-50 px-4 flex items-center cursor-pointer py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" @click="logout">
                 <i class="fa fa-sign-out-alt fa-fw"></i> 
                 <div class="ml-3 text-slate-800">Keluar</div>

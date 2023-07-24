@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Home from './pages/Home.vue';
 import DetailProject from './pages/DetailProject.vue';
 import Profile from './pages/Profile.vue';
+import EditProfile from './pages/EditProfile.vue';
 import CreateProject from './pages/CreateProject.vue';
 import EditProject from './pages/EditProject.vue';
 import Login from './pages/auth/Login.vue';
@@ -58,6 +59,12 @@ const routes = [
     path: '/user/:id',
     component: Profile,
     name: 'Profile',
+    props: true,
+  },
+  {
+    path: '/user/edit',
+    component: EditProfile,
+    name: 'EditProfile',
     props: true,
   },
 ]

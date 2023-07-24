@@ -6,14 +6,18 @@ export default createStore({
     return {
       logged: false,
       user: null,
+      access_token: null,
     }
   },
   mutations: {
     setLogged(state, user) {
       state.logged = true;
       state.user = user;
-      let access_token = sessionStorage.getItem('access_token');
-      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+      this.access_token = sessionStorage.getItem('access_token');
+      axios.defaults.headers.common['Authorization'] = `Bearer ${this.access_token}`;
+    },
+    updateUser(state, user) {
+      state.user = user;
     },
     setLogout(state) {
       state.logged = false;

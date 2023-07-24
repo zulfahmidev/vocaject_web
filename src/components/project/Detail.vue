@@ -79,7 +79,7 @@
         <div class="text-3xl text-primary">
           <i class="fa fa-comment-dots"></i>
         </div>
-        <div class="font-black text-xl hidden lg:block">Chat</div>
+        <div class="font-black text-xl hidden lg:block">Konsultasi</div>
       </div>
     </div>
     <div class="py-3" v-if="proposal == null && tab==0">
@@ -96,19 +96,19 @@
         <div class="text-3xl text-primary">
           <i class="fa fa-clipboard-list"></i>
         </div>
-        <div class="font-black text-xl hidden lg:block">Todolist</div>
+        <div class="font-black text-xl hidden lg:block">Target Proyek</div>
       </div>
       <div class="bg-white p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=1">
         <div class="text-3xl text-primary">
           <i class="fa fa-book"></i>
         </div>
-        <div class="font-black text-xl hidden lg:block">Log Book</div>
+        <div class="font-black text-xl hidden lg:block">Logbook Mahasiswa</div>
       </div>
       <div class="bg-white lg:hidden p-4 rounded shadow w-full flex items-center gap-2 justify-center hover-comp cursor-pointer" @click="tab=2">
         <div class="text-3xl text-primary">
           <i class="fa fa-comment-dots"></i>
         </div>
-        <div class="font-black text-xl hidden lg:block">Chat</div>
+        <div class="font-black text-xl hidden lg:block">Konsultasi Proyek</div>
       </div>
     </div>
     <ProjectTodolist @update_progress="updateProgress" :project_id="project?.id" v-if="tab==0" />
@@ -122,9 +122,12 @@ import ProjectChat from '../../components/project/Chat.vue';
 import ProjectTodolist from '../../components/project/Todolist.vue';
 import ProjectLogbook from '../../components/project/Logbook.vue';
 import ProjectProposals from '../../components/project/Proposals.vue';
+import { watchEffect } from 'vue';
 </script>
 
 <script>
+import { watchEffect } from 'vue';
+
 export default {
   props: {
     project: Object
@@ -217,7 +220,9 @@ export default {
     }
   },
   mounted() {
-    this.loadProposal();
+    watchEffect(() => {
+      this.loadProposal();
+    })
     // let project_id = this.$route.params.id
     // this.axios.get(`/project/${project_id}`)
     // .then(({data: result}) => {

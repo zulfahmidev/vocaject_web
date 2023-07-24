@@ -28,7 +28,7 @@
         <div class="mt-1 text-xs text-red-400" v-for="(v, i) in errors.address" :key="i">{{v}}</div>
       </div>
       <div class="my-2">
-        <input type="number" v-model="form.phone" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="Nomor HP" name="phone">
+        <input type="text" v-model="form.phone" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="Nomor HP" name="phone">
         <div class="mt-1 text-xs text-red-400" v-for="(v, i) in errors.phone" :key="i">{{v}}</div>
       </div>
       <div class="border-b my-2"></div>

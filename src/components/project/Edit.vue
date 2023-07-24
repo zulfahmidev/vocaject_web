@@ -36,14 +36,14 @@
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.category_id" :key="i">{{ v }}</div>
       </div>
       <div class="my-2">
-        <div class="text-xs text-primary mb-1" >Tanggal Deadline:</div>
-        <input type="date" v-model="form.deadline_at" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" name="deadline_at">
-        <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.deadline_at" :key="i">{{ v }}</div>
-      </div>
-      <div class="my-2">
         <div class="text-xs text-primary mb-1" >Tanggal Tutup Pengajuan:</div>
         <input type="date" v-model="form.expired_at" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" name="expired_at">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.expired_at" :key="i">{{ v }}</div>
+      </div>
+      <div class="my-2">
+        <div class="text-xs text-primary mb-1" >Tanggal Deadline:</div>
+        <input type="date" v-model="form.deadline_at" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" name="deadline_at">
+        <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.deadline_at" :key="i">{{ v }}</div>
       </div>
       <button class="py-2 outline-none px-3 block text-center bg-primary hover:bg-secondary w-full text-white rounded" @click="edit">
         <div v-if="!button_loading">Simpan Perubahan</div>
