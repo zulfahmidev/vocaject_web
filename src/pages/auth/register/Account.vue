@@ -37,12 +37,15 @@
         <div class="mt-1 text-xs text-red-400" v-for="(v, i) in errors.email" :key="i">{{v}}</div>
       </div>
       <div class="my-2">
-        <input type="password" v-model="form.password" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="password" name="password">
+        <input type="password" v-model="form.password" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="password" name="password" ref="password">
         <div class="mt-1 text-xs text-red-400" v-for="(v, i) in errors.password" :key="i">{{v}}</div>
       </div>
       <div class="my-2">
-        <input type="password" v-model="form.confirm_password" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="konfirmasi password" name="confirm_password">
+        <input type="password" v-model="form.confirm_password" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="konfirmasi password" name="confirm_password" ref="confirm_password">
         <div class="mt-1 text-xs text-red-400" v-if="!confirmPassword">Password tidak sesuai.</div>
+      </div>
+      <div class="mb-2 text-sm flex items-center gap-2">
+        <input type="checkbox" v-model="hidePassword" @change="switchHidePassword"> Tampilkan Password
       </div>
       <button class="py-2 outline-none px-3 block text-center bg-primary hover:bg-secondary w-full text-white rounded" @click="register" :class="{'bg-slate-300 cursor-default hover:bg-slate-300': !confirmPassword || form.confirm_password == ''}">
         <div v-if="!loading">Daftar</div>
@@ -65,6 +68,7 @@ export default {
   data() {
     return {
       loading: false,
+      hidePassword: false,
       form: {
         name: '',
         description: '',
@@ -94,6 +98,15 @@ export default {
   methods: {
     autoGrow(event) {
       event.style.height = '5px'; event.style.height = (event.scrollHeight) + "px";
+    },
+    switchHidePassword() {
+      if (this.hidePassword) {
+        this.$refs.password.type = 'text';
+        this.$refs.confirm_password.type = 'text';
+      }else {
+        this.$refs.password.type = 'password';
+        this.$refs.confirm_password.type = 'password';
+      }
     },
     register() {
       if (!this.confirmPassword || this.form.confirm_password == '') {
