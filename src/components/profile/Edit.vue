@@ -6,7 +6,7 @@
     </div>
     <div class="w-36 h-36 bg-slate-100 rounded m-auto mt-5 overflow-hidden relative cursor-pointer border">
       <img :src="form.picture" :alt="form.name" ref="picture" class="w-full">
-      <div class="absolute left-0 top-0 w-full h-full bg-black/25 items-center flex justify-center text-white text-2xl opacity-0 hover:opacity-100 transition" @click="$refs.upload_picture.click()">
+      <div class="absolute left-0 top-0 w-full h-full bg-black/25 items-center flex justify-center text-white text-2xl" @click="$refs.upload_picture.click()">
         <i class="fa fa-edit"></i>
       </div>
       <input type="file" ref="upload_picture" class="hidden" @change="selectPicture">

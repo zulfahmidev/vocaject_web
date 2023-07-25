@@ -19,8 +19,12 @@
         <input type="email" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="email" v-model="form.email" @keyup.enter="login" name="email">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.email" :key="i">{{ v }}</div>
       </div>
-      <div class="my-2">
-        <input type="password" v-model="form.password" @keyup.enter="login" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="password" name="password">
+      <div class="my-2 relative">
+        <input type="password" v-model="form.password" @keyup.enter="login" class="py-2 outline-none pl-3 pr-11 border-2 w-full rounded focus:border-primary" placeholder="password" name="password" ref="password">
+        <div class="absolute top-3 right-4 cursor-pointer text-slate-400 hover:text-slate-600" @click="switchHidePassword">
+          <div v-if="hidePassword"><i class="fa fa-eye"></i></div>
+          <div v-if="!hidePassword"><i class="fa fa-eye-slash"></i></div>
+        </div>
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.password" :key="i">{{ v }}</div>
       </div>
       <router-link to="/" class="text-sm hover:underline">
@@ -47,6 +51,7 @@ import Loading from '../../components/Loading.vue';
 export default {
   data() {
     return {
+      hidePassword: true,
       form: {
         email: '',
         password: '',
@@ -60,6 +65,15 @@ export default {
     }
   },
   methods: {
+    switchHidePassword() {
+      if (this.hidePassword) {
+        this.$refs.password.type = 'text';
+        this.hidePassword = false;
+      }else {
+        this.$refs.password.type = 'password';
+        this.hidePassword = true;
+      }
+    },
     login() {
       this.loading = true;
       this.axios.post('/auth/login?platform=web', {

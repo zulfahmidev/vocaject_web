@@ -26,7 +26,7 @@ import Categories from '../components/Categories.vue';
 </script>
 
 <script>
-// import {watchEffect} from 'vue';
+import {watchEffect} from 'vue';
 export default {
   data() {
     return {
@@ -46,9 +46,11 @@ export default {
     
   },
   mounted() {
-    // watchEffect(() => {
-    //   this.loadProfile()
-    // })
+    watchEffect(() => {
+      if (!this.$store.state.user) {
+        this.$router.replace({name: 'Home'})
+      }
+    })
   }
 }
 </script>
