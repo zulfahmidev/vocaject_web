@@ -24,7 +24,7 @@
       <div class="mb-2 py-2 px-3 hover:bg-slate-50 border-b rounded cursor-pointer" @click="loadContacts()">
         <i class="fa fa-arrow-left mr-2"></i> Kembali
       </div>
-      <div class="h-96 overflow-y-scroll bg-slate-100 rounded p-3" id="message-box" style="scroll-behavior: smooth;">
+      <div class="h-96 overflow-y-scroll bg-slate-100 rounded p-3" id="message-box">
         <div class="py-6" v-if="loading">
           <Loading height="6" />
         </div>
@@ -105,6 +105,7 @@ export default {
         this.messages = result.data;
         setTimeout(() => {
           this.scrollToBottom()
+          document.querySelector('#message-box').style.scrollBehavior = "smooth";
         }, 1);
       })
     },
