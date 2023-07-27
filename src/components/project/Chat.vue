@@ -37,8 +37,8 @@
               <img :src="v.lecture.picture" :alt="v.lecture.name" class="rounded-full w-10 h-10 overflow-hidden border">
             </router-link>
             <div class="">
-              <div class="py-2 px-3 bg-slate-700 w-fit h-fit rounded-lg rounded-bl-none text-white text-sm max-w-xs lg:max-w-md">
-                <div class="text-blue-300 text-xs">{{ v.lecture.name }}</div>
+              <div class="py-2 px-3 bg-white w-fit h-fit rounded-lg rounded-bl-none text-black shadow mb-1 text-sm max-w-xs lg:max-w-md">
+                <div class="text-primary text-xs capitalize">{{ v.lecture.name }}</div>
                 <div class="">{{ v.message }}</div>
               </div>
               <div class="text-xs">{{ getTime(v.created_at) }}</div>
@@ -47,7 +47,7 @@
 
           <div class="flex justify-end items-end my-2 gap-2" v-if="isSender(v.sender)">
             <div>
-              <div class="py-2 px-3 bg-primary w-fit h-fit rounded-lg rounded-br-none text-white max-w-xs">
+              <div class="py-2 px-3 bg-primary w-fit h-fit shadow mb-1 rounded-lg rounded-br-none text-white max-w-xs">
                 <div class="">{{ v.message }}</div>
               </div>
               <div class="text-xs text-right">{{ getTime(v.created_at) }}</div>

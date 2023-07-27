@@ -15,6 +15,7 @@
     <div class="text-right">
       <select class="text-xs bg-white px-2 py-1 rounded outline-none" v-model="filter.status" @change="loadProjects">
         <option value="">Semua</option>
+        <option value="completed">Selesai</option>
         <option value="opened">Buka</option>
         <option value="closed">Tutup</option>
       </select>
@@ -28,6 +29,7 @@
           <div class="font-bold capitalize text-lg">{{ v.title }}</div>
           <div class="py-1 px-2 border border-red-300 bg-red-100 h-fit w-fit rounded-full" style="font-size: 8px;" v-if="v.status == 'closed'">Tutup</div>
           <div class="py-1 px-2 border border-green-300 bg-green-100 h-fit w-fit rounded-full" style="font-size: 8px;" v-if="v.status == 'opened'">Buka</div>
+          <div class="py-1 px-2 border border-blue-300 bg-blue-100 h-fit w-fit rounded-full" style="font-size: 8px;" v-if="v.status == 'completed'">Selesai</div>
         </div>
         <div class="text-sm text-secondary capitalize">{{ v.company.name }}</div>
         <!-- <div class="text-sm py-1">
@@ -42,6 +44,7 @@
     <div class="my-16" v-if="loadingLoadMore">
       <Loading height="6" />
     </div>
+    <div class="text-sm text-slate-400 text-center py-5" v-if="!loadingLoadMore && projects.length == 0">Belum ada proyek yang tersedia.</div>
     <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore && projects.length == (offset+1)*limit">Muat lebih banyak!</div>
   </div>
 </template>

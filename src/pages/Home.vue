@@ -33,6 +33,7 @@ import MyProject from '../components/MyProject.vue';
 </script>
 
 <script>
+import { watchEffect } from 'vue';
 export default {
   props: {
     filter: Object
@@ -61,6 +62,7 @@ export default {
         },
       })
       .then(({data: result}) => {
+        console.log(filter)
         this.projects = result?.data;
         this.loading = false;
       })
@@ -95,7 +97,9 @@ export default {
     }
   },
   mounted() {
-    this.getProjects(history.state.filter)
+    watchEffect(() => {
+      this.getProjects(history.state.filter)
+    })
   },
 }
 </script>

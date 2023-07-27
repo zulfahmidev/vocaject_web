@@ -25,9 +25,13 @@
 
   <!-- Projects -->
   <div class="py-5">
-    <div class="text-sm mb-2 font-bold">Proyek Terbuka:</div>
-    <div class="my-16" v-if="loading">
-      <Loading height="6" />
+    <div class="flex items-center justify-between mb-2">
+      <div class="text-sm font-bold">Proyek Terbuka:</div>
+      <select class="text-xs bg-white px-2 py-1 rounded outline-none" v-model="status" @change="getProjects" v-if="$store.state.user?.id == user.id">
+        <option value="">Semua</option>
+        <option value="opened">Buka</option>
+        <option value="closed">Tutup</option>
+      </select>
     </div>
     <div class="text-slate-400 text-xs mt-2" v-if="!loading && projects.length == 0">Belum ada proyek yang tersedia.</div>
     <div class="grid lg:grid-cols-2 lg:gap-2">
@@ -60,6 +64,10 @@
         </div>
       </router-link>
     </div>
+    <div class="my-16" v-if="projectLoading">
+      <Loading height="6" />
+    </div>
+    <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMoreProject" v-if="!projectLoading && projects.length == (project.offset+1)*project.take">Muat lebih banyak!</div>
   </div>
 
   <!-- Contact Profile -->
@@ -110,6 +118,8 @@ import Loading from '../../components/Loading.vue';
 </script>
 
 <script>
+import { watchEffect } from 'vue';
+
 export default {
   props: {
     user: Object,
@@ -119,6 +129,12 @@ export default {
       projects: [],
       loading: false,
       showContact: false,
+      project: {
+        offset: 0,
+        take: 2,
+      },
+      projectLoading: false,
+      status: '',
     }
   },
   methods: {
@@ -132,12 +148,31 @@ export default {
       return roles[role];
     },
     getProjects() {
-      this.loading = true;
+      this.projectLoading = true;
       let id = this.user.id;
-      this.axios.get(`/project?company_id=${id}&status=opened`)
+      this.axios.get(`/project?company_id=${id}&status=${this.status}&offset=${this.project.offset}&take=${this.project.take}`)
       .then(({data: result}) => {
-        this.loading = false;
+        this.projectLoading = false;
         this.projects = result.data;
+      })
+    },
+    loadMoreProject() {
+      this.projectLoading = true;
+      this.project.offset++;
+      let id = this.user.id;
+      this.axios.request({
+        method: 'GET',
+        url: '/project',
+        params: {
+          company_id: id,
+          status: this.status,
+          take: this.project.take,
+          offset: this.project.offset*this.project.take,
+        }
+      })
+      .then(({data: result}) => {
+        this.projects = [...this.projects, ...result.data];
+        this.projectLoading = false;
       })
     },
     curFormat(number) {
@@ -154,6 +189,13 @@ export default {
     },
   },
   mounted() {
+    watchEffect(() => {
+      if (this.$store.state.user?.id != this.user?.id) {
+        this.status = 'opened';
+      }else {
+        this.status = '';
+      }
+    })
     this.getProjects();
   }
 }
