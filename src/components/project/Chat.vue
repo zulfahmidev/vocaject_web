@@ -29,7 +29,9 @@
           <Loading height="6" />
         </div>
         <div class="" v-for="(v, i) in messages" :key="i">
+          
           <div class="text-xs my-4 py-1 px-2 bg-slate-200 w-fit rounded m-auto text-slate-600" v-if="getDate(messages[i-1]?.created_at) != getDate(v.created_at)">{{ getDate(v.created_at) }}</div>
+
           <div class="flex my-2 items-end gap-2" v-if="!isSender(v.sender)">
             <router-link :to="{name: 'Profile', params: {id: v.lecture.id}}">
               <img :src="v.lecture.picture" :alt="v.lecture.name" class="rounded-full w-10 h-10 overflow-hidden border">

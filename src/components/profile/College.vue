@@ -15,7 +15,11 @@
         <div class="flex flex-col justify-center text-center m-auto lg:text-left lg:m-0">
           <div class="text-xl font-bold text-primary capitalize">{{user?.name}}</div>
           <div class="mb-2 text-sm capitalize">{{ getRole(user?.role) }}</div>
-          <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showContact = true">Lihat kontak</div>
+          <div class="flex gap-2 w-fit m-auto lg:m-0">
+            <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showContact = true">Lihat kontak</div>
+            <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showLectures = true">Lihat Dosen</div>
+            <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showStudents = true">Lihat Mahasiswa</div>
+          </div>
         </div>
       </div>
       <div class="text-sm mt-3 font-bold">Deskripsi:</div>
@@ -63,8 +67,8 @@
   </div>
 
   <!-- Contact Profile -->
-  <div class="z-10 fixed left-0 top-0 bg-black/25 backdrop-blur-sm min-w-full min-h-full" v-if="showContact">
-    <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 26rem;">
+  <div class="z-10 fixed px-2 left-0 top-0 bg-black/25 backdrop-blur-sm w-full h-full" v-if="showContact">
+    <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 100%;">
       <div class="px-5 py-3 border-b flex justify-between items-center">
         <div class="text-xl capitalize">{{ user.name }}</div>
         <div class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded-full cursor-pointer" @click="showContact = false">
@@ -103,6 +107,119 @@
       </div>
     </div>
   </div>
+
+  <!-- Mahasiswa -->
+  <div class="z-10 fixed px-2 left-0 top-0 bg-black/25 backdrop-blur-sm w-full h-full" v-if="showStudents">
+    <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 100%;">
+      <div class="px-5 py-3 border-b flex justify-between items-center">
+        <div class="text-xl capitalize">Daftar Mahasiswa</div>
+        <div class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded-full cursor-pointer" @click="showStudents = false">
+          <i class="fa fa-times"></i>
+        </div>
+      </div>
+      <div class="px-5 py-3">
+        <div class="grid grid-cols-2 border-b text-center mb-1">
+          <div :class="`border-b-2 py-2 cursor-pointer ${(modalStudentsTab == 0) ? 'border-primary text-secondary' : 'border-white text-slate-600'}`" @click="modalStudentsTab = 0">
+            Mahasiswa Aktif
+          </div>
+          <div :class="`border-b-2 py-2 cursor-pointer ${(modalStudentsTab == 1) ? 'border-primary text-secondary' : 'border-white text-slate-600'}`" @click="modalStudentsTab = 1">
+            Belum Terkonfirmasi
+          </div>
+        </div>
+        <div class="overflow-y-scroll" style="height: 400px;">
+          <div v-for="(v, i) in students" :key="i" v-if="modalStudentsTab==0">
+            <div class="py-3 px-3 flex gap-5 items-center rounded"  v-if="v.status == 'accepted'">
+              <img :src="v.picture" :alt="v.name" class="w-14 h-14 rounded-full border">
+              <div class="">
+                <div class="text-xl capitalize font-bold">{{ v.name }}</div>
+                <div class="text-sm capitalize">{{ v.nim }}</div>
+              </div>
+              <div class="m-auto mr-0">
+                <router-link :to="{name: 'Profile', params: {id: v.id}}" class="bg-primary hover:bg-secondary py-1 px-2 rounded text-white text-xs">
+                  <i class="fa fa-eye"></i>
+                </router-link>
+              </div>
+            </div>
+          </div>
+
+          <div v-for="(v, i) in students" :key="i" v-if="modalStudentsTab==1">
+            <div class="py-3 px-3 flex gap-5 items-center rounded"  v-if="v.status == 'panding'">
+              <img :src="v.picture" :alt="v.name" class="w-14 h-14 rounded-full border">
+              <div>
+                <div class="text-xl capitalize font-bold">{{ v.name }}</div>
+                <div class="text-sm capitalize">{{ v.nim }}</div>
+              </div>
+              <div class="m-auto mr-0 flex items-center gap-1">
+                <button class="bg-primary hover:bg-secondary rounded text-white py-1 px-2 text-xs" @click="confirmStudent(v.id, i)">
+                  <i class="fa fa-check"></i>
+                </button>
+                <router-link :to="{name: 'Profile', params: {id: v.id}}" class="bg-primary hover:bg-secondary py-1 px-2 rounded text-white text-xs">
+                  <i class="fa fa-eye"></i>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dosen -->
+  <div class="z-10 fixed px-2 left-0 top-0 bg-black/25 backdrop-blur-sm w-full h-full" v-if="showLectures">
+    <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 100%;">
+      <div class="px-5 py-3 border-b flex justify-between items-center">
+        <div class="text-xl capitalize">Daftar Dosen</div>
+        <div class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded-full cursor-pointer" @click="showLectures = false">
+          <i class="fa fa-times"></i>
+        </div>
+      </div>
+      <div class="px-5 py-3">
+        <div class="grid grid-cols-2 border-b text-center mb-1">
+          <div :class="`border-b-2 py-2 cursor-pointer ${(modalLecturesTab == 0) ? 'border-primary text-secondary' : 'border-white text-slate-600'}`" @click="modalLecturesTab = 0">
+            Dosen Aktif
+          </div>
+          <div :class="`border-b-2 py-2 cursor-pointer ${(modalLecturesTab == 1) ? 'border-primary text-secondary' : 'border-white text-slate-600'}`" @click="modalLecturesTab = 1">
+            Belum Terkonfirmasi
+          </div>
+        </div>
+        <div class="overflow-y-scroll" style="height: 400px;">
+          <div v-for="(v, i) in lectures" :key="i" v-if="modalLecturesTab==0">
+            <div class="py-3 px-3 flex gap-5 items-center rounded"  v-if="v.status == 'accepted'">
+              <img :src="v.picture" :alt="v.name" class="w-14 h-14 rounded-full border">
+              <div class="">
+                <div class="text-xl capitalize font-bold">{{ v.name }}</div>
+                <div class="text-sm capitalize">{{ v.nidn }}</div>
+              </div>
+              <div class="m-auto mr-0">
+                <router-link :to="{name: 'Profile', params: {id: v.id}}" class="bg-primary hover:bg-secondary py-1 px-2 rounded text-white text-xs">
+                  <i class="fa fa-eye"></i>
+                </router-link>
+              </div>
+            </div>
+          </div>
+
+          <div v-for="(v, i) in lectures" :key="i" v-if="modalLecturesTab==1">
+            <div class="py-3 px-3 flex gap-5 items-center rounded"  v-if="v.status == 'panding'">
+              <img :src="v.picture" :alt="v.name" class="w-14 h-14 rounded-full border">
+              <div>
+                <div class="text-xl capitalize font-bold">{{ v.name }}</div>
+                <div class="text-sm capitalize">{{ v.nidn }}</div>
+              </div>
+              <div class="m-auto mr-0 flex items-center gap-1">
+                <button class="bg-primary hover:bg-secondary rounded text-white py-1 px-2 text-xs" @click="confirmLecture(v.id, i)">
+                  <i class="fa fa-check"></i>
+                </button>
+                <router-link :to="{name: 'Profile', params: {id: v.id}}" class="bg-primary hover:bg-secondary py-1 px-2 rounded text-white text-xs">
+                  <i class="fa fa-eye"></i>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </template>
 
 <script setup>
@@ -119,6 +236,12 @@ export default {
       projects: [],
       loading: false,
       showContact: false,
+      showStudents: false,
+      showLectures: false,
+      students: [],
+      lectures: [],
+      modalStudentsTab: 0,
+      modalLecturesTab: 0,
     }
   },
   methods: {
@@ -152,9 +275,47 @@ export default {
       let months = ['jan', 'feb', 'mar', 'apr', 'mei', "jun", 'jul', 'sept', 'okt', 'nov', 'des'];
       return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
     },
+    getStudents() {
+      this.axios.get(`user/student/${this.user.id}`)
+      .then(({data: result}) => {
+        this.students = result.data;
+      })
+    },
+    getLectures() {
+      this.axios.get(`user/lecture/${this.user.id}`)
+      .then(({data: result}) => {
+        this.lectures = result.data;
+      })
+    },
+    confirmStudent(id, index) {
+      this.axios.post(`user/submission/set/${id}/status/accepted`)
+      .then(({data: result}) => {
+        this.students[index] = result.data;
+        Swal.fire({
+          title: 'Berhasil!',
+          text: `Anda berhasil menerima ${result.data.name} sebagai mahasiswa.`,
+          icon: 'success',
+          confirmButtonColor: '#20889C',
+        })
+      })
+    },
+    confirmLecture(id, index) {
+      this.axios.post(`user/submission/set/${id}/status/accepted`)
+      .then(({data: result}) => {
+        this.lectures[index] = result.data;
+        Swal.fire({
+          title: 'Berhasil!',
+          text: `Anda berhasil menerima ${result.data.name} sebagai dosen.`,
+          icon: 'success',
+          confirmButtonColor: '#20889C',
+        })
+      })
+    }
   },
   mounted() {
     this.getProjects();
+    this.getStudents()
+    this.getLectures()
   }
 }
 </script>
