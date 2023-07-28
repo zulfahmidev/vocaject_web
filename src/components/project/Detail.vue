@@ -91,10 +91,12 @@
       </div>
     </div>
     <div class="py-3" v-if="proposal == null && tab==0">
+      
       <ProjectProposals @proposal_confirmed="loadProposal" :project_id="project?.id" />
     </div>
     <ProjectChat class="lg:hidden" :project_id="project.id" v-if="tab==1" />
   </div>
+  
   <div class="py-3 hidden lg:block" v-if="project?.company.id == getUser()?.id && proposal == null && tab==0">
     <ProjectProposals @proposal_confirmed="loadProposal" :project_id="project?.id" />
   </div>

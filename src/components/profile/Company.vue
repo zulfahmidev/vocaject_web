@@ -104,7 +104,7 @@
             <i class="fa fa-map-marker-alt"></i>
           </div>
           <div class="text-sm">
-            <div class="font-bold">Email:</div>
+            <div class="font-bold">Alamat:</div>
             <div class="capitalize">{{user.address}}</div>
           </div>
         </div>
