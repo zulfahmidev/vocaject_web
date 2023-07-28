@@ -15,13 +15,13 @@
       </div>
     </div>
     <div class="p-3">
-      <div class="block lg:flex justify-between">
+      <div class="block lg:flex items-center justify-between">
         <div class="w-full">
           <div class="text-2xl font-black capitalize">{{ project?.title }}</div>
           <div class="text-lg text-primary capitalize">{{ project?.category?.name }}</div>
         </div>
-        <div class="">
-          <div class="flex gap-2 border-t mt-2 pt-2 lg:border-none lg:mt-0 lg:pt-2">
+        <div class="flex flex-col justify-center">
+          <div class="flex gap-2 py-2 lg:py-1 border-t lg:border-none">
             <div class="text-xs text-slate-500">
               <i class="fa fa-tags"></i> 
               <!-- <div class="text-xs ">Anggaran:</div> -->
@@ -29,12 +29,20 @@
             <div class="text-xs">{{ curFormat(project?.budget) }}</div>
           </div>
 
-          <div class="flex gap-2 border-t mt-2 pt-2 lg:border-none lg:mt-0 lg:pt-2">
+          <div class="flex gap-2 py-2 lg:py-1 border-t lg:border-none">
             <div class="text-xs text-slate-500">
               <i class="far fa-calendar"></i>
               <!-- <div class="">Deadline:</div> -->
             </div>
             <div class="text-xs">{{ getDate(project?.deadline_at) }}</div>
+          </div>
+
+          <div class="flex gap-2 py-2 lg:py-1 border-t lg:border-none">
+            <div class="text-xs text-slate-500">
+              <i class="far fa-clock"></i>
+              <!-- <div class="">Deadline:</div> -->
+            </div>
+            <div class="text-xs">{{ getDate(project?.expired_at) }}</div>
           </div>
         </div>
       </div>
