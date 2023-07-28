@@ -127,6 +127,13 @@ export default {
         .catch(({response}) => {
           this.loading = false;
           this.error = response?.data?.message
+          this.errors = {
+            picture: [],
+            name: [],
+            description: [],
+            address: [],
+            phone: [],
+          }
           if (response?.status == 400) {
             for (const key in response?.data?.data) {
               const v = response?.data?.data[key];
