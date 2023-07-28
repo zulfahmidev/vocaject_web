@@ -124,8 +124,22 @@ export default {
             this.$store.commit('updateUser', result.data);
           })
         })
-        .catch((e) => {
-          console.dir(e)
+        .catch(({response}) => {
+          this.loading = false;
+          this.error = response?.data?.message
+          if (response?.status == 400) {
+            for (const key in response?.data?.data) {
+              const v = response?.data?.data[key];
+              this.errors[key] = v;
+            }
+          }
+          // Swal.fire({
+          //   title: 'Gagal!',
+          //   text: 'Terdapat kesalah.',
+          //   icon: 'error',
+          //   confirmButtonColor: '#20889C',
+          // })
+          // console.dir(e)
         })
       });
     },
