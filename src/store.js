@@ -13,8 +13,25 @@ export default createStore({
     setLogged(state, user) {
       state.logged = true;
       state.user = user;
-      this.access_token = sessionStorage.getItem('access_token');
+      this.access_token = getCookie('access_token');
+
       axios.defaults.headers.common['Authorization'] = `Bearer ${this.access_token}`;
+
+      function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
     },
     updateUser(state, user) {
       state.user = user;

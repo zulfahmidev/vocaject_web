@@ -27,7 +27,7 @@
         </div>
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.password" :key="i">{{ v }}</div>
       </div>
-      <router-link to="/" class="text-sm hover:underline">
+      <router-link :to="{name: 'ForgotPassword'}" class="text-sm hover:underline">
         Lupa password?
       </router-link>
       <button class="py-2 px-3 my-2 bg-primary hover:bg-secondary w-full text-white rounded" @click="login">
@@ -81,7 +81,11 @@ export default {
         password: this.form.password,
       })
       .then(({data: result}) => {
-        sessionStorage.setItem('access_token', result.data.access_token)
+        const d = new Date();
+        d.setTime(d.getTime() + (356*24*60*60*1000));
+        let expires = "expires="+ d.toUTCString();
+        document.cookie = 'access_token' + "=" + result.data.access_token + ";" + expires + ";path=/";
+
         this.$store.commit('setLogged', result.data.user)
         this.loading = false;
         this.$router.replace({name: 'Home'});

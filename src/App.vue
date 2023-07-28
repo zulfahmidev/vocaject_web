@@ -15,7 +15,7 @@ import Navbar from './components/Navbar.vue';
 export default {
   methods: {
     checkLogged() {
-      let access_token = sessionStorage.getItem('access_token');
+      let access_token = this.getCookie('access_token');
       if (access_token) {
         this.axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
@@ -30,6 +30,21 @@ export default {
       }else {
         this.$store.commit('setLogout');
       }
+    },
+    getCookie(cname) {
+      let name = cname + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
     }
   },
   mounted() {

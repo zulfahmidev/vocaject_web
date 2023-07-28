@@ -9,6 +9,9 @@ import Login from './pages/auth/Login.vue';
 import Role from './pages/auth/register/Role.vue';
 import Account from './pages/auth/register/Account.vue';
 import Done from './pages/auth/register/Done.vue';
+import ForgotPassword from './pages/auth/ForgotPassword.vue';
+import ChangePassword from './pages/auth/ChangePassword.vue';
+import CheckOTP from './pages/auth/CheckOTP.vue';
 
 const routes = [
   {
@@ -54,6 +57,23 @@ const routes = [
     path: '/auth/register/account',
     component: Account,
     name: 'Account'
+  },
+  {
+    path: '/auth/forgot-password',
+    component: ForgotPassword,
+    name: 'ForgotPassword'
+  },
+  {
+    path: '/auth/check-otp',
+    component: CheckOTP,
+    name: 'CheckOTP',
+    props: true,
+  },
+  {
+    path: '/auth/change-password',
+    component: ChangePassword,
+    name: 'ChangePassword',
+    props: true,
   },
   {
     path: '/user/:id',
