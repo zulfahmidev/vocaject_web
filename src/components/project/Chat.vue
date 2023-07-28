@@ -132,15 +132,15 @@ export default {
       this.lecture_id = lecture_id;
       this.getMessages();
       this.channel.bind('new-message', ({data}) => {
-      if (data.project.id == this.project_id && data.lecture.id == this.lecture_id) {
-        if (data.sender == 'lecture') {
-          this.messages.push(data);
-          setTimeout(() => {
-            this.scrollToBottom();
-          }, 500);
+        if (data.project.id == this.project_id && data.lecture.id == this.lecture_id) {
+          if (data.sender == 'lecture') {
+            this.messages.push(data);
+            setTimeout(() => {
+              this.scrollToBottom();
+            }, 500);
+          }
         }
-      }
-    });
+      });
     },
     isSender(role) {
       return this.$store.state?.user?.role == role;
@@ -189,6 +189,23 @@ export default {
     });
 
     this.channel = this.pusher.subscribe('project-message');
+
+
+    this.channel.bind('new-message', ({data}) => {
+        if (data.project.id == this.project_id) {
+          if (data.sender == 'lecture') {
+            let includes = false;
+            this.contacts.forEach(lecture => {
+              if (lecture.id == data.lecture.id) {
+                includes = true;
+              }
+            });
+            if (!includes) {
+              this.contacts.push(data.lecture);
+            }
+          }
+        }
+    });
 
     // channel.bind('delete-message', function(data) {
     //   alert(JSON.stringify(data));

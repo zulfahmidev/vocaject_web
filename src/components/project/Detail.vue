@@ -147,7 +147,7 @@ export default {
       student_selected_id: -1,
       checked_task: 0,
       total_task: 0,
-      proposal: null
+      proposal: null,
     }
   },
   computed: {
@@ -231,11 +231,6 @@ export default {
     watchEffect(() => {
       this.loadProposal();
     })
-    // let project_id = this.$route.params.id
-    // this.axios.get(`/project/${project_id}`)
-    // .then(({data: result}) => {
-    //   this.project = result.data;
-    // })
   },
 }
 </script>
