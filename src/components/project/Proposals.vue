@@ -1,6 +1,6 @@
 <template>
+  <div class="mb-2">Daftar Proposal:</div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-    Daftar Proposal:
     <div class="col-span-3 text-center text-sm text-slate-400 py-5" v-if="proposals.length == 0">Belum ada proposal yang di ajukan.</div>
     <div :class="{'hidden lg:block':selected != null}">
       <div :class="{'border-primary/30 bg-light': selected==i, 'bg-white': selected!=i}" class="rounded shadow p-3 hover-comp cursor-pointer h-fit mb-2" @click="selectProposal(i)" v-for="(v, i) in proposals" :key="i">

@@ -1,7 +1,7 @@
 <template>
   <div class="h-14">
     <div class="bg-white shadow-sm fixed left-0 top-0 right-0 z-10">
-      <div class="container mx-auto h-14 flex items-center justify-between px-3 md:px-0">
+      <div class="container mx-auto h-14 flex items-center justify-between px-5 md:px-0">
         <router-link :to="{name: 'Home'}">
           <img src="/logo_with_text.png" alt="vocaject logo" class="h-12">
         </router-link>

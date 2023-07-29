@@ -12,13 +12,14 @@ import Done from './pages/auth/register/Done.vue';
 import ForgotPassword from './pages/auth/ForgotPassword.vue';
 import ChangePassword from './pages/auth/ChangePassword.vue';
 import CheckOTP from './pages/auth/CheckOTP.vue';
+import InitData from './pages/InitData.vue';
 
 const routes = [
   {
     path: '/',
     component: Home,
     name: 'Home',
-    props: true,
+    props: route => ({category: route.query.category, search: route.query.search}),
   },
   {
     path: '/project/show/:id',
@@ -87,6 +88,11 @@ const routes = [
     name: 'EditProfile',
     props: true,
   },
+  {
+    path: '/init-data',
+    component: InitData,
+    name: 'InitData'
+  }
 ]
 
 export default createRouter({

@@ -126,7 +126,7 @@
         </div>
       </div>
       <div class="px-5 py-3">
-        <div class="grid grid-cols-2 border-b text-center mb-1">
+        <div class="grid grid-cols-2 border-b text-center mb-1" v-if="getUser?.id == user.id">
           <div :class="`border-b-2 py-2 cursor-pointer ${(modalStudentsTab == 0) ? 'border-primary text-secondary' : 'border-white text-slate-600'}`" @click="modalStudentsTab = 0">
             Mahasiswa Aktif
           </div>
@@ -182,7 +182,7 @@
         </div>
       </div>
       <div class="px-5 py-3">
-        <div class="grid grid-cols-2 border-b text-center mb-1">
+        <div class="grid grid-cols-2 border-b text-center mb-1" v-if="getUser?.id == user.id">
           <div :class="`border-b-2 py-2 cursor-pointer ${(modalLecturesTab == 0) ? 'border-primary text-secondary' : 'border-white text-slate-600'}`" @click="modalLecturesTab = 0">
             Dosen Aktif
           </div>
@@ -257,6 +257,11 @@ export default {
       modalStudentsTab: 0,
       modalLecturesTab: 0,
       status: '',
+    }
+  },
+  computed: {
+    getUser() {
+      return this.$store.state.user;
     }
   },
   methods: {

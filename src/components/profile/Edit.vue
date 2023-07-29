@@ -79,6 +79,7 @@ export default {
       cropingUrl: '',
       crop: false,
       loading: false,
+      file: null,
       form: {
         picture: '',
         name: '',
@@ -98,57 +99,57 @@ export default {
   methods: {
     saveChange() {
       this.loading = true;
-      this.canvas.toBlob((blob) => {
-        const formData = new FormData();
-        formData.append('picture', blob, 'filename.png');
-        formData.append('name', this.form.name);
-        formData.append('description', this.form.description);
-        formData.append('address', this.form.address);
-        formData.append('phone', this.form.phone);
+      const formData = new FormData();
+      if (this.file) {
+        formData.append('picture', this.file, 'filename.png');
+      }
+      formData.append('name', this.form.name);
+      formData.append('description', this.form.description);
+      formData.append('address', this.form.address);
+      formData.append('phone', this.form.phone);
 
-        // Post via axios or other transport method
-        this.axios.post('/user/update', formData, {
-          headers: {
-              'Content-Type': 'multipart/form-data',
-          }
+      // Post via axios or other transport method
+      this.axios.post('/user/update', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+      })
+      .then(({data: result}) => {
+        this.loading = false;
+        Swal.fire({
+          title: 'Berhasil!',
+          text: 'Perubahan berhasil disimpan.',
+          icon: 'success',
+          confirmButtonColor: '#20889C',
+        }).then(() => {
+          this.initUser(result.data);
+          this.$store.commit('updateUser', result.data);
         })
-        .then(({data: result}) => {
-          this.loading = false;
-          Swal.fire({
-            title: 'Berhasil!',
-            text: 'Perubahan berhasil disimpan.',
-            icon: 'success',
-            confirmButtonColor: '#20889C',
-          }).then(() => {
-            this.initUser(result.data);
-            this.$store.commit('updateUser', result.data);
-          })
-        })
-        .catch(({response}) => {
-          this.loading = false;
-          this.error = response?.data?.message
-          this.errors = {
-            picture: [],
-            name: [],
-            description: [],
-            address: [],
-            phone: [],
+      })
+      .catch(({response}) => {
+        this.loading = false;
+        this.error = response?.data?.message
+        this.errors = {
+          picture: [],
+          name: [],
+          description: [],
+          address: [],
+          phone: [],
+        }
+        if (response?.status == 400) {
+          for (const key in response?.data?.data) {
+            const v = response?.data?.data[key];
+            this.errors[key] = v;
           }
-          if (response?.status == 400) {
-            for (const key in response?.data?.data) {
-              const v = response?.data?.data[key];
-              this.errors[key] = v;
-            }
-          }
-          // Swal.fire({
-          //   title: 'Gagal!',
-          //   text: 'Terdapat kesalah.',
-          //   icon: 'error',
-          //   confirmButtonColor: '#20889C',
-          // })
-          // console.dir(e)
-        })
-      });
+        }
+        // Swal.fire({
+        //   title: 'Gagal!',
+        //   text: 'Terdapat kesalah.',
+        //   icon: 'error',
+        //   confirmButtonColor: '#20889C',
+        // })
+        // console.dir(e)
+      })
     },
     initUser(data = null) {
       let user = (data) ? data : this.user;
@@ -168,6 +169,9 @@ export default {
     },
     cropImage(){
       this.form.picture = this.canvas.toDataURL();
+      this.canvas.toBlob((blob) => {
+        this.file = blob;
+      });
       this.crop = false;
 		},
   },

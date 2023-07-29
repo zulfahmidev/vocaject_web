@@ -3,7 +3,7 @@
     <!-- <Navbar /> -->
     <div class="grid grid-cols-1 md:grid-cols-4 md:gap-4 px-3 md:px-0">
       <div class="relative">
-        <Categories class="sticky top-16" @get_project="getProjects" />
+        <Categories class="sticky top-16" @trigger="getProjects" />
       </div>
       <div class="col-span-2" :class="{'col-span-3': !getLogged}">
         <div class="my-16" v-if="loading">
@@ -12,11 +12,13 @@
         <div class="text-center text-sm text-gray-500 py-5" v-if="projects.length == 0">
           <img src="/ills/empty.svg" alt="page not found" v-if="!loading" class="w-96 m-auto mt-16">
         </div>
-        <Projects v-if="!loading" :projects="projects" />
+        <Projects v-if="!loading" :projects="projects" :more_projects="more_projects" />
+        <Projects v-if="!loading" />
         <div class="my-16" v-if="loadingLoadMore">
           <Loading height="6" />
         </div>
-        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore && !loading && projects.length == (offset+1)*take">Muat lebih banyak!</div>
+        <div class="text-sm text-primary hover:underline w-fit m-auto my-5 cursor-pointer" @click="loadMore" v-if="!loadingLoadMore && !loading && projects.length + more_projects.length == (offset+1)*take">Muat lebih banyak!</div>
+        <!-- <router-link :to="{name: 'Home', query: {offset: offset}}"></router-link> -->
       </div>
       <div class="relative hidden lg:block">
         <MyProject class="sticky top-16" v-if="getLogged" />
@@ -41,28 +43,30 @@ export default {
   data() {
     return {
       projects: [],
+      more_projects: [],
       loading: true,
       loadingLoadMore: false,
+      take: 6,
       offset: 0,
-      take: 10,
-      filter: {}
+      filter: {},
     }
   },
   methods: {
-    getProjects(filter = {category: '', title: '', take: 10, offset: 0}) {
+    getProjects(filter = {}) {
       this.filter = filter;
-      this.offset = filter.offset;
       this.loading = true;
+      this.offset = 0;
       this.axios.request({
         method: 'GET',
         url: '/project',
         params: {
-          ...filter,
+          ...this.filter,
           status: 'opened',
+          offset: this.offset,
+          take: this.take,
         },
       })
       .then(({data: result}) => {
-        console.log(filter)
         this.projects = result?.data;
         this.loading = false;
       })
@@ -71,19 +75,20 @@ export default {
       })
     },
     loadMore() {
-      this.offset++;
       this.loadingLoadMore = true;
+      this.offset++;
       this.axios.request({
         method: 'GET',
         url: '/project',
         params: {
           ...this.filter,
+          status: 'opened',
           take: this.take,
           offset: this.offset*this.take,
-        }
+        },
       })
       .then(({data: result}) => {
-        this.projects = [...this.projects, ...result?.data];
+        this.projects = this.projects.concat(result?.data);
         this.loadingLoadMore = false;
       })
       .catch(e => {
@@ -97,9 +102,13 @@ export default {
     }
   },
   mounted() {
-    watchEffect(() => {
-      this.getProjects(history.state.filter)
-    })
+    this.getProjects(history.state)
+    // watchEffect(() => {
+      // this.offset = 0;
+      // if (this.offset == 0) {
+      //   this.more_projects = []
+      // }
+    // })
   },
 }
 </script>
