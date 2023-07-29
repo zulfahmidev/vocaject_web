@@ -28,7 +28,7 @@
         </div>
         <div class="hidden lg:block">Aplikasi Seluler</div>
       </router-link>
-      <router-link :to="{name: 'Home', state:{category: 'video-permainan'}}" class="cursor-pointer bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center lg:justify-start" @click="$emit('trigger', {category: 'video-permainan'})">
+      <router-link :to="{name: 'Home', state:{category: 'pengembangan-game'}}" class="cursor-pointer bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center lg:justify-start" @click="$emit('trigger', {category: 'pengembangan-game'})">
         <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
           <i class="fa fa-gamepad"></i>
         </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="hidden lg:block">Desain Grafis</div>
       </router-link>
-      <router-link :to="{name: 'Home', state:{category: 'video-editing'}}" class="cursor-pointer bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center lg:justify-start" @click="$emit('trigger', {category: 'video-editing'})">
+      <router-link :to="{name: 'Home', state:{category: 'editor-video'}}" class="cursor-pointer bg-white shadow flex items-center w-full rounded mb-2 hover-comp justify-center lg:justify-start" @click="$emit('trigger', {category: 'editor-video'})">
         <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
           <i class="fa fa-file-video"></i>
         </div>
