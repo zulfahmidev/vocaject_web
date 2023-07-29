@@ -8,7 +8,7 @@
     <div class="py-4">
       <div class="lg:flex gap-4">
         <div class="bg-white rounded w-fit m-auto mb-2 lg:m-0">
-          <div class="w-36 h-36 bg-slate-100 rounded overflow-hidden">
+          <div class="w-36 h-36 bg-slate-100 rounded overflow-hidden border">
             <img :src="user.picture" :alt="user.name" class="w-full">
           </div>
         </div>
@@ -45,7 +45,7 @@
     <div class="text-slate-400 text-xs mt-2" v-if="!loading && projects.length == 0">Belum ada proyek yang tersedia.</div>
     <div class="grid lg:grid-cols-2 gap-2">
       <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp">
-        <div class="w-24 m-3 mr-0 rounded overflow-hidden">
+        <div class="w-24 m-3 mr-0 rounded overflow-hidden border">
           <img :src="v.company.picture" :alt="v.name">
         </div>
         <div class="py-3 pl-4">

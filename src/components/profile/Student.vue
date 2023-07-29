@@ -8,7 +8,7 @@
     <div class="py-4">
       <div class="lg:flex gap-4">
         <div class="bg-white rounded w-fit m-auto mb-2 lg:m-0">
-          <div class="w-36 h-36 bg-slate-100 rounded overflow-hidden">
+          <div class="w-36 h-36 bg-slate-100 rounded overflow-hidden border">
             <img :src="user.picture" :alt="user.name" class="w-full">
           </div>
         </div>

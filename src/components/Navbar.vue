@@ -11,7 +11,7 @@
         <div class="relative inline-block text-left" v-if="isLogged">
           <div class="flex items-center gap-4 cursor-pointer" @click="showProfileMenu = !showProfileMenu">
             <div class="capitalize hidden lg:block">{{ user?.name }}</div>
-            <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+            <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden border">
               <img :src="user?.picture" alt="" class="w-full">
             </div>
           </div>
