@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="relative mb-2">
-      <input type="text" placeholder="Cari proyek..." class="pl-4 pr-12 py-2 shadow rounded outline-none focus:shadow-lg w-full bg-white" v-model="title" @keyup.enter="getProject">
+      <input type="text" placeholder="Cari proyek..." class="pl-4 pr-12 py-2 shadow rounded outline-none focus:shadow-lg w-full bg-white" v-model="title" @keyup.enter="$emit('trigger', {title: title})">
       <div class="absolute right-4 top-2 text-gray-400">
         <i class="fa fa-magnifying-glass"></i>
       </div>
@@ -10,7 +10,7 @@
       Kategori Proyek
     </div>
     <div class="flex gap-2 justify-center md:block">
-      <router-link :to="{name: 'Home', state:{}}" class="cursor-pointer bg-white shadow flex items-center w-full rounded mb-2 hover-comp hover-comp justify-center lg:justify-start" @click="$emit('trigger', {})">
+      <router-link :to="{name: 'Home', state:{}}" class="cursor-pointer bg-white shadow flex items-center w-full rounded mb-2 hover-comp hover-comp justify-center lg:justify-start" @click="$emit('trigger', {category: ''})">
         <div class="w-14 h-12 flex items-center justify-center text-2xl text-primary">
           <i class="fa fa-list"></i>
         </div>
@@ -54,6 +54,7 @@
 export default {
   data() {
     return {
+      title:'',
     }
   },
   methods: {

@@ -48,12 +48,18 @@ export default {
       loadingLoadMore: false,
       take: 6,
       offset: 0,
-      filter: {},
+      filter: {
+        category: '',
+        title: '',
+      },
     }
   },
   methods: {
     getProjects(filter = {}) {
-      this.filter = filter;
+      this.filter.category = filter?.category || this.filter.category;
+      if (filter?.category == '') this.filter.category = '';
+      this.filter.title = filter?.title || this.filter.title;
+      if (filter?.title == '') this.filter.title = '';
       this.loading = true;
       this.offset = 0;
       this.axios.request({
