@@ -106,6 +106,7 @@ export default {
         setTimeout(() => {
           this.scrollToBottom()
           document.querySelector('#message-box').style.scrollBehavior = "smooth";
+        console.log(this.messages)
         }, 1);
       })
     },
@@ -143,7 +144,8 @@ export default {
       });
     },
     isSender(role) {
-      return this.$store.state?.user?.role == role;
+      // console.log(role, ['company', 'college'].includes(this.$store.state?.user?.role))
+      return ['company', 'college'].includes(role);
     },
     sendMessage() {
       if (this.message.trim().length > 0) {
