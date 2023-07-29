@@ -27,6 +27,10 @@
     </div>
   </div>
 
+  <router-link :to="{name: 'CreateProject'}" class="block lg:hidden mt-4 bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center" v-if="getUser?.id == user.id">
+    Buat Proyek Baru
+  </router-link>
+
   <!-- Projects -->
   <div class="py-5">
     <div class="flex items-center justify-between mb-2">
@@ -35,10 +39,11 @@
         <option value="">Semua</option>
         <option value="opened">Buka</option>
         <option value="closed">Tutup</option>
+        <option value="completed">Selesai</option>
       </select>
     </div>
     <div class="text-slate-400 text-xs mt-2" v-if="!loading && projects.length == 0">Belum ada proyek yang tersedia.</div>
-    <div class="grid lg:grid-cols-2 lg:gap-2">
+    <div class="grid lg:grid-cols-2 gap-2">
       <router-link v-for="(v, i) in projects" :key="i" :to="{name: 'DetailProject', params: {id: v.id}}" class="bg-white shadow rounded flex hover-comp">
         <div class="w-24 m-3 mr-0 rounded overflow-hidden">
           <img :src="v.company.picture" :alt="v.name">
