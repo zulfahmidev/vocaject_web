@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <router-link :to="{name: 'CreateProject'}" class="block lg:hidden mt-4 bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center" v-if="getUser?.id == user.id">
+  <router-link :to="{name: 'CreateProject'}" class="block lg:hidden mt-4 bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center" v-if="$store.state.user?.id == user.id">
     Buat Proyek Baru
   </router-link>
 
@@ -140,6 +140,11 @@ export default {
       },
       projectLoading: false,
       status: '',
+    }
+  },
+  compute: {
+    getUser() {
+      return this.$store.state.user;
     }
   },
   methods: {
