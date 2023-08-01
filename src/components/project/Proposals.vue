@@ -58,6 +58,21 @@
             </router-link>
           </div>
         </div>
+        <div class="border-t pt-2 text-xs">
+          <div class="flex justify-between mb-1">
+            <div class="">Anggaran</div>
+            <div class="">{{ curFormat(project?.budget) }}</div>
+          </div>
+          <div class="flex justify-between mb-1">
+            <div class="">Pajak 5%</div>
+            <div class="">{{ curFormat(project?.budget * 0.05) }}</div>
+          </div>
+          <div class="border-b my-2"></div>
+          <div class="flex justify-between mb-1">
+            <div class="">Total</div>
+            <div class="">{{ curFormat(project?.budget + (project?.budget * 0.05)) }}</div>
+          </div>
+        </div>
         <button class="bg-primary text-white hover:bg-secondary p-2 shadow rounded text-center mt-2 w-full" @click="confirmProposal(proposal?.id)">
           Terima Proposal
         </button>
@@ -69,7 +84,7 @@
 <script>
 export default {
   props: {
-    project_id: Number
+    project: Object
   },
   data() {
     return {
@@ -86,6 +101,13 @@ export default {
     selectProposal(index) {
       this.selected = index;
     },
+    curFormat(number) {
+      let n = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      })
+      return n.format(number);
+    },
     getIcon(type) {
       if (['pdf'].includes(type)) return 'fa-file-pdf';
       if (['png', 'jpg', 'jpeg'].includes(type)) return 'fa-image';
@@ -95,13 +117,13 @@ export default {
       Swal.fire({
         icon: 'warning',
         title: 'Anda yakin?',
-        text: 'Anda tidak dapat mengembalikannya!',
+        text: 'Setelah anda terima, proposal tidak dapat dikembalikan dan saldo anda akan dipotong sesuai dengan total yang harus dibayar.',
         showCancelButton: true,
         confirmButtonText: 'Terima',
         confirmButtonColor: '#20889C',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.axios.post(`/project/${this.project_id}/proposal/${proposal_id}`)
+          this.axios.post(`/project/${this.project.id}/proposal/${proposal_id}`)
           .then(({data: result}) => {
             Swal.fire({
               title: 'Berhasil!',
@@ -117,7 +139,7 @@ export default {
     }
   },
   mounted() {
-    this.axios.get(`/project/${this.project_id}/proposal`)
+    this.axios.get(`/project/${this.project.id}/proposal`)
     .then(({data: result}) => {
       this.proposals = result.data;
     })

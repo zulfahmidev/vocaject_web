@@ -7,22 +7,29 @@
     <div class="p-3">
       <div class="my-2">
         <div class="text-xs text-primary mb-1" >Judul Proyek:</div>
-        <input type="text" v-model="form.title" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="title" name="title">
+        <input type="text" v-model="form.title" class="py-2 outline-none px-3 border w-full rounded focus:border-primary" placeholder="title" name="title">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.title" :key="i">{{ v }}</div>
       </div>
       <div class="my-2">
         <div class="text-xs text-primary mb-1" >Deskripsi:</div>
-        <textarea v-model="form.description" class="py-2 h-fit outline-none px-3 border-2 w-full rounded focus:border-primary mt-1 resize-none" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'" placeholder="deskripsi" name="description"></textarea>
+        <textarea v-model="form.description" class="py-2 h-fit outline-none px-3 border w-full rounded focus:border-primary mt-1 resize-none" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'" placeholder="deskripsi" name="description"></textarea>
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.description" :key="i">{{ v }}</div>
       </div>
-      <div class="my-2">
-        <div class="text-xs text-primary mb-1" >Anggaran:</div>
-        <input type="number" v-model="form.budget" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" placeholder="Anggaran" name="budget">
-        <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.budget" :key="i">{{ v }}</div>
+      <div class="my-2 grid grid-cols-2 gap-2">
+        <div class="">
+          <div class="text-xs text-primary mb-1" >Anggaran:</div>
+          <input type="number" v-model="form.budget" class="py-2 outline-none px-3 border w-full rounded focus:border-primary" placeholder="Anggaran" name="budget">
+          <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.budget" :key="i">{{ v }}</div>
+        </div>
+        <div class="">
+          <div class="text-xs text-primary mb-1" >Total Saat Pembayaran (Tax 5%):</div>
+          <input type="text" disabled class="py-2 px-3 border rounded w-full" v-model="getTotal">
+        </div>
       </div>
+      
       <div class="my-2">
         <div class="text-xs text-primary mb-1" >Kategori:</div>
-        <select class="p-2 outline-none bg-white px-3 border-2 w-full rounded focus:border-primary" v-model="form.category_id">
+        <select class="p-2 outline-none bg-white px-3 border w-full rounded focus:border-primary" v-model="form.category_id">
           <option value="-1">Pilih Kategori</option>
           <option v-for="(v, i) in categories" :key="i" :value="v.id" class="capitalize" >{{ v.name }}</option>
         </select>
@@ -30,12 +37,12 @@
       </div>
       <div class="my-2">
         <div class="text-xs text-primary mb-1" >Tanggal Tutup Pengajuan:</div>
-        <input type="date" v-model="form.expired_at" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" name="expired_at">
+        <input type="date" v-model="form.expired_at" class="py-2 outline-none px-3 border w-full rounded focus:border-primary" name="expired_at">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.expired_at" :key="i">{{ v }}</div>
       </div>
       <div class="my-2">
         <div class="text-xs text-primary mb-1" >Tanggal Deadline:</div>
-        <input type="date" v-model="form.deadline_at" class="py-2 outline-none px-3 border-2 w-full rounded focus:border-primary" name="deadline_at">
+        <input type="date" v-model="form.deadline_at" class="py-2 outline-none px-3 border w-full rounded focus:border-primary" name="deadline_at">
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.deadline_at" :key="i">{{ v }}</div>
       </div>
       <button class="py-2 outline-none px-3 block text-center bg-primary hover:bg-secondary w-full text-white rounded" @click="create">
@@ -72,6 +79,11 @@ export default {
       },
       loading: false,
       categories: []
+    }
+  },
+  computed: {
+    getTotal() {
+      return this.form.budget + (this.form.budget * 0.05);
     }
   },
   methods: {
