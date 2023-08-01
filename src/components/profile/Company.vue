@@ -15,6 +15,10 @@
         <div class="flex flex-col justify-center text-center m-auto lg:text-left lg:m-0">
           <div class="text-xl font-bold text-primary capitalize">{{user?.name}}</div>
           <div class="mb-2 text-sm capitalize">{{ getRole(user?.role) }}</div>
+          <div class="mb-3 text-sm" v-if="getUser?.id == user.id">
+            <i class="fa fa-money-bill-wave"></i>
+            {{ curFormat(user?.balance) }}
+          </div>
           <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showContact = true">Lihat kontak</div>
         </div>
       </div>
@@ -195,7 +199,7 @@ export default {
     getDate(submited_at) {
       let date = new Date(submited_at);
       let months = ['jan', 'feb', 'mar', 'apr', 'mei', "jun", 'jul', 'sept', 'okt', 'nov', 'des'];
-      return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+      return `${date.getDate()} ${months[date.getMonth()-1]} ${date.getFullYear()}`;
     },
   },
   mounted() {

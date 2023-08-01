@@ -10,7 +10,13 @@
         </router-link>
         <div class="relative inline-block text-left" v-if="isLogged">
           <div class="flex items-center gap-4 cursor-pointer" @click="showProfileMenu = !showProfileMenu">
-            <div class="capitalize hidden lg:block">{{ user?.name }}</div>
+            <div class="text-right">
+              <div class="capitalize hidden lg:block">{{ user?.name }}</div>
+              <div class="text-xs">
+                <i class="fa fa-money-bill-wave"></i>
+                {{ curFormat(user?.balance) }}
+              </div>
+            </div>
             <div class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden border">
               <img :src="user?.picture" alt="" class="w-full">
             </div>
@@ -20,7 +26,7 @@
               <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
               <div class="text-gray-700 block border-b px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">
                 <div class="text-primary font-bold text-base capitalize">{{ user?.name }}</div>
-                <div class="text-slate-500 capitalize">{{ user?.role }}</div>
+                <div class="text-slate-500 capitalize">{{ getRole(user?.role) }}</div>
               </div>
               <router-link :to="{name: 'Profile', params: {id: user?.id}}" class="text-gray-400 hover:bg-slate-50 px-4 flex items-center py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1" @click="showProfileMenu=false">
                 <i class="fa fa-user fa-fw"></i> 
@@ -58,13 +64,29 @@ export default {
     }
   },
   methods: {
+    curFormat(number) {
+      let n = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      })
+      return n.format(number);
+    },
     logout() {
       this.axios.post('/auth/logout')
       .then(() => {
         this.showProfileMenu = false;
         this.$store.commit('setLogout');
       })
-    }
+    },
+    getRole(role) {
+      let roles = {
+        company: 'Perusahaan',
+        college: 'Kampus',
+        lecture: 'Dosen',
+        student: 'Mahasiswa',
+      }
+      return roles[role];
+    },
   },
   mounted() {
   }

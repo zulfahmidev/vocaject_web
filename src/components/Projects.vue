@@ -65,7 +65,7 @@ export default {
     getDate(submited_at) {
       let date = new Date(submited_at);
       let months = ['jan', 'feb', 'mar', 'apr', 'mei', "jun", 'jul', 'sept', 'okt', 'nov', 'des'];
-      return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+      return `${date.getDate()} ${months[date.getMonth()-1]} ${date.getFullYear()}`;
     }
   },
   mounted() {
