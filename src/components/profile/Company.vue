@@ -9,33 +9,60 @@
       <div class="lg:flex gap-4">
         <div class="bg-white rounded w-fit m-auto mb-2 lg:m-0">
           <div class="w-36 h-36 bg-slate-100 rounded overflow-hidden border">
-            <img :src="user.picture" :alt="user.name" class="w-full">
+            <img :src="user?.picture" :alt="user?.name" class="w-full">
           </div>
         </div>
         <div class="flex flex-col justify-center text-center m-auto lg:text-left lg:m-0">
           <div class="text-xl font-bold text-primary capitalize">{{user?.name}}</div>
           <div class="mb-2 text-sm capitalize">{{ getRole(user?.role) }}</div>
-          <div class="mb-3 text-sm" v-if="getUser?.id == user.id">
+          <div class="mb-3 text-sm" v-if="$store.state.user?.id == user?.id">
             <i class="fa fa-money-bill-wave"></i>
             {{ curFormat(user?.balance) }}
           </div>
-          <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showContact = true">Lihat kontak</div>
+          <div class="flex gap-2">
+            <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showTopUp = true" v-if="$store.state.user?.id == user?.id">Isi Saldo</div>
+            <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showContact = true">Lihat kontak</div>
+          </div>
         </div>
       </div>
       <div class="text-sm mt-3 font-bold">Deskripsi:</div>
-      <div class="text-xs mt-2 text-justify">{{ user.description }}</div>
+      <div class="text-xs mt-2 text-justify">{{ user?.description }}</div>
     </div>
   </div>
 
-  <router-link :to="{name: 'CreateProject'}" class="block lg:hidden mt-4 bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center" v-if="$store.state.user?.id == user.id">
+  <router-link :to="{name: 'CreateProject'}" class="block lg:hidden mt-4 bg-primary text-white hover:bg-secondary p-3 shadow rounded text-center" v-if="$store.state.user?.id == user?.id">
     Buat Proyek Baru
   </router-link>
+
+  <!-- Top Up -->
+  <div class="z-10 fixed px-2 left-0 top-0 bg-black/25 backdrop-blur-sm w-full h-full" v-if="showTopUp">
+    <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 100%;">
+      <div class="px-5 py-3 border-b flex justify-between items-center">
+        <div class="text-xl capitalize">Top Up Saldo</div>
+        <div class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded-full cursor-pointer" @click="showTopUp = false">
+          <i class="fa fa-times"></i>
+        </div>
+      </div>
+      <div class="p-5">
+        <div class="mb-2">
+          <div class="text-sm">Jumlah:</div>
+          <input type="number" v-model="topup_form.amount" class="py-2 px-3 border rounded outline-none w-full" placeholder="jumlah">
+          <div class="text-xs text-red-600 mt-1" v-for="(v, i) in topup_errors.amount" :key="i">{{ v }}</div>
+          <div class="text-xs text-red-600 mt-1" v-if="topup_form.amount < 10000">Minimum pengisian adalah Rp, 10.000.</div>
+        </div>
+        <button @click="topup" class="py-2 px-3 w-full bg-primary hover:bg-secondary outline-none text-white">
+          <div v-if="!topup_loading">Top Up</div>
+          <Loading height="6" v-if="topup_loading" />
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Projects -->
   <div class="py-5">
     <div class="flex items-center justify-between mb-2">
       <div class="text-sm font-bold">Proyek Terbuka:</div>
-      <select class="text-xs bg-white px-2 py-1 rounded outline-none" v-model="status" @change="getProjects" v-if="$store.state.user?.id == user.id">
+      <select class="text-xs bg-white px-2 py-1 rounded outline-none" v-model="status" @change="getProjects" v-if="$store.state.user?.id == user?.id">
         <option value="">Semua</option>
         <option value="opened">Buka</option>
         <option value="closed">Tutup</option>
@@ -83,7 +110,7 @@
   <div class="z-10 fixed left-0 top-0 bg-black/25 backdrop-blur-sm min-w-full min-h-full" v-if="showContact">
     <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 26rem;">
       <div class="px-5 py-3 border-b flex justify-between items-center">
-        <div class="text-xl capitalize">{{ user.name }}</div>
+        <div class="text-xl capitalize">{{ user?.name }}</div>
         <div class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded-full cursor-pointer" @click="showContact = false">
           <i class="fa fa-times"></i>
         </div>
@@ -96,7 +123,7 @@
           </div>
           <div class="text-sm">
             <div class="font-bold">Email:</div>
-            <div class="">{{user.email}}</div>
+            <div class="">{{user?.email}}</div>
           </div>
         </div>
         <div class="flex mb-2">
@@ -105,7 +132,7 @@
           </div>
           <div class="text-sm">
             <div class="font-bold">Telepon:</div>
-            <div class="">{{user.phone}}</div>
+            <div class="">{{user?.phone}}</div>
           </div>
         </div>
         <div class="flex mb-2">
@@ -114,7 +141,7 @@
           </div>
           <div class="text-sm">
             <div class="font-bold">Alamat:</div>
-            <div class="capitalize">{{user.address}}</div>
+            <div class="capitalize">{{user?.address}}</div>
           </div>
         </div>
       </div>
@@ -131,19 +158,29 @@ import { watchEffect } from 'vue';
 
 export default {
   props: {
-    user: Object,
+    _user: Object,
   },
   data() {
     return {
+      user: null,
       projects: [],
       loading: false,
       showContact: false,
+      showTopUp: false,
       project: {
         offset: 0,
         take: 2,
       },
       projectLoading: false,
       status: '',
+      topup_form: {
+        amount: 0,
+      },
+      topup_errors: {
+        amount: []
+      },
+      topup_error: '',
+      topup_loading: '',
     }
   },
   compute: {
@@ -161,9 +198,44 @@ export default {
       }
       return roles[role];
     },
+    topup() {
+      if (this.topup_form.amount >= 10000) {
+        this.topup_loading = true;
+        this.axios.post('/user/balance', this.topup_form)
+        .then(({data: result}) => {
+          this.topup_loading = false;
+          Swal.fire({
+            title: 'Berhasil!',
+            text: `Anda berhasil menambahkan saldo sebanyak ${this.curFormat(this.topup_form.amount)}.`,
+            icon: 'success',
+            confirmButtonColor: '#20889C',
+          }).then(() => {
+            this.initUser(result.data);
+            this.showTopUp = false;
+          })
+        })
+        .catch(({response}) => {
+          this.topup_loading = false;
+          this.topup_error = response?.data?.message
+          this.topup_errors = {
+            amount: [],
+          }
+          if (response?.status == 400) {
+            for (const key in response?.data?.data) {
+              const v = response?.data?.data[key];
+              this.errors[key] = v;
+            }
+          }
+        })
+      }
+    },
+    initUser(data = null) {
+      this.user = data;
+      this.$store.commit('updateUser', data);
+    },
     getProjects() {
       this.projectLoading = true;
-      let id = this.user.id;
+      let id = this.user?.id;
       this.axios.get(`/project?company_id=${id}&status=${this.status}&offset=${this.project.offset}&take=${this.project.take}`)
       .then(({data: result}) => {
         this.projectLoading = false;
@@ -173,7 +245,7 @@ export default {
     loadMoreProject() {
       this.projectLoading = true;
       this.project.offset++;
-      let id = this.user.id;
+      let id = this.user?.id;
       this.axios.request({
         method: 'GET',
         url: '/project',
@@ -203,6 +275,7 @@ export default {
     },
   },
   mounted() {
+    this.user = this.$props._user;
     watchEffect(() => {
       if (this.$store.state.user?.id != this.user?.id) {
         this.status = 'opened';

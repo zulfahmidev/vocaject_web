@@ -9,7 +9,7 @@
       <div class="lg:flex gap-4">
         <div class="bg-white rounded w-fit m-auto mb-2 lg:m-0">
           <div class="w-36 h-36 bg-slate-100 rounded overflow-hidden border">
-            <img :src="user.picture" :alt="user.name" class="w-full">
+            <img :src="user?.picture" :alt="user?.name" class="w-full">
           </div>
         </div>
         <div class="flex flex-col justify-center text-center m-auto lg:text-left lg:m-0">
@@ -17,7 +17,7 @@
           <div class="text-sm capitalize">{{ getRole(user?.role) }}</div>
           <div class="text-xs mb-2">
             from 
-            <router-link class="text-primary capitalize font-bold hover:underline" :to="{name: 'Profile', params: {id: user.college.id}}">{{user.college.name}}.</router-link>
+            <router-link class="text-primary capitalize font-bold hover:underline" :to="{name: 'Profile', params: {id: user?.college.id}}">{{user?.college.name}}.</router-link>
           </div>
           <div class="text-xs p-2 bg-primary rounded text-white hover:bg-secondary cursor-pointer w-fit m-auto lg:m-0" @click="showContact = true">Lihat kontak</div>
         </div>
@@ -29,7 +29,7 @@
   <div class="z-10 fixed left-0 top-0 bg-black/25 backdrop-blur-sm min-w-full min-h-full" v-if="showContact">
     <div class="bg-white rounded shadow m-auto mt-6" style="max-width: 26rem; width: 26rem;">
       <div class="px-5 py-3 border-b flex justify-between items-center">
-        <div class="text-xl capitalize">{{ user.name }}</div>
+        <div class="text-xl capitalize">{{ user?.name }}</div>
         <div class="w-8 h-8 hover:bg-slate-100 flex items-center justify-center rounded-full cursor-pointer" @click="showContact = false">
           <i class="fa fa-times"></i>
         </div>
@@ -42,7 +42,7 @@
           </div>
           <div class="text-sm">
             <div class="font-bold">Email:</div>
-            <div class="">{{user.email}}</div>
+            <div class="">{{user?.email}}</div>
           </div>
         </div>
         <div class="flex mb-2">
@@ -51,7 +51,7 @@
           </div>
           <div class="text-sm">
             <div class="font-bold">Telepon:</div>
-            <div class="">{{user.phone}}</div>
+            <div class="">{{user?.phone}}</div>
           </div>
         </div>
         <div class="flex mb-2">
@@ -60,7 +60,7 @@
           </div>
           <div class="text-sm">
             <div class="font-bold">Alamat:</div>
-            <div class="capitalize">{{user.address}}</div>
+            <div class="capitalize">{{user?.address}}</div>
           </div>
         </div>
       </div>
@@ -75,10 +75,11 @@ import Loading from '../../components/Loading.vue';
 <script>
 export default {
   props: {
-    user: Object,
+    _user: Object,
   },
   data() {
     return {
+      user: null,
       projects: [],
       loading: false,
       showContact: false,
@@ -96,7 +97,7 @@ export default {
     },
     getProjects() {
       this.loading = true;
-      let id = this.user.id;
+      let id = this.user?.id;
       this.axios.get(`/project?company_id=${id}&status=opened`)
       .then(({data: result}) => {
         this.loading = false;
@@ -117,6 +118,7 @@ export default {
     },
   },
   mounted() {
+    this.user = this.$props._user;
     this.getProjects();
   }
 }

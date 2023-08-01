@@ -9,10 +9,10 @@
           <Loading height="6" />
         </div>
         <img src="/ills/page_not_found.svg" alt="page not found" v-if="notFound && !loading" class="w-96 m-auto mt-16">
-        <CompanyProfile :user="user" v-if="!loading && user?.role == 'company'" />
-        <CollegeProfile :user="user" v-if="!loading && user?.role == 'college'" />
-        <StudentProfile :user="user" v-if="!loading && user?.role == 'student'" />
-        <LectureProfile :user="user" v-if="!loading && user?.role == 'lecture'" />
+        <CompanyProfile :_user="user" v-if="!loading && user?.role == 'company'" />
+        <CollegeProfile2 :_user="user" v-if="!loading && user?.role == 'college'" />
+        <StudentProfile :_user="user" v-if="!loading && user?.role == 'student'" />
+        <LectureProfile :_user="user" v-if="!loading && user?.role == 'lecture'" />
       </div>
       <div class="relative hidden lg:block">
         <MyProject class="sticky top-16" v-if="getLogged" />
@@ -24,7 +24,7 @@
 <script setup>
 import MyProject from '../components/MyProject.vue';
 import CompanyProfile from '../components/profile/Company.vue';
-import CollegeProfile from '../components/profile/College.vue';
+import CollegeProfile2 from '../components/profile/College2.vue';
 import StudentProfile from '../components/profile/Student.vue';
 import LectureProfile from '../components/profile/Lecture.vue';
 import Loading from '../components/Loading.vue';
