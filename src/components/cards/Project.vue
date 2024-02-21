@@ -29,7 +29,7 @@
   </router-link>
 </template>
 
-<script lang="js">
+<script lang="ts">
 export default {
   props: {
     data: Object,
