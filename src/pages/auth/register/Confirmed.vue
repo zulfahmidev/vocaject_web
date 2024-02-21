@@ -1,8 +1,5 @@
 <template>
-  <div class="w-full p-10 bg-white m-auto mt-16 rounded shadow text-center" style="max-width: 26rem;">
-    <div class="w-28 h-28 rounded-full bg-slate-100 m-auto flex items-center justify-center">
-      <img src="/logo.png" alt="logo" class="h-16 m-auto">
-    </div>
+  <div>
     <div class="my-3">
       <div class="text-xl">
         Selamat datang di <b>Vocaject!</b>

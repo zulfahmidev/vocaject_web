@@ -1,8 +1,5 @@
 <template>
-  <div class="w-full p-10 bg-white m-auto mt-16 rounded shadow text-center" style="max-width: 26rem;">
-    <div class="w-28 h-28 rounded-full bg-slate-100 m-auto flex items-center justify-center">
-      <img src="/logo.png" alt="logo" class="h-16 m-auto">
-    </div>
+  <div>
     <div class="my-3">
       <div class="text-xl">
         Selamat datang kembali!
@@ -27,7 +24,7 @@
         </div>
         <div class="text-red-900 text-xs my-1" v-for="(v, i) in errors.password" :key="i">{{ v }}</div>
       </div>
-      <router-link :to="{name: 'ForgotPassword'}" class="text-sm hover:underline">
+      <router-link :to="{name: 'forgot-password'}" class="text-sm hover:underline">
         Lupa password?
       </router-link>
       <button class="py-2 px-3 my-2 bg-primary hover:bg-secondary w-full text-white rounded" @click="login">
@@ -37,13 +34,14 @@
     </div>
     <div class="my-2">
       Belum punya akun?
-      <router-link :to="{name:'Role'}" class="text-sm text-primary hover:underline">Register!</router-link>
+      <router-link :to="{name:'role'}" class="text-sm text-primary hover:underline">Register!</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import Loading from '../../components/Loading.vue';
+import Loading from '../../components/utils/Loading.vue';
+import { watch } from 'vue'
 </script>
 
 <script>
@@ -88,7 +86,8 @@ export default {
 
         this.$store.commit('setLogged', result.data.user)
         this.loading = false;
-        this.$router.replace({name: 'Home'});
+        // console.log(this.$router.replace({name: 'profile'}))
+        this.$router.replace({name: 'profile'})
       })
       .catch(({response}) => {
         this.loading = false;
@@ -107,9 +106,12 @@ export default {
     }
   },
   mounted() {
-    if (this.$store.state.logged) {
-      this.$router.replace({name: 'Home'});
-    }
+    // watch(this.$store.state.logged, () => {
+    //   console.log(this.$store.state.logged)
+    //   if (this.$store.state.logged) {
+    //     this.$router.replace({name: 'profile'});
+    //   }
+    // })
   }
 }
 </script>

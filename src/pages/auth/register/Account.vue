@@ -1,8 +1,5 @@
 <template>
-  <div class="w-full p-10 bg-white m-auto mt-16 rounded shadow text-center" style="max-width: 26rem;">
-    <div class="w-28 h-28 rounded-full bg-slate-100 m-auto flex items-center justify-center">
-      <img src="/logo.png" alt="logo" class="h-16 m-auto">
-    </div>
+  <div>
     <div class="my-3">
       <div class="text-xl">
         Selamat datang di <b>Vocaject!</b>
@@ -54,13 +51,13 @@
     </div>
     <div class="my-2">
       Sudah punya akun?
-      <router-link :to="{name: 'Login'}" class="text-sm text-primary hover:underline">Login!</router-link>
+      <router-link :to="{name: 'login'}" class="text-sm text-primary hover:underline">Login!</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import Loading from '../../../components/Loading.vue';
+import Loading from '../../../components/utils/Loading.vue';
 </script>
 
 <script>
@@ -72,6 +69,7 @@ export default {
       form: {
         name: '',
         description: '',
+        uang: 1000,
         address: '',
         phone: '',
         email: '',

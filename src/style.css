@@ -2,9 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); */
+
+/* body {
+  font-family: Poppins !important;
+} */
+
 @layer components {
-  .hover-comp {
-    @apply hover:bg-light border border-white hover:border-primary/30;
+  .button-hover {
+    @apply border border-transparent hover:border-primary hover:bg-light/50 active:bg-light cursor-pointer;
   }
-  /* ... */
+  .button-active {
+    @apply border border-primary bg-light;
+  }
+  .router-link-active {
+    @apply border border-primary bg-light;
+  }
+  .badge-xs {
+    @apply border rounded-xl;
+    font-size: 8px;
+    padding: 2px 6px;
+  }
 }
