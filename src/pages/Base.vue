@@ -8,14 +8,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Navbar from '../components/base/Navbar.vue';
 import Sidebar from '../components/base/Sidebar.vue';
 import {watchEffect} from 'vue';
 
 </script>
 
-<script>
+<script lang="ts">
 export default {
   methods: {
     checkLogged() {

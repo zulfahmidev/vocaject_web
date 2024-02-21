@@ -39,12 +39,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Loading from '../../components/utils/Loading.vue';
 import { watch } from 'vue'
 </script>
 
-<script>
+<script lang="ts">
 
 export default {
   data() {
