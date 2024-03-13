@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-50 text-slate-900">
+  <div class="bg-slate-50 text-slate-900 min-h-screen">
     <Navbar />
     <section class="container mx-auto my-4 grid grid-cols-4 gap-4">
       <Sidebar />
@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import Navbar from '../components/base/Navbar.vue';
 import Sidebar from '../components/base/Sidebar.vue';
-import {watchEffect} from 'vue';
 
 </script>
 

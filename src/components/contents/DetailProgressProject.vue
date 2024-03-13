@@ -6,6 +6,7 @@
     </div>
 
     <div class="grid grid-cols-3 gap-3" v-if="!loading">
+      
 
       <!-- Detail Project -->
       <div class="col-span-2">
@@ -63,12 +64,12 @@
         <!-- Features -->
         <div v-if="data?.status != 'opened'">
           <div class="grid grid-cols-2 gap-3 mt-3">
-            <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3">
+            <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3" @click="selectedTab = 0">
               <i class="fa fa-fw fa-bullseye text-primary"></i>
               <div class="border-r h-6 border-slate-300"></div>
               <span>Target Proyek</span>
             </div>
-            <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3">
+            <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3" @click="selectedTab = 1">
               <i class="fa fa-fw fa-file text-primary"></i>
               <div class="border-r h-6 border-slate-300"></div>
               <span>Logbook Mahasiswa</span>
@@ -76,241 +77,14 @@
           </div>
   
           <!-- Tab Target Project -->
-          <div class="mt-3 bg-white rounded shadow hidden">
-            <div class="py-3 px-5 border-b border-slate-300">
-              Target Proyek
-            </div>
-            <div class="py-3 px-5">
-              <div class="flex gap-3 mt-3">
-                <div class="text-xl">
-                  <i class="far fa-check-square"></i>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam voluptatum voluptate
-                  officia cum aspernatur pariatur iste. Voluptatum, voluptatibus magnam.</p>
-              </div>
-              <div class="flex gap-3 mt-3">
-                <div class="text-xl">
-                  <i class="far fa-square"></i>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam voluptatum voluptate
-                  officia cum aspernatur pariatur iste. Voluptatum, voluptatibus magnam.</p>
-              </div>
-              <div class="flex gap-3 mt-3">
-                <div class="text-xl">
-                  <i class="far fa-check-square"></i>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quibusdam voluptatum voluptate
-                  officia cum aspernatur pariatur iste. Voluptatum, voluptatibus magnam.</p>
-              </div>
-            </div>
-          </div>
+          <Target v-if="selectedTab === 0" />
   
           <!-- Tab Logbook -->
-          <div class="mt-3 bg-white rounded shadow hidden">
-            <div class="py-3 px-5 border-b border-slate-300">
-              Logbook Mahasiswa
-            </div>
-          </div>
-  
-          <div class="grid grid-cols-3 gap-3 mt-3">
-  
-            <!-- Senders -->
-            <div class="col-span-1">
-              <div class="bg-white shadow rounded flex gap-3 items-center p-2 button-hover mb-2">
-                <div class="">
-                  <div class="w-8 h-8 rounded-full bg-slate-300"></div>
-                </div>
-                <div class="text-xs">
-                  <div class="font-bold">Zulfahmi</div>
-                  <div class="text-slate-500">2020903430056</div>
-                </div>
-              </div>
-              <div class="bg-white shadow rounded flex gap-3 items-center p-2 button-hover mb-2">
-                <div class="">
-                  <div class="w-8 h-8 rounded-full bg-slate-300"></div>
-                </div>
-                <div class="text-xs">
-                  <div class="font-bold">Zulfahmi</div>
-                  <div class="text-slate-500">2020903430056</div>
-                </div>
-              </div>
-            </div>
-  
-            <!-- Proposal Detail -->
-            <div class="col-span-2">
-  
-              <!-- Profile Sender -->
-              <div class="bg-white shadow rounded p-3">
-                <div class="flex justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="">
-                      <div class="w-10 h-10 rounded-full bg-slate-300"></div>
-                    </div>
-                    <div class="text-sm">
-                      <div class="font-bold">Zulfahmi</div>
-                      <div class="text-slate-500">Politeknik Negeri Lhokseumawe</div>
-                    </div>
-                  </div>
-                  <div class="">
-                    <div
-                      class="w-6 h-6 rounded-sm active:bg-slate-200 flex items-center justify-center cursor-pointer text-slate-500 hover:text-black"
-                      onclick="switchShowModal(modalActive)">
-                      <i class="fa fa-times" style="margin-top: 2px;"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="bg-white rounded shadow p-3 mt-3">
-                <div class="font-bold">17 Desember 2023</div>
-                <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur consectetur iste voluptas labore ipsum sequi porro, reiciendis atque neque impedit.</p>
-              </div>
-  
-              <div class="bg-white rounded shadow p-3 mt-3">
-                <div class="font-bold">17 Desember 2023</div>
-                <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur consectetur iste voluptas labore ipsum sequi porro, reiciendis atque neque impedit.</p>
-              </div>
-  
-              <div class="bg-white rounded shadow p-3 mt-3">
-                <div class="font-bold">17 Desember 2023</div>
-                <p class="text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur consectetur iste voluptas labore ipsum sequi porro, reiciendis atque neque impedit.</p>
-              </div>
-  
-            </div>
-  
-  
-          </div>
+          <Logbook v-if="selectedTab === 1" />
         </div>
 
         <!-- Proposals -->
-        <div v-if="data?.status == 'opened'">
-          <div class="my-3">Proposals</div>
-          <div class="grid grid-cols-3 gap-3" v-if="proposal.proposals.length > 0 && !proposal.loadingProposals">
-  
-            <!-- Senders -->
-            <div class="col-span-1">
-              <div class="bg-white shadow rounded flex gap-3 items-center p-2 button-hover mb-2" v-for="(item, index) in proposal.proposals" :key="index">
-                <div class="">
-                  <div class="w-8 h-8 rounded-full bg-slate-300"></div>
-                </div>
-                <div class="text-xs">
-                  <div class="font-bold">Zulfahmi</div>
-                  <div class="text-slate-500">Politeknik Negeri...</div>
-                </div>
-              </div>
-            </div>
-  
-            <!-- Proposal Detail -->
-            <div class="col-span-2 bg-white shadow rounded p-3" v-if="proposal.selected && !proposal.loadingProposal">
-  
-              <!-- Profile Sender -->
-              <div class="flex justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="">
-                    <div class="w-10 h-10 rounded-full bg-slate-300"></div>
-                  </div>
-                  <div class="text-sm">
-                    <div class="font-bold">Zulfahmi</div>
-                    <div class="text-slate-500">Politeknik Negeri Lhokseumawe</div>
-                  </div>
-                </div>
-                <div class="">
-                  <div
-                    class="w-6 h-6 rounded-sm active:bg-slate-200 flex items-center justify-center cursor-pointer text-slate-500 hover:text-black"
-                    onclick="switchShowModal(modalActive)">
-                    <i class="fa fa-times" style="margin-top: 2px;"></i>
-                  </div>
-                </div>
-              </div>
-              <hr class="my-2">
-  
-              <!-- Summary -->
-              <div class="text-xs font-bold">Ringkasan:</div>
-              <p class="text-xs">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat quia odit autem aliquam nemo, laborum
-                quam delectus eveniet nisi est illum aspernatur suscipit maxime nostrum enim sit quae provident debitis.
-              </p>
-              <hr class="my-2">
-  
-              <!-- Constributors -->
-              <div class="text-xs font-bold">Anggota:</div>
-              <div class="grid grid-cols-3 mt-2 gap-2">
-  
-                <div class="col-span-1 flex items-center button-hover border border-slate-300 rounded">
-                  <div class="">
-                    <div class="w-8 h-8 flex items-center justify-center text-primary">
-                      <i class="fa fa-user"></i>
-                    </div>
-                  </div>
-                  <div class="border-r border-slate-300 h-5"></div>
-                  <div class="text-xs ml-2">Zulfahmi</div>
-                </div>
-  
-                <div class="col-span-1 flex items-center button-hover border border-slate-300 rounded">
-                  <div class="">
-                    <div class="w-8 h-8 flex items-center justify-center text-primary">
-                      <i class="fa fa-user"></i>
-                    </div>
-                  </div>
-                  <div class="border-r border-slate-300 h-5"></div>
-                  <div class="text-xs ml-2">Zulfahmi</div>
-                </div>
-  
-                <div class="col-span-1 flex items-center button-hover border border-slate-300 rounded">
-                  <div class="">
-                    <div class="w-8 h-8 flex items-center justify-center text-primary">
-                      <i class="fa fa-user"></i>
-                    </div>
-                  </div>
-                  <div class="border-r border-slate-300 h-5"></div>
-                  <div class="text-xs ml-2">Zulfahmi</div>
-                </div>
-  
-                <div class="col-span-1 flex items-center button-hover border border-slate-300 rounded">
-                  <div class="">
-                    <div class="w-8 h-8 flex items-center justify-center text-primary">
-                      <i class="fa fa-user"></i>
-                    </div>
-                  </div>
-                  <div class="border-r border-slate-300 h-5"></div>
-                  <div class="text-xs ml-2">Zulfahmi</div>
-                </div>
-              </div>
-              <hr class="my-2">
-  
-              <div class="flex justify-end gap-3">
-                <div
-                  class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer w-fit">
-                  <i class="fa fa-fw fa-paperclip"></i>
-                  <span>Lampiran</span>
-                </div>
-                <div
-                  class="p-2 text-xs border rounded border-red-400 text-red-500 hover:border-red-900 hover:text-red-900 cursor-pointer w-fit">
-                  <i class="fa fa-fw fa-times"></i>
-                  <span>Tolak</span>
-                </div>
-                <div
-                  class="p-2 text-xs border rounded border-primary text-primary hover:border-emerald-500 hover:text-emerald-500 cursor-pointer w-fit">
-                  <i class="fa fa-fw fa-check"></i>
-                  <span>Terima</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-span-2 py-5 text-center" v-if="proposal.loadingProposal">
-              <Loading height="6" />
-            </div>
-            <div class="col-span-2 py-5 text-xs text-center" v-if="!proposal.selected">
-              Proposal belum dipilih.
-            </div>
-  
-          </div>
-          <div class="py-6 text-center text-xs" v-if="proposal.proposals.length == 0 && !proposal.loadingProposals">
-            Belum ada proposal yang masuk.
-          </div>
-          <div class="py-6 text-center" v-if="proposal.loadingProposals">
-            <Loading height="6" />
-          </div>
-        </div>
+        <Proposal v-if="data?.status == 'opened' && !loading" :project_id="id" @approved="getProject" />
 
       </div>
 
@@ -322,8 +96,8 @@
             Progres Kerja
           </div>
           <div class="p-5 flex items-center justify-center">
-            <div class="w-36 h-36 rounded-full flex items-center justify-center" style="border: 2rem solid #79C7C6">
-              100%</div>
+            <!-- <div class="w-36 h-36 rounded-full flex items-center justify-center" style="border: 2rem solid #79C7C6">{{ Math.floor(data?.progress) }}</div> -->
+            <ProgressChart />
           </div>
         </div>
 
@@ -338,28 +112,31 @@
 
 <script setup lang="ts">
 import ProjectListMin from '../base/ProjectListMin.vue';
+import Proposal from '../cards/Proposal.vue';
+import Target from '../cards/Target.vue';
+import Logbook from '../cards/Logbook.vue';
+import ProgressChart from '../cards/ProgressChart.vue';
 import Loading from '../utils/Loading.vue';
 
+// import { Pie } from 'vue-chartjs'
+// import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
+// ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 </script>
 
 <script lang="ts">
+
 export default {
   props: {
     id: Number
   },
   data() {
     return {
+      // chartCtx: null,
       data: {},
       loading: false,
-      proposal: {
-        proposals: [],
-        selected: null,
-        loadingProposals: false,
-        loadingProposal: false,
-      }
+      selectedTab: 0
     }
-  },
-  computed: {
   },
   methods: {
     formatDate(date: any) {
@@ -379,7 +156,6 @@ export default {
       .then((result) => {
         this.data = result.data.data;
         this.loading = false
-        this.getProposals()
       })
     },
     getImage() {
@@ -388,17 +164,13 @@ export default {
     getColor() {
       return '#f5f5ff'
     },
-    getProposals() {
-      this.proposal.loadingProposals = true
-      this.axios.get(`/project/${this.id}/proposal`)
-      .then((result) => {
-        this.proposal.proposals = result.data.data;
-        this.proposal.loadingProposals = false
-      })
-    }
   },
   mounted() {
-      this.getProject()
+    this.getProject()
+
+    // setInterval(() => {
+    //   // console.log('a')
+    // }, 1000)
   },
 }
 </script>

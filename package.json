@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "axios": "^1.6.7",
+    "chart.js": "^4.4.2",
     "localforage": "^1.10.0",
     "vue": "^3.3.11",
     "vue-advanced-cropper": "^2.8.8",
     "vue-axios": "^3.5.2",
+    "vue-chartjs": "^5.3.0",
     "vue-pusher": "^1.1.0",
     "vue-router": "^4.2.5",
+    "vue-sweetalert2": "^5.0.5",
     "vuex": "^4.0.2",
     "vuex-persist": "^3.1.3"
   },
