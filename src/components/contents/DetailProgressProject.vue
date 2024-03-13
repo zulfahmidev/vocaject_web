@@ -63,21 +63,27 @@
 
         <!-- Features -->
         <div v-if="data?.status != 'opened'">
+
           <div class="grid grid-cols-2 gap-3 mt-3">
+
+            <!-- Feature Target Project -->
             <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3" @click="selectedTab = 0">
               <i class="fa fa-fw fa-bullseye text-primary"></i>
               <div class="border-r h-6 border-slate-300"></div>
               <span>Target Proyek</span>
             </div>
+
+            <!-- Feature Logbook -->
             <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3" @click="selectedTab = 1">
               <i class="fa fa-fw fa-file text-primary"></i>
               <div class="border-r h-6 border-slate-300"></div>
               <span>Logbook Mahasiswa</span>
             </div>
+
           </div>
   
           <!-- Tab Target Project -->
-          <Target v-if="selectedTab === 0" />
+          <Target v-if="selectedTab === 0" :id="id" />
   
           <!-- Tab Logbook -->
           <Logbook v-if="selectedTab === 1" />
@@ -96,7 +102,6 @@
             Progres Kerja
           </div>
           <div class="p-5 flex items-center justify-center">
-            <!-- <div class="w-36 h-36 rounded-full flex items-center justify-center" style="border: 2rem solid #79C7C6">{{ Math.floor(data?.progress) }}</div> -->
             <ProgressChart />
           </div>
         </div>
