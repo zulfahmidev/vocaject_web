@@ -6,7 +6,7 @@
       <div class="p-3 text-primary font-bold border-b">Diskusi Proyek</div>
 
       <!-- Contacct -->
-      <div class="grid grid-cols-3" style="height: 500px;">
+      <div class="grid grid-cols-3" style="height: 75vh;">
         <div class="col-span-1 h-full overflow-y-auto">
 
           <!-- Search Project -->
