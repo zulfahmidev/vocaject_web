@@ -67,14 +67,18 @@
           <div class="grid grid-cols-2 gap-3 mt-3">
 
             <!-- Feature Target Project -->
-            <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3" @click="selectedTab = 0">
+            <div 
+              :class="`${selectedTab==0 ? 'button-active' : 'bg-white'} rounded shadow button-hover p-3 flex items-center gap-3`" 
+              @click="selectedTab = 0">
               <i class="fa fa-fw fa-bullseye text-primary"></i>
               <div class="border-r h-6 border-slate-300"></div>
               <span>Target Proyek</span>
             </div>
 
             <!-- Feature Logbook -->
-            <div class="bg-white rounded shadow button-hover p-3 flex items-center gap-3" @click="selectedTab = 1">
+            <div 
+              :class="`${selectedTab==1 ? 'button-active' : 'bg-white'} rounded shadow button-hover p-3 flex items-center gap-3`" 
+              @click="selectedTab = 1">
               <i class="fa fa-fw fa-file text-primary"></i>
               <div class="border-r h-6 border-slate-300"></div>
               <span>Logbook Mahasiswa</span>
@@ -83,10 +87,10 @@
           </div>
   
           <!-- Tab Target Project -->
-          <Target v-if="selectedTab === 0" :id="id" />
+          <Target v-if="selectedTab === 0" :data="targets" />
   
           <!-- Tab Logbook -->
-          <Logbook v-if="selectedTab === 1" />
+          <Logbook v-if="selectedTab === 1" :project_data="data" />
         </div>
 
         <!-- Proposals -->
@@ -102,7 +106,7 @@
             Progres Kerja
           </div>
           <div class="p-5 flex items-center justify-center">
-            <ProgressChart />
+            <ProgressChart :targets="targets" :loading="loadingTarget" />
           </div>
         </div>
 
@@ -123,10 +127,6 @@ import Logbook from '../cards/Logbook.vue';
 import ProgressChart from '../cards/ProgressChart.vue';
 import Loading from '../utils/Loading.vue';
 
-// import { Pie } from 'vue-chartjs'
-// import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-
-// ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 </script>
 
 <script lang="ts">
@@ -140,7 +140,9 @@ export default {
       // chartCtx: null,
       data: {},
       loading: false,
-      selectedTab: 0
+      loadingTarget: true,
+      selectedTab: 0,
+      targets: []
     }
   },
   methods: {
@@ -169,13 +171,18 @@ export default {
     getColor() {
       return '#f5f5ff'
     },
+    getTargets() {
+      this.loadingTarget = true
+      this.axios.get(`/project/${this.id}/task`)
+      .then((result) => {
+        this.targets = result.data.data;
+        this.loadingTarget = false
+      })
+    }
   },
   mounted() {
     this.getProject()
-
-    // setInterval(() => {
-    //   // console.log('a')
-    // }, 1000)
+    this.getTargets()
   },
 }
 </script>

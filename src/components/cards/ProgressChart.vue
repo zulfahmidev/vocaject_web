@@ -1,6 +1,7 @@
 <template>
   <div class="w-60">
-    <Pie :data="data" :options="options" />
+    <p class="text-xs text-center" v-if="targets.length == 0">Belum ada target.</p>
+    <Pie :data="chartData" :options="options" v-if="targets.length != 0" />
   </div>
 </template>
 
@@ -12,24 +13,36 @@ import { Pie } from 'vue-chartjs'
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default {
-  name: 'App',
+  props: {
+    targets: Object,
+    loadingTarget: Boolean
+  },
   components: {
     Pie
   },
   data() {
     return {
-      data: {
+      checkeds: 0,
+      count: 20,
+      options: {}
+    }
+  },
+  computed: {
+    chartData() {
+      let checked = this.targets.filter((v) => {
+        return v.checked == true;
+      }).length;
+
+      let count = this.targets.length;
+
+      return {
         labels: ['Belum Selesai', 'Sudah Selesai'],
         datasets: [
           {
             backgroundColor: ['#EEEEEE', '#79C7C6'],
-            data: [40, 60]
+            data: [count - checked, checked]
           }
         ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false
       }
     }
   }
