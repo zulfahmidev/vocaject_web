@@ -140,9 +140,6 @@ export default {
       return this.proposals[this.selected];
     },
     approve(proposal: any) {
-      console.log(`project/${this.project_id}/proposal/${proposal?.id}`)
-      // this.$swal(proposal)
-      // this.loadingApprove = true
       this.axios.post(`project/${this.project_id}/proposal/${proposal?.id}`)
       .then((result) => {
         this.$swal({

@@ -126,6 +126,7 @@ import Target from '../cards/Target.vue';
 import Logbook from '../cards/Logbook.vue';
 import ProgressChart from '../cards/ProgressChart.vue';
 import Loading from '../utils/Loading.vue';
+import { watchEffect } from 'vue';
 
 </script>
 
@@ -181,8 +182,10 @@ export default {
     }
   },
   mounted() {
-    this.getProject()
-    this.getTargets()
+    watchEffect(() => {
+      this.getProject()
+      this.getTargets()
+    })
   },
 }
 </script>
