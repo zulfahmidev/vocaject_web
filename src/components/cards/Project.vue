@@ -22,7 +22,7 @@
         </div>
         <div class="text-xs">
           <i class="fa fa-fw fa-bars-progress mr-1"></i>
-          <span>50%</span>
+          <span>{{ data?.progress }}%</span>
         </div>
       </div>
     </div>
