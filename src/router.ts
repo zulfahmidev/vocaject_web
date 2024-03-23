@@ -86,7 +86,7 @@ const router = VueRouter.createRouter({
             },
             {
               path: '/base/setting/change-password',
-              name: 'change-password',
+              name: 'setting-password',
               props: true,
               components: {
                 setting: ProfileSetting
@@ -94,7 +94,7 @@ const router = VueRouter.createRouter({
             },
             {
               path: '/base/setting/preference',
-              name: 'preference',
+              name: 'setting-preference',
               props: true,
               components: {
                 setting: ProfileSetting

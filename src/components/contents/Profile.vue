@@ -17,7 +17,7 @@
               <div class="w-28 h-28 mx-5 rounded-full bg-slate-300 overflow-hidden">
                 <img :src="user?.picture" :alt="user?.name">
               </div>
-              <router-link :to="{name: 'settings'}" class="w-8 h-8 rounded-full text-slate-500 hover:text-black active:bg-slate-200 flex items-center justify-center cursor-pointer m-1">
+              <router-link :to="{name: 'setting-profile'}" class="w-8 h-8 rounded-full text-slate-500 hover:text-black active:bg-slate-200 flex items-center justify-center cursor-pointer m-1">
                 <i class="fa fa-pencil"></i>
               </router-link>
             </div>

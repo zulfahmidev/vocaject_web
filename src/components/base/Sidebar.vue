@@ -75,7 +75,7 @@ export default {
           'icon': 'comments'
         },
         {
-          'name': 'settings',
+          'name': 'setting-profile',
           'text': 'Pengaturan',
           'icon': 'cog'
         },
