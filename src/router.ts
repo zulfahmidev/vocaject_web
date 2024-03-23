@@ -23,6 +23,9 @@ import Confirmed from './pages/auth/register/Confirmed.vue';
 import Done from './pages/auth/register/Done.vue';
 import Role from './pages/auth/register/Role.vue';
 
+// Settings
+import ProfileSetting from './components/settings/Profile.vue';
+
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHashHistory(),
   routes: [
@@ -59,19 +62,53 @@ const router = VueRouter.createRouter({
           }
         },
         {
-          path: '/base/setting',
-          name: 'settings',
-          components: {
-            content: Settings
-          }
-        },
-        {
           path: '/base/project/:id/detail',
           name: 'progress-project',
           props: true,
           components: {
             content: DetailProgressProject
           }
+        },
+        {
+          path: '/base/setting',
+          name: 'settings',
+          components: {
+            content: Settings
+          },
+          children: [
+            {
+              path: '/base/setting/profile',
+              name: 'setting-profile',
+              props: true,
+              components: {
+                setting: ProfileSetting
+              }
+            },
+            {
+              path: '/base/setting/change-password',
+              name: 'change-password',
+              props: true,
+              components: {
+                setting: ProfileSetting
+              }
+            },
+            {
+              path: '/base/setting/preference',
+              name: 'preference',
+              props: true,
+              components: {
+                setting: ProfileSetting
+              }
+            },
+            {
+              path: '/base/setting/about-us',
+              name: 'about-us',
+              props: true,
+              components: {
+                setting: ProfileSetting
+              }
+            },
+          ]
         },
       ]
     }, 
