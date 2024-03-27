@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import Loading from '../../components/utils/Loading.vue';
-import { watch } from 'vue'
+
 </script>
 
 <script lang="ts">
@@ -106,13 +106,5 @@ export default {
       })
     }
   },
-  mounted() {
-    // watch(this.$store.state.logged, () => {
-    //   console.log(this.$store.state.logged)
-    //   if (this.$store.state.logged) {
-    //     this.$router.replace({name: 'profile'});
-    //   }
-    // })
-  }
 }
 </script>

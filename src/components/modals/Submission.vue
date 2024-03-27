@@ -1,7 +1,7 @@
 <template>
   <div
     class="fixed left-0 top-0 bottom-0 right-0 bg-black/50 z-20 backdrop-blur-sm flex items-center justify-center"
-    id="modal_profile">
+    v-if="isShow">
     <!-- small: w-1/3 | medium: 1/2 | large: 2/3 -->
     <div class="w-1/3 bg-white rounded overflow-hidden">
 
@@ -11,7 +11,7 @@
 
         <div
           class="w-6 h-6 rounded-sm active:bg-slate-200 flex items-center justify-center cursor-pointer text-slate-500 hover:text-black"
-          onclick="switchShowModal(modalActive)">
+          @click="close">
           <i class="fa fa-times" style="margin-top: 2px;"></i>
         </div>
       </div>
@@ -76,3 +76,22 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    isShow: Boolean,
+    type: String
+  },
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    close() {
+      this.$emit('close')
+    }
+  }
+}
+</script>

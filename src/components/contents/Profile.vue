@@ -28,19 +28,21 @@
           </div>
         </div>
 
-        <div class="mt-3 grid grid-cols-2 gap-3" v-if="user?.role == 'kampus'">
+        <div class="mt-3 grid grid-cols-2 gap-3" v-if="user?.role == 'college'">
           <div
-            class="border border-primary rounded p-3 text-center text-primary hover:bg-light cursor-pointer">
+            class="border border-primary rounded p-3 text-center text-primary hover:bg-light cursor-pointer"
+            @click="showSubmissionModal('student')">
             Pengajuan Mahasiswa
           </div>
           <div
-            class="border border-primary rounded p-3 text-center text-primary hover:bg-light cursor-pointer">
+            class="border border-primary rounded p-3 text-center text-primary hover:bg-light cursor-pointer"
+            @click="showSubmissionModal('lecture')">
             Pengajuan Dosen
           </div>
         </div>
 
         <div class="rounded bg-white shadow overflow-hidden mt-3 p-5">
-          <div v-if="user?.role == 'mahasiswa'">
+          <div v-if="user?.role == 'student'">
             <div class="font-bold">NIM</div>
             <p>2020903430056</p>
             <hr class="my-3">
@@ -60,12 +62,15 @@
       <ProjectListMin />
     </div>
 
+    <!-- Modals -->
+    <Submission :isShow="isShowSubmissionModal" :type="submissionType" @close="hideSubmissionModal" />
   </main>
 </template>
 
 <script setup lang="ts">
 import ProjectListMin from '../base/ProjectListMin.vue';
 import Loading from '../utils/Loading.vue';
+import Submission from '../modals/Submission.vue';
 
 </script>
 
@@ -75,6 +80,18 @@ export default {
     return {
       user: {},
       loading: false,
+      isShowSubmissionModal: false,
+      submissionType: '',
+    }
+  },
+  methods: {
+    showSubmissionModal(type) {
+      this.isShowSubmissionModal = true;
+      this.submissionType = type;
+    },
+    hideSubmissionModal() {
+      this.isShowSubmissionModal = false;
+      this.submissionType = '';
     }
   },
   mounted() {
