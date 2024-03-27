@@ -1,8 +1,15 @@
 <template>
-  <div class="col-span-2 border-l border-slate-300 h-full relative overflow-auto" ref="message-box">
+  <div 
+    class="col-span-2 border-l border-slate-300 h-full relative overflow-auto" 
+    ref="message-box"
+    style="
+      display: grid;
+      grid-template-rows: 4rem auto 4rem;
+      height: 75vh;
+    ">
 
     <!-- Header -->
-    <div class="bg-primary flex items-center gap-3 px-3" style="height: 10vh">
+    <div class="bg-primary flex items-center gap-3 px-3">
       <div class="">
         <div class="w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
           <img :src="contact?.picture" alt="profile picture">
@@ -15,9 +22,15 @@
     </div>
 
     <!-- Messages -->
-    <div class="pb-14 pt-3 pb-5 px-5 overflow-auto" style="height: 65vh;">
+    <div class="px-5 py-5 overflow-auto">
       
       <div class="" v-for="(item, index) in messages" :key="index">
+
+        <!-- Date Devider -->
+        <div 
+          class="w-fit py-1 px-2 bg-slate-100 text-xs my-3 rounded mx-auto"
+          v-if="dateFormat(item.created_at) != dateFormat(messages[index-1]?.created_at)"
+          >{{ dateFormat(item.created_at) }}</div>
 
         <!-- Recieved -->
         <div class="flex gap-3" v-if="item.sender != getRole()">
@@ -78,9 +91,8 @@
 
     </div>
 
-
     <!-- Input -->
-    <div class="absolute bg-light border-t border-primary bottom-0 left-0 w-full flex items-center" style="height: 10vh">
+    <div class="bg-light border-t border-primary left-0 w-full flex items-center">
       <div class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer">
         <i class="fa fa-fw fa-paperclip"></i>
       </div>
@@ -147,6 +159,11 @@ export default {
     timeFormat(date) {
       let d = new Date(date);
       return `${this.addZero(d.getHours())}:${this.addZero(d.getMinutes())}`;
+    },
+    dateFormat(date: any) {
+      let d = new Date(date);
+      let months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      return `${this.addZero(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}`
     },
     addZero(number) {
       if (number < 10) {
