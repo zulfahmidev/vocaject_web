@@ -1,7 +1,6 @@
 <template>
   <div 
-    class="col-span-2 border-l border-slate-300 h-full relative overflow-auto" 
-    ref="message-box"
+    class="col-span-2 border-l border-slate-300 h-full"
     style="
       display: grid;
       grid-template-rows: 4rem auto 4rem;
@@ -9,22 +8,36 @@
     ">
 
     <!-- Header -->
-    <div class="bg-primary flex items-center gap-3 px-3">
-      <div class="">
-        <div class="w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
-          <img :src="contact?.picture" alt="profile picture">
+    <div class="bg-primary px-3 flex items-center">
+      <div class="flex gap-3" v-if="!loadingContact">
+        <div>
+          <div class="w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
+            <img :src="contact?.picture" alt="profile picture">
+          </div>
+        </div>
+        <div class="w-full">
+          <div class="text-white font-bold capitalize">{{ contact?.name }}</div>
+          <div class="text-xs text-white capitalize">{{ contact?.college.name }}</div>
         </div>
       </div>
-      <div class="w-full">
-        <div class="text-white font-bold capitalize">{{ contact?.name }}</div>
-        <div class="text-xs text-white capitalize">{{ contact?.college.name }}</div>
+      <div class="animate-pulse flex gap-3 w-1/2 items-center" v-if="loadingContact">
+        <div>
+          <div class="w-10 h-10 bg-slate-50/50 rounded-full overflow-hidden"></div>
+        </div>
+        <div class="w-full">
+          <div class="bg-slate-50/50 h-3 rounded w-1/2"></div>
+          <div class="bg-slate-50/50 h-3 rounded w-full mt-2"></div>
+        </div>
       </div>
     </div>
 
     <!-- Messages -->
-    <div class="px-5 py-5 overflow-auto">
+    <div 
+      class="px-5 py-5 overflow-auto"
+      ref="message-box"
+    >
       
-      <div class="" v-for="(item, index) in messages" :key="index">
+      <div class="" v-for="(item, index) in messages" :key="index" v-if="!loadingMessage">
 
         <!-- Date Devider -->
         <div 
@@ -89,6 +102,30 @@
 
       </div>
 
+      <div class="animate-pulse w-full" v-if="loadingMessage">
+        <div class="w-1/4 m-auto h-4 bg-slate-300 rounded"></div>
+        <div class="mt-4 w-1/3">
+          <div class="bg-slate-300 w-full h-8 rounded"></div>
+          <div class="bg-slate-300 w-1/4 h-4 mt-1 rounded"></div>
+        </div>
+        <div class="mt-4 flex items-end flex-col m-auto mr-0 w-1/3">
+          <div class="bg-slate-300 w-full h-8 rounded"></div>
+          <div class="bg-slate-300 w-1/4 h-4 mt-1 rounded"></div>
+        </div>
+        <div class="mt-4 w-1/3">
+          <div class="bg-slate-300 w-full h-8 rounded"></div>
+          <div class="bg-slate-300 w-1/4 h-4 mt-1 rounded"></div>
+        </div>
+        <div class="mt-4 flex items-end flex-col m-auto mr-0 w-1/3">
+          <div class="bg-slate-300 w-full h-8 rounded"></div>
+          <div class="bg-slate-300 w-1/4 h-4 mt-1 rounded"></div>
+        </div>
+        <div class="w-1/4 m-auto h-4 bg-slate-300 rounded"></div>
+        <div class="mt-4 w-1/3">
+          <div class="bg-slate-300 w-full h-8 rounded"></div>
+          <div class="bg-slate-300 w-1/4 h-4 mt-1 rounded"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Input -->
@@ -127,6 +164,8 @@ export default {
       messages: [],
       contact: null,
       sendLoading: false,
+      loadingContact: false,
+      loadingMessage: false,
       message: '',
     }
   },
@@ -134,11 +173,15 @@ export default {
     async getMessages() {
       this.messages = [];
       this.message = '';
+      this.loadingMessage = true;
 
       await this.axios.get(`/project/${this.project_id}/message/${this.contact_id}`)
         .then(({ data: result }) => {
           this.messages = result.data;
-          this.scrollToBottom();
+          this.loadingMessage = false;
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 20);
         })
 
       await this.channel.bind('new-message', ({ data }) => {
@@ -172,9 +215,11 @@ export default {
       return number
     },
     getContact() {
+      this.loadingContact = true;
       this.axios.get(`/user/${this.contact_id}`)
         .then(({ data: result }) => {
           this.contact = result.data;
+          this.loadingContact = false;
         })
     },
     getData() {

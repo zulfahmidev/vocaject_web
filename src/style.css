@@ -24,3 +24,28 @@
     padding: 2px 6px;
   }
 }
+
+/* * {
+  scrollbar-width: thin;
+  scrollbar-color: #79C7C6 #f5f5ff;
+} */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #eefffb;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(121, 199, 198, .5);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(121, 199, 198, 1);
+}
