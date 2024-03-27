@@ -86,8 +86,9 @@ export default {
 
         this.$store.commit('setLogged', result.data.user)
         this.loading = false;
-        // console.log(this.$router.replace({name: 'profile'}))
         this.$router.replace({name: 'profile'})
+
+        window.location.reload()
       })
       .catch(({response}) => {
         this.loading = false;

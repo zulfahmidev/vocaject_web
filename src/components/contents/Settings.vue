@@ -28,7 +28,7 @@
             <div class="h-6 border-r border-slate-500"></div>
             <span>Tentang Aplikasi</span>
           </router-link>
-          <div class="py-2 px-3 rounded bg-slate-100 mt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-200 text-red-500">
+          <div class="py-2 px-3 rounded bg-slate-100 mt-3 flex items-center gap-3 cursor-pointer hover:bg-slate-200 text-red-500" @click="logout">
             <div class=""><i class="fa fa-fw fa-sign-out"></i></div>
             <div class="h-6 border-r border-slate-500"></div>
             <span>Keluar</span>
@@ -43,3 +43,26 @@
     </div>
   </main>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$swal.fire({
+        title: "",
+        text: "Apakah anda yakin ingin logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Logout",
+        cancelButtonText: "Batal"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.commit('setLogout')
+        }
+      });
+    }
+  },
+}
+</script>
