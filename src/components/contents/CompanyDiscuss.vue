@@ -65,7 +65,7 @@
               class="text-center text-xs py-2">Belum ada kontak masuk</div>
           </div>
 
-          <div class="text-xs text-slate-400 px-3 mt-1" v-if="!loadingProject">Belum ada pesan...</div>
+          <div class="text-xs text-slate-400 px-3 mt-1" v-if="!loadingProject && displayProjects.length == 0">Belum ada pesan...</div>
 
           <!-- Loading Project -->
           <div v-if="loadingProject" class="px-2 rounded mt-2" v-for="(item, index) in 3" :key="index">

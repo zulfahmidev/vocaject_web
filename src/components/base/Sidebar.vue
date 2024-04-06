@@ -7,12 +7,14 @@
         <div class="p-3 mx-auto text-center relative">
           <div class="absolute right-0 h-12 bg-primary top-0 left-0"></div>
           <div class="z-10 relative">
-            <div class="w-16 h-16 mx-auto bg-slate-200 rounded-full"></div>
-            <div class="font-bold mt-2">
-              Politeknik Negeri Lhokseumawe
+            <div class="w-16 h-16 mx-auto bg-slate-200 rounded-full overflow-hidden">
+              <img :src="$store.state.user.picture" :alt="`image ${$store.state.user.name}`">
             </div>
-            <div class="text-sm text-slate-500">
-              Kampus
+            <div class="font-bold mt-2 capitalize">
+              {{ $store.state.user.name }}
+            </div>
+            <div class="text-sm text-slate-500 capitalize">
+              {{ roles[$store.state.user.role] }}
             </div>
           </div>
         </div>
@@ -58,6 +60,12 @@
 export default {
   data() {
     return {
+      roles: {
+        college: 'Kampus',
+        student: 'Mahasiswa',
+        company: 'Industri',
+        lecture: 'Dosen',
+      },
       menu: [
         {
           'name': 'profile',
