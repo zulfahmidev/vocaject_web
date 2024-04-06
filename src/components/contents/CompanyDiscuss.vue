@@ -16,7 +16,7 @@
           </div>
 
           <!-- Projects -->
-          <div class="text-xs px-3 text-slate-500">Semua proyek</div>
+          <div class="text-xs px-3 text-slate-500 font-bold">Semua proyek</div>
 
           <div class="py-2 px-3" v-for="(item, index) in displayProjects" :key="index">
             <div class="border-b border-slate-300 py-1 flex justify-between items-center cursor-pointer"
@@ -64,6 +64,8 @@
             <div v-if="selected.project_id == item.id && selected.contacts.length == 0"
               class="text-center text-xs py-2">Belum ada kontak masuk</div>
           </div>
+
+          <div class="text-xs text-slate-400 px-3 mt-1" v-if="!loadingProject">Belum ada pesan...</div>
 
           <!-- Loading Project -->
           <div v-if="loadingProject" class="px-2 rounded mt-2" v-for="(item, index) in 3" :key="index">
