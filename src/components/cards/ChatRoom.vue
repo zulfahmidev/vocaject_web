@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="col-span-2 border-l border-slate-300 h-full"
+    class="col-span-2 border-l border-slate-300 h-full relative"
     style="
       display: grid;
       grid-template-rows: 4rem auto 4rem;
@@ -55,7 +55,7 @@
           </div>
 
           <!-- Recieved With File -->
-          <div class="w-2/3" v-if="item.message.type == 'file'">
+          <div class="w-2/3" v-if="item.message.type == 'document'">
             <div class="bg-slate-300 text-sm rounded w-fit flex items-center gap-2 p-2 cursor-pointer">
               <div class="">
                 <div class="w-8 h-8 rounded flex items-center justify-center text-xl">
@@ -83,17 +83,17 @@
           </div>
 
           <!-- Recieved With File -->
-          <div class="w-2/3" v-if="item.message.type == 'file'">
+          <div class="w-2/3" v-if="item.message.type == 'document'">
             <div class="bg-primary text-sm rounded w-fit flex items-center gap-2 p-2 m-auto mr-0 cursor-pointer">
-              <div class="">
+              <a href="" class="">
                 <div class="w-8 h-8 rounded flex items-center justify-center text-xl">
                   <!-- <i class="fa fa-download"></i> -->
                   <i class="fa fa-paperclip"></i>
                 </div>
-              </div>
+              </a>
               <div class="">
-                <div class="font-bold">File Lampiran.pdf</div>
-                <div class="">14 mb.</div>
+                <div class="font-bold">{{ item.message.document.origin_filename }}</div>
+                <div class="text-xs">14 mb.</div>
               </div>
             </div>
             <div class="text-xs py-1 text-end text-black">{{ timeFormat(item.created_at) }}</div>
@@ -130,18 +130,34 @@
 
     <!-- Input -->
     <div class="bg-light border-t border-primary left-0 w-full flex items-center">
-      <div class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer">
+      <div class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer" @click="selectFile">
         <i class="fa fa-fw fa-paperclip"></i>
+        <input type="file" ref="file-upload" class="hidden" @change="onSelectFile"
+        :disabled="loadingMessage">
       </div>
       <input type="text" placeholder="Ketik disini..."
         class="px-3 py-2 h-fit bg-white w-full rounded border-primary border outline-none text-sm" 
         v-model="message"
         ref="input-message"
         @keydown.enter="sendMessage"
+        :disabled="loadingMessage"
         >
-      <div class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer" @click="sendMessage">
+      <button :disabled="loadingMessage" class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer" @click="sendMessage">
         <i class="fa fa-fw fa-paper-plane" v-if="!sendLoading"></i>
         <Loading height="6" v-if="sendLoading" />
+      </button>
+    </div>
+
+    <div class="absolute top-0 left-0 w-full h-full bg-slate-50 flex items-center justify-center" v-if="selectedFile.isSelected">
+      <div class="text-center">
+        <div class="text-9xl text-slate-400">
+          <i class="fa fa-image"></i>
+        </div>
+        <div class="w-2/3 m-auto text-sm text-center break-words" ref="file-upload-name"></div>
+        <div class="flex gap-4 justify-center">
+          <button class="py-2 px-5 rounded bg-slate-400/80 text-sm text-white mt-3 hover:bg-slate-400" @click="cancelSelectFile">Batal</button>
+          <button class="py-2 px-5 rounded bg-primary/80 text-sm text-white mt-3 hover:bg-primary" @click="sendDocument">Kirim</button>
+        </div>
       </div>
     </div>
   </div>
@@ -167,9 +183,35 @@ export default {
       loadingContact: false,
       loadingMessage: false,
       message: '',
+      selectedFile: {
+        isSelected: false,
+        fileSelected: null
+      }
     }
   },
   methods: {
+    selectFile() {
+      this.$refs['file-upload'].click()
+    },
+    onSelectFile({target}) {
+      this.selectedFile.isSelected = true
+      if (target.files && target.files[0]) {
+        var data = target.files[0]
+        this.selectedFile.fileSelected = data;
+        var reader = new FileReader();
+        
+        reader.onload = (e) => {
+          this.$refs['file-upload-name'].innerHTML = data.name;
+          // $('#blah').attr('src', e.target.result).width(150).height(200);
+        };
+
+        reader.readAsDataURL(target.files[0]);
+      }
+    },
+    cancelSelectFile() {
+      this.selectedFile.isSelected = false
+      this.$refs['file-upload'].value = ''
+    },
     async getMessages() {
       this.messages = [];
       this.message = '';
@@ -216,6 +258,7 @@ export default {
     },
     getContact() {
       this.loadingContact = true;
+      this.cancelSelectFile()
       this.axios.get(`/user/${this.contact_id}`)
         .then(({ data: result }) => {
           this.contact = result.data;
@@ -245,6 +288,32 @@ export default {
           .catch(() => {
             this.sendLoading = false;
           })
+      }
+    },
+    sendDocument() {
+      if (this.selectedFile.fileSelected) {
+        this.sendLoading = true;
+        this.$refs['input-message'].disable = true;
+
+        let fd = new FormData()
+        fd.append('sender', this.getRole())
+        fd.append('file', this.selectedFile.fileSelected)
+
+        this.cancelSelectFile()
+
+        this.axios.post(`/project/${this.project_id}/message/${this.contact_id}/document`, fd)
+        .then(({ data: result }) => {
+          this.sendLoading = false;
+          this.$refs['input-message'].disable = false;
+          this.messages.push(result.data);
+          this.message = '';
+          setTimeout(() => {
+            this.scrollToBottom(true);
+          }, 20);
+        })
+        .catch(() => {
+          this.sendLoading = false;
+        })
       }
     },
     scrollToBottom(smooth = false) {
