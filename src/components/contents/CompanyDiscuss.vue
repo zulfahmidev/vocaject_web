@@ -27,9 +27,9 @@
 
             <!-- Contacts -->
             <div
-              :class="`p-2 border-slate-200 my-1 rounded flex items-center gap-3 hover:bg-slate-100 cursor-pointer ${selectedContact == contact.id ? 'bg-slate-100' : ''}`"
+              :class="`p-2 border-slate-200 my-1 rounded flex items-center gap-3 hover:bg-slate-100 cursor-pointer ${selectedContact.user_id == contact.id ? 'bg-slate-100' : ''}`"
               v-if="selected.project_id == item.id" v-for="(contact, index2) in selected.contacts" :key="index2"
-              @click="selectedContact = contact.id">
+              @click="selectContact(contact.id)">
               <div class="">
                 <div class="w-10 h-10 bg-slate-300 rounded-full overflow-hidden">
                   <img :src="contact.picture" :alt="contact.name">
@@ -80,10 +80,10 @@
         </div>
 
         <!-- Chat Room -->
-        <ChatRoom v-if="selectedContact" :project_id="selected.project_id" :contact_id="selectedContact"
+        <ChatRoom v-if="selectedContact.user_id != null" :project_id="selectedContact.project_id" :contact_id="selectedContact.user_id"
           :channel="channel" />
         <div class="col-span-2 border-l border-slate-300 h-full relative flex justify-center items-center"
-          v-if="!selectedContact" style="height: 75vh">
+          v-if="!selectedContact.user_id" style="height: 75vh">
           <span>Kontak belum dipilih</span>
         </div>
       </div>
@@ -106,7 +106,10 @@ export default {
         project_id: null,
         contacts: [],
       },
-      selectedContact: null,
+      selectedContact: {
+        user_id: null,
+        project_id: null,
+      },
       channel: null,
       loadingProject: false,
       loadingContact: false
@@ -144,6 +147,11 @@ export default {
         this.selected.project_id = null;
         this.selected.contacts = [];
       }
+    },
+    selectContact(user_id) {
+      console.log(user_id)
+      this.selectedContact.project_id = this.selected.project_id;
+      this.selectedContact.user_id = user_id;
     }
   },
   mounted() {
