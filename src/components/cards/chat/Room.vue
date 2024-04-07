@@ -164,7 +164,7 @@
 </template>
 
 <script setup lang="ts">
-import Loading from '../utils/Loading.vue';
+import Loading from '../../utils/Loading.vue';
 import { watchEffect } from 'vue';
 </script>
 
