@@ -1,6 +1,6 @@
 <template>
-  <main class="col-span-3">
-
+  <main style="height: 86vh; padding-top: 4vh">
+a
     <div class="grid grid-cols-3 gap-3">
 
       <!-- Detail Profile -->

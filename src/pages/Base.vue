@@ -1,9 +1,11 @@
 <template>
-  <div class="bg-slate-50 text-slate-900 min-h-screen">
+  <div class="bg-slate-50 text-slate-900">
     <Navbar />
-    <section class="container mx-auto my-4 grid grid-cols-4 gap-4">
+    <section class="container mx-auto grid grid-cols-4 gap-4">
       <Sidebar />
-      <router-view name="content"></router-view>
+      <div class="col-span-3" style="height: 86vh;margin-top: 4vh;">
+        <router-view name="content"></router-view>
+      </div>
     </section>
   </div>
 </template>
