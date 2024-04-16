@@ -9,13 +9,13 @@
         <option value="closed">Tutup</option>
         <option value="completed">Selesai</option>
       </select>
-      <div class="col-span-2 bg-white rounded shadow flex overflow-hidden">
+      <div :class="`col-span-${isCompany() ? '2' : '3'} bg-white rounded shadow flex overflow-hidden`">
         <input type="text" placeholder="Cari proyek..." class="w-full outline-none py-3 px-4" @input="getProjects" v-model="search">
         <div class="h-full w-10 flex items-center text-primary">
           <i class="fa fa-fw fa-search"></i>
         </div>
       </div>
-      <router-link :to="{name: 'create-project'}" class="bg-primary shadow rounded text-center p-3 text-white col-span-1">Buat Proyek</router-link>
+      <router-link v-if="isCompany()" :to="{name: 'create-project'}" class="bg-primary shadow rounded text-center p-3 text-white col-span-1">Buat Proyek</router-link>
     </div>
 
     <!-- Projects -->
@@ -58,12 +58,20 @@ export default {
     }
   },
   methods: {
+    isCompany() {
+      return ['college', 'company'].includes(this.$store.state.user.role);
+    },
     getProjects() {
       this.loading = true
-      this.axios.get(`/project?company_id=${this.$store.state.user?.id}&title=${this.search}&status=${this.status}`)
+      let getBy = `${this.$store.state.user.role}_id`
+      if (this.$store.state.user.role == 'college') {
+        getBy = `company_id`
+      }
+      this.axios.get(`/project?${getBy}=${this.$store.state.user?.id}&title=${this.search}&status=${this.status}`)
       .then((result) => {
         this.projects = result.data.data;
         this.loading = false
+        
       })
     }
   },
