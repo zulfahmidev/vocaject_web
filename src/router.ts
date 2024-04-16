@@ -70,45 +70,36 @@ const router = VueRouter.createRouter({
           }
         },
         {
-          path: '/base/setting',
-          name: 'settings',
+          path: '/base/setting/profile',
+          name: 'setting-profile',
+          props: true,
           components: {
-            content: Settings
-          },
-          children: [
-            {
-              path: '/base/setting/profile',
-              name: 'setting-profile',
-              props: true,
-              components: {
-                setting: ProfileSetting
-              }
-            },
-            {
-              path: '/base/setting/change-password',
-              name: 'setting-password',
-              props: true,
-              components: {
-                setting: ProfileSetting
-              }
-            },
-            {
-              path: '/base/setting/preference',
-              name: 'setting-preference',
-              props: true,
-              components: {
-                setting: ProfileSetting
-              }
-            },
-            {
-              path: '/base/setting/about-us',
-              name: 'about-us',
-              props: true,
-              components: {
-                setting: ProfileSetting
-              }
-            },
-          ]
+            content: ProfileSetting
+          }
+        },
+        {
+          path: '/base/setting/change-password',
+          name: 'setting-password',
+          props: true,
+          components: {
+            content: ProfileSetting
+          }
+        },
+        {
+          path: '/base/setting/preference',
+          name: 'setting-preference',
+          props: true,
+          components: {
+            content: ProfileSetting
+          }
+        },
+        {
+          path: '/base/setting/about-us',
+          name: 'about-us',
+          props: true,
+          components: {
+            content: ProfileSetting
+          }
         },
       ]
     }, 

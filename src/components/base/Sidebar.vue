@@ -12,6 +12,24 @@
       </router-link>
     </div>
 
+    <div class="mb-4">
+      <div class="capitalize text-xs text-slate-500">Lainnya</div>
+      <router-link :to="{name: 'about-us'}" :class="`${$route.name == 'about-us' ? 'button-active' : 'bg-white'} rounded shadow mb-2 cursor-pointer flex items-center button-hover`">
+        <div class="w-12 h-12 flex items-center justify-center text-primary text-xl">
+          <i :class="`fa fa-info`"></i>
+        </div>
+        <div class="h-6 border-l border-slate-300"></div>
+        <div class="px-2">Tentang Kami</div>
+      </router-link>
+      <button @click="logout" class="w-full bg-white rounded shadow mb-2 cursor-pointer flex items-center button-hover">
+        <div class="w-12 h-12 flex items-center justify-center text-red-500 text-xl">
+          <i :class="`fa fa-sign-out`"></i>
+        </div>
+        <div class="h-6 border-l border-slate-300"></div>
+        <div class="px-2">Keluar</div>
+      </button>
+    </div>
+
   </aside>
 </template>
 
@@ -26,7 +44,7 @@ export default {
         lecture: 'Dosen',
       },
       categories: [
-        'umum', 'pengaturan', 'lainnya'
+        'umum', 'pengaturan'
       ],
       menu: {
         umum: [
@@ -53,32 +71,36 @@ export default {
             'icon': 'user-cog'
           },
           {
-            'name': 'setting-profile',
+            'name': 'setting-password',
             'text': 'Ganti Password',
             'icon': 'key'
           },
           {
-            'name': 'setting-profile',
+            'name': 'setting-preference',
             'text': 'Preferensi',
             'icon': 'sun'
           },
         ],
-        lainnya: [
-          {
-            'name': 'setting-profile',
-            'text': 'Tentang Aplikasi',
-            'icon': 'info'
-          },
-          {
-            'name': 'setting-profile',
-            'text': 'Keluar',
-            'icon': 'sign-out'
-          },
-        ]
       }
     }
   },
-  mounted() {
+  methods: {
+    logout() {
+      this.$swal.fire({
+        title: "",
+        text: "Apakah anda yakin ingin logout?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Logout",
+        cancelButtonText: "Batal"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$store.commit('setLogout')
+        }
+      });
+    }
   },
 }
 </script>
