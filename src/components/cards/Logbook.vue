@@ -47,8 +47,8 @@
                 <div class="w-10 h-10 rounded-full bg-slate-300"></div>
               </div>
               <div class="text-sm">
-                <div class="font-bold">Zulfahmi</div>
-                <div class="text-slate-500">Politeknik Negeri Lhokseumawe</div>
+                <div class="font-bold capitalize">{{ getMemberSelected().name }}</div>
+                <div class="text-slate-500 capitalize">{{ getMemberSelected().college.name }}</div>
               </div>
             </div>
             <div class="">
@@ -60,6 +60,8 @@
             </div>
           </div>
         </div>
+        
+        <div class="mt-3 p-3 bg-primary/90 text-white rounded shadow text-center cursor-pointer active:bg-primary" v-if="getMemberSelected().id == $store.state.user.id" @click="isShowModalLogbook = true">Tambah Logbook</div>
 
         <div class="bg-white rounded shadow p-3 mt-3" v-for="(item, index) in logbooks" :key="index">
           <div class="font-bold">{{ dateFormat(item.submited_at) }}</div>
@@ -70,11 +72,14 @@
 
 
     </div>
+
+    <LogbookModal v-if="selectedMember != null && isShowModalLogbook" :project_id="project_data.id" :member_id="getMemberSelected().id" @onClose="isShowModalLogbook = false" @onCreated="addLogbook" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Loading from '../utils/Loading.vue';
+import LogbookModal from '../modals/Logbook.vue';
 
 </script>
 
@@ -88,6 +93,7 @@ export default {
       loading: false,
       selectedMember: null,
       logbooks: [],
+      isShowModalLogbook: false,
     }
   },
   methods: {
@@ -103,11 +109,24 @@ export default {
       this.selectedMember = index;
       this.getLogbooks(this.project_data.members[index].id)
     },
+    getMemberSelected() {
+      return this.project_data.members[this.selectedMember];
+    },
     dateFormat(date: any) {
       let d = new Date(date);
       let months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-      return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
+      return `${this.addZero(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}`
     },
+    addZero(n) {
+      if (n < 10) {
+        return `0${n}`
+      }
+      return `${n}`;
+    },
+    addLogbook(logbook) {
+      this.isShowModalLogbook = false;
+      this.logbooks.push(logbook)
+    }
   },
   mounted() {
 
