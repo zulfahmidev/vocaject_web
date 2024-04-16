@@ -3,7 +3,11 @@
 
     <div class="mb-4" v-for="(category, index) in categories" :key="index">
       <div v-if="category !== 'umum'" class="capitalize text-xs text-slate-500">{{ category }}</div>
-      <router-link :to="{name: item.name}" v-for="(item, index2) in menu[category]" :key="index2" :class="`${$route.name == item.name ? 'button-active' : 'bg-white'} rounded shadow mb-2 cursor-pointer flex items-center button-hover`">
+      <router-link 
+        :to="{name: item.name}" 
+        v-for="(item, index2) in menu[category]" 
+        :key="index2" 
+        :class="`${$route.name == item.name ? 'button-active' : 'bg-white'} rounded shadow mb-2 cursor-pointer flex items-center button-hover ${hasPermission(item.roles) ? '' : 'hidden'}`">
         <div class="w-12 h-12 flex items-center justify-center text-primary text-xl">
           <i :class="`fa fa-${item.icon}`"></i>
         </div>
@@ -51,34 +55,46 @@ export default {
           {
             'name': 'profile',
             'text': 'Profil Saya',
-            'icon': 'user'
+            'icon': 'user',
+            'roles': '*',
           },
           {
             'name': 'projects',
+            'text': 'Jelajahi Proyek',
+            'icon': 'project-diagram',
+            'roles': 'lecture',
+          },
+          {
+            'name': 'my-projects',
             'text': 'Proyek Saya',
-            'icon': 'project-diagram'
+            'icon': 'list',
+            'roles': '*',
           },
           {
             'name': 'project-discuss',
             'text': 'Diskusi Proyek',
-            'icon': 'comments'
+            'icon': 'comments',
+            'roles': 'company, college, lecture',
           },
         ],
         pengaturan: [
           {
             'name': 'setting-profile',
             'text': 'Personalisasi',
-            'icon': 'user-cog'
+            'icon': 'user-cog',
+            'roles': '*',
           },
           {
             'name': 'setting-password',
             'text': 'Ganti Password',
-            'icon': 'key'
+            'icon': 'key',
+            'roles': '*',
           },
           {
             'name': 'setting-preference',
             'text': 'Preferensi',
-            'icon': 'sun'
+            'icon': 'sun',
+            'roles': '*',
           },
         ],
       }
@@ -100,6 +116,12 @@ export default {
           this.$store.commit('setLogout')
         }
       });
+    },
+    hasPermission(perms) {
+      if (perms != '*') {
+        return perms.split(', ').includes(this.$store.state.user.role);
+      }
+      return true;
     }
   },
 }

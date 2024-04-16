@@ -54,7 +54,11 @@ export default {
   methods: {
     getProjects() {
       this.loading = true
-      this.axios.get(`/project?company_id=${this.$store.state.user?.id}&title=${this.search}&status=${this.status}`)
+      let getBy = `${this.$store.state.user.role}_id`
+      if (this.$store.state.user.role == 'college') {
+        getBy = `company_id`
+      }
+      this.axios.get(`/project?${getBy}=${this.$store.state.user?.id}&title=${this.search}&status=${this.status}`)
       .then((result) => {
         this.projects = result.data.data;
       this.loading = false

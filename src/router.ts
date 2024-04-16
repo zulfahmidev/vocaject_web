@@ -7,7 +7,7 @@ import Auth from './pages/Auth.vue';
 
 // Contents
 import Profile from './components/contents/Profile.vue';
-import Settings from './components/contents/Settings.vue';
+import ExploreProjects from './components/contents/ExploreProjects.vue';
 import Projects from './components/contents/Projects.vue';
 import ProjectDiscuss from './components/contents/ProjectDiscuss.vue';
 import DetailProgressProject from './components/contents/DetailProgressProject.vue';
@@ -57,6 +57,13 @@ const router = VueRouter.createRouter({
         {
           path: '/base/project',
           name: 'projects',
+          components: {
+            content: ExploreProjects
+          }
+        },
+        {
+          path: '/base/project/me',
+          name: 'my-projects',
           components: {
             content: Projects
           }
