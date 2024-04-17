@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-white shadow" style="height: 7vh;">
+  <nav class="bg-white shadow" style="height: 10vh;">
     <div class="container mx-auto flex justify-between items-center h-full">
 
       <!-- Logo -->

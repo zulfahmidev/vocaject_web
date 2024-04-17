@@ -1,5 +1,5 @@
 <template>
-  <aside class="col-span-1 overflow-auto" style="height: 86vh; margin-top: 4vh;">
+  <aside class="col-span-1 overflow-auto pr-2" style="height: 86vh; margin-top: 4vh;">
 
     <div class="mb-4" v-for="(category, index) in categories" :key="index">
       <div v-if="category !== 'umum'" class="capitalize text-xs text-slate-500">{{ category }}</div>

@@ -20,7 +20,7 @@
           <i class="fa fa-fw fa-calendar-alt mr-1"></i>
           <span>{{ data?.deadline_at }}</span>
         </div>
-        <div class="text-xs">
+        <div class="text-xs" v-if="!hidePercent">
           <i class="fa fa-fw fa-bars-progress mr-1"></i>
           <span>{{ data?.progress }}%</span>
         </div>
@@ -33,6 +33,7 @@
 export default {
   props: {
     data: Object,
+    hidePercent: Boolean
   },
   data() {
     return {
