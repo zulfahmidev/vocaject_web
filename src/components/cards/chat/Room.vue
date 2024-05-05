@@ -239,7 +239,8 @@ export default {
       });
     },
     getRole() {
-      return this.$store.state.user.role
+      let role = this.$store.state.user.role;
+      return role == 'college' ? 'company' : role;
     },
     timeFormat(date) {
       let d = new Date(date);

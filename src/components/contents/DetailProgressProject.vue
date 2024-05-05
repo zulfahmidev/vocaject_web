@@ -22,6 +22,13 @@
               <div class="">Kembali</div>
             </div>
             <div class="flex items-center gap-3">
+              <router-link
+                :to="{name: 'submit-proposal'}"
+                v-if="isShowButtonSubmitProposal()"
+                class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer">
+                <i class="far fa-fw fa-sticky-note"></i>
+                <span>Ajukan Proposal</span>
+              </router-link>
               <router-link :to="{name: 'project-discuss'}" class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer">
                 <i class="far fa-fw fa-message"></i>
                 <span>Diskusi</span>
@@ -94,7 +101,7 @@
         </div>
 
         <!-- Proposals -->
-        <Proposal v-if="data?.status == 'opened' && !loading" :project_id="id" @approved="getProject" />
+        <Proposal v-if="data?.status == 'opened' && !loading && data?.company.id == $store.state.user.id" :project_id="id" @approved="getProject" />
 
       </div>
 
@@ -179,6 +186,14 @@ export default {
         this.targets = result.data.data;
         this.loadingTarget = false
       })
+    },
+    isShowButtonSubmitProposal() {
+      if (this.$store.state.user.role == 'lecture') {
+        if (this.data.status == 'opened') {
+          return true;
+        }
+      }
+      return false;
     }
   },
   mounted() {

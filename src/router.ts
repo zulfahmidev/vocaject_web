@@ -11,6 +11,7 @@ import ExploreProjects from './components/contents/ExploreProjects.vue';
 import Projects from './components/contents/Projects.vue';
 import ProjectDiscuss from './components/contents/ProjectDiscuss.vue';
 import DetailProgressProject from './components/contents/DetailProgressProject.vue';
+import SubmitProposal from './components/contents/SubmitProposal.vue';
 import CreateProject from './components/contents/CreateProject.vue';
 
 // Auth Contents
@@ -74,6 +75,14 @@ const router = VueRouter.createRouter({
           props: true,
           components: {
             content: DetailProgressProject
+          }
+        },
+        {
+          path: '/base/project/:id/submit-proposal',
+          name: 'submit-proposal',
+          props: true,
+          components: {
+            content: SubmitProposal
           }
         },
         {

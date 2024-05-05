@@ -64,13 +64,24 @@
         </div>
         <hr class="my-2">
 
+        <!-- Attachments -->
+        <div class="text-xs font-bold">Lampiran:</div>
+        <div class="grid grid-cols-3 mt-2 gap-2">
+
+          <div @click="helper.downloadFile(att)" class="col-span-1 flex items-center button-hover border border-slate-300 rounded" v-for="(att, aIndex) in getProposal()?.attachments" :key="aIndex">
+            <div class="">
+              <div class="w-8 h-8 flex items-center justify-center text-primary">
+                <i class="fa fa-download"></i>
+              </div>
+            </div>
+            <div class="border-r border-slate-300 h-5"></div>
+            <div class="text-xs ml-2 truncate pr-2">{{ att?.origin_filename }}</div>
+          </div>
+
+        </div>
+        <hr class="my-2">
+
         <div class="flex justify-end gap-3">
-          <a href="http://" target="_blank" rel="noopener noreferrer"></a>
-          <a :href="att.filepath" target="_blank" rel="noopener noreferrer" v-for="(att, aIndex) in getProposal()?.attachments" :key="aIndex"
-            class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer w-fit">
-            <i class="fa fa-fw fa-paperclip"></i>
-            <span>Lampiran</span>
-          </a>
           <!-- <div
             class="p-2 text-xs border rounded border-red-400 text-red-500 hover:border-red-900 hover:text-red-900 cursor-pointer w-fit">
             <i class="fa fa-fw fa-times"></i>
@@ -106,6 +117,7 @@
 
 <script setup lang="ts">
 import Loading from '../utils/Loading.vue';
+import helper from '../../helper.ts';
 
 </script>
 
