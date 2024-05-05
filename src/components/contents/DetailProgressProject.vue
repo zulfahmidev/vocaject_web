@@ -1,5 +1,5 @@
 <template>
-  <main class="col-span-3">
+  <main class="col-span-3" id="asas">
 
     <div class="flex h-96 justify-center items-center" v-if="loading">
       <Loading height="6" />
@@ -98,7 +98,7 @@
           </div>
   
           <!-- Tab Target Project -->
-          <Target v-if="selectedTab === 0" :data="targets" />
+          <Target v-if="selectedTab === 0" :project_data="data" :data="targets" :loading="loadingTarget" />
   
           <!-- Tab Logbook -->
           <Logbook v-if="selectedTab === 1" :project_data="data" />
@@ -126,7 +126,6 @@
 
       </div>
     </div>
-
   </main>
 </template>
 
@@ -188,6 +187,7 @@ export default {
       this.axios.get(`/project/${this.id}/task`)
       .then((result) => {
         this.targets = result.data.data;
+        console.log(this.targets)
         this.loadingTarget = false
       })
     },
@@ -196,7 +196,7 @@ export default {
         return true;
       }
       return false;
-    }
+    },
   },
   mounted() {
     watchEffect(() => {
