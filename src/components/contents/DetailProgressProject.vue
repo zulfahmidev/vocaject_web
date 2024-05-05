@@ -192,10 +192,8 @@ export default {
       })
     },
     isShowButtonSubmitProposal() {
-      if (this.$store.state.user.role == 'lecture') {
-        if (this.data.status == 'opened') {
-          return true;
-        }
+      if (this.$store.state.user.role == 'lecture' && this.data.status == 'opened') {
+        return true;
       }
       return false;
     }

@@ -14,7 +14,10 @@
       </div>
     </div>
     <div class="mt-3">
-      <div class="grid grid-cols-3">
+      <div class="grid grid-cols-3 gap-3">
+        <div class="col-span-1 animate-pulse" v-for="index in 6" :key="index" v-if="loading">
+          <div class="w-full rounded bg-slate-200 h-52"></div>
+        </div>
         <div class="col-span-1" v-for="(item, index) in projects" :key="index">
           <CardProject :data="item" :hidePercent="true" />
         </div>
@@ -32,13 +35,16 @@ import CardProject from '../cards/Project.vue'
 export default {
   data() {
     return {
-      projects: []
+      projects: [],
+      loading: false,
     }
   },
   methods: {
     getProjects() {
+      this.loading = true;
       this.axios.get('/project?status=opened')
       .then(({data: res}) => {
+        this.loading = false;
         this.projects = res.data
       })
     }
