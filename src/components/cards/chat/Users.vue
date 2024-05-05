@@ -75,7 +75,7 @@ export default {
       this.users = [];
 
       this.loading = true
-      this.axios.get(`/project/${this.project_id}/message/get/contact`)
+      this.axios.get(`/project/message/get/company/contact/${this.project_id}`)
         .then(({ data: result }) => {
           this.loading = false
           this.users = result.data

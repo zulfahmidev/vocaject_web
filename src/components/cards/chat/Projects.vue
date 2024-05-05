@@ -15,7 +15,9 @@
       v-for="(item, index) in displayProjects" :key="index" @click="selectProject(item.id)">
 
       <div class="">
-        <div class="w-10 h-10 bg-slate-300 rounded-full overflow-hidden"></div>
+        <div class="w-10 h-10 bg-slate-300 rounded-full overflow-hidden">
+          <img :src="item.company.picture" :alt="item.company.name">
+        </div>
       </div>
       <div class="w-full">
         <div class="capitalize">{{ item.title }}</div>
@@ -73,7 +75,8 @@ export default {
     getProjects() {
       let id = this.$store.state.user.id;
       this.loading = true;
-      this.axios.get(`/project?company_id=${id}`)
+      let url = this.$store.state.user.role == 'lecture' ? `/project/message/get/lecture/contact/${id}` : `/project?company_id=${id}`;
+      this.axios.get(url)
         .then(({ data: result }) => {
           this.loading = false;
           this.projects = result.data

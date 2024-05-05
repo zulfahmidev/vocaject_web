@@ -29,10 +29,14 @@
                 <i class="far fa-fw fa-sticky-note"></i>
                 <span>Ajukan Proposal</span>
               </router-link>
-              <router-link :to="{name: 'project-discuss'}" class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer">
+
+              <router-link :to="{name: 'project-discuss', query: {
+                project_id: id
+              }}" class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer">
                 <i class="far fa-fw fa-message"></i>
                 <span>Diskusi</span>
               </router-link>
+
             </div>
           </div>
 

@@ -48,7 +48,12 @@ export default {
   },
   methods: {
     selectProject(project_id) {
-      this.openProject = project_id
+      if (this.$store.state.user.role == 'lecture') {
+        this.selectedProject = project_id
+        this.selectedUser = this.$store.state.user.id
+      }else {
+        this.openProject = project_id
+      }
     },
     selectUser(user_id) {
       this.selectedProject = this.openProject
@@ -56,6 +61,11 @@ export default {
     }
   },
   mounted() {
+
+    let query = this.$route.query;
+    if (query.project_id) {
+      this.selectProject(query.project_id)
+    }
 
     if (this.project_id) {
       this.openProject = this.project_id

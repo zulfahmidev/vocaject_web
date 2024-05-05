@@ -12,12 +12,12 @@
       <div class="flex gap-3" v-if="!loadingContact">
         <div>
           <div class="w-10 h-10 bg-slate-50 rounded-full overflow-hidden">
-            <img :src="contact?.picture" alt="profile picture">
+            <img :src="isProject() ? contact?.company.picture : contact?.picture" alt="profile picture">
           </div>
         </div>
         <div class="w-full">
-          <div class="text-white font-bold capitalize">{{ contact?.name }}</div>
-          <div class="text-xs text-white capitalize">{{ contact?.college.name }}</div>
+          <div class="text-white font-bold capitalize">{{ isProject() ? contact?.title : contact?.name }}</div>
+          <div class="text-xs text-white capitalize">{{ isProject() ? contact?.company.name : contact?.college.name }}</div>
         </div>
       </div>
       <div class="animate-pulse flex gap-3 w-1/2 items-center" v-if="loadingContact">
@@ -42,7 +42,7 @@
         <!-- Date Devider -->
         <div 
           class="w-fit py-1 px-2 bg-slate-100 text-xs my-3 rounded mx-auto"
-          v-if="dateFormat(item.created_at) != dateFormat(messages[index-1]?.created_at)"
+          v-if="index-1 == -1 || dateFormat(item.created_at) != dateFormat(messages[index-1]?.created_at)"
           >{{ dateFormat(item.created_at) }}</div>
 
         <!-- Recieved -->
@@ -244,7 +244,7 @@ export default {
         })
 
       await this.channel.bind('new-message', ({ data }) => {
-        if (data.project.id == this.project_id && data.lecture.id == this.contact_id) {
+        if (data.project.id == this.project_id && data.lecture.id == this.contact_id && data.lecture_id != this.$state.state.user.id) {
           if (data.sender == 'lecture') {
             data.message = JSON.parse(data.message);
             this.messages.push(data);
@@ -254,6 +254,9 @@ export default {
           }
         }
       });
+    },
+    isProject() {
+      return this.$store.state.user.role == 'lecture'
     },
     getRole() {
       let role = this.$store.state.user.role;
@@ -277,7 +280,8 @@ export default {
     getContact() {
       this.loadingContact = true;
       this.cancelSelectFile()
-      this.axios.get(`/user/${this.contact_id}`)
+      let url = this.$store.state.user.role == 'lecture' ? `/project/${this.project_id}` : `/user/${this.contact_id}`
+      this.axios.get(url)
         .then(({ data: result }) => {
           this.contact = result.data;
           this.loadingContact = false;
