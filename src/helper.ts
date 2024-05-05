@@ -2,11 +2,12 @@ import axios from "axios"
 import FileDownload from "js-file-download"
 
 export default {
-  downloadFile(data) {
+  downloadFile(data, onSuccess) {
     axios.get(`/document/view/${data.filename}`, {
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
     })
     .then(response => {
+      onSuccess();
       FileDownload(response.data, data.origin_filename)
     })
   },

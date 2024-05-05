@@ -55,16 +55,17 @@
           </div>
 
           <!-- Recieved With File -->
-          <div class="w-2/3" v-if="item.message.type == 'document'">
+          <div class="w-2/3" v-if="item.message.type == 'document'" @click="downloadFile(item.message.document)">
             <div class="bg-slate-300 text-sm rounded w-fit flex items-center gap-2 p-2 cursor-pointer">
               <div class="">
                 <div class="w-8 h-8 rounded flex items-center justify-center text-xl">
                   <!-- <i class="fa fa-download"></i> -->
-                  <i class="fa fa-paperclip"></i>
+                  <i class="fa fa-paperclip"  v-if="!isLoading(item.message.document)"></i>
+                  <Loading height="6" v-if="isLoading(item.message.document)" />
                 </div>
               </div>
               <div class="">
-                <div class="font-bold">File Lampiran.pdf</div>
+                <div class="font-bold">{{ item.message.document.origin_filename }}</div>
                 <div class="">14 mb.</div>
               </div>
             </div>
@@ -76,19 +77,20 @@
         <!-- Sender -->
         <div class="flex gap-3 justify-end text-white" v-if="item.sender == getRole()">
 
-          <!-- Recieved Without File -->
+          <!-- Sender Without File -->
           <div class="w-2/3" v-if="item.message.type == 'text'">
             <div class="bg-primary text-sm p-2 rounded m-auto mr-0 w-fit">{{ item.message.text }}</div>
             <div class="text-xs py-1 text-end text-black">{{ timeFormat(item.created_at) }}</div>
           </div>
 
-          <!-- Recieved With File -->
-          <div class="w-2/3" v-if="item.message.type == 'document'">
+          <!-- Sender With File -->
+          <div class="w-2/3" v-if="item.message.type == 'document'" @click="downloadFile(item.message.document)">
             <div class="bg-primary text-sm rounded w-fit flex items-center gap-2 p-2 m-auto mr-0 cursor-pointer">
               <a href="" class="">
                 <div class="w-8 h-8 rounded flex items-center justify-center text-xl">
                   <!-- <i class="fa fa-download"></i> -->
-                  <i class="fa fa-paperclip"></i>
+                  <i class="fa fa-paperclip"  v-if="!isLoading(item.message.document)"></i>
+                  <Loading height="6" v-if="isLoading(item.message.document)" />
                 </div>
               </a>
               <div class="">
@@ -166,6 +168,7 @@
 <script setup lang="ts">
 import Loading from '../../utils/Loading.vue';
 import { watchEffect } from 'vue';
+import helper from '../../../helper';
 </script>
 
 <script lang="ts">
@@ -186,12 +189,26 @@ export default {
       selectedFile: {
         isSelected: false,
         fileSelected: null
-      }
+      },
+      messageLoadings: []
     }
   },
   methods: {
     selectFile() {
       this.$refs['file-upload'].click()
+    },
+    downloadFile(data) {
+      if (!this.messageLoadings.includes(data.id)) {
+        this.messageLoadings.push(data.id)
+        helper.downloadFile(data, (v) => {
+          this.messageLoadings = this.messageLoadings.filter(id => {
+            return id != data.id
+          })
+        })
+      }
+    },
+    isLoading(data) {
+      return this.messageLoadings.includes(data.id)
     },
     onSelectFile({target}) {
       this.selectedFile.isSelected = true
