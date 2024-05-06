@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted() {
-
+    console.log(process.env)
     let query = this.$route.query;
     if (query.project_id) {
       this.selectProject(query.project_id)
@@ -73,7 +73,7 @@ export default {
 
     Pusher.logToConsole = true;
 
-    this.pusher = new Pusher('4d394bf66f66eef330a9', {
+    this.pusher = new Pusher('a61d757d1eba3baeb993', {
       cluster: 'ap1'
     });
 
