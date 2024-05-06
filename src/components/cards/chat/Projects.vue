@@ -23,10 +23,10 @@
         <div class="capitalize">{{ item.title }}</div>
         <div class="text-xs text-blue-500">Sedang dikerjakan</div>
       </div>
-      <div class="text-end">
+      <!-- <div class="text-end">
         <div class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">5
         </div>
-      </div>
+      </div> -->
 
     </div>
 

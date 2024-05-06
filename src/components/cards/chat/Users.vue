@@ -20,10 +20,10 @@
         <div class="capitalize">{{ user.name }}</div>
         <div class="text-xs text-slate-500 capitalize">{{ user.college.name }}</div>
       </div>
-      <div class="text-end">
+      <!-- <div class="text-end">
         <div class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-xs">5
         </div>
-      </div>
+      </div> -->
     </div>
   
     <!-- Loading Contact -->
