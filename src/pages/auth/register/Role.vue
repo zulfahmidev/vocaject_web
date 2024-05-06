@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
   mounted() {
     if (this.$store.state.logged) {

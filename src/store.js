@@ -11,15 +11,15 @@ export default createStore({
     }
   },
   mutations: {
-    setLogged(state: any, user: any) {      
+    setLogged(state, user) {      
       localStorage.setItem('logged', 'true');
       localStorage.setItem('user', JSON.stringify(user));
       axios.defaults.headers.common['Authorization'] = `Bearer ${state.access_token}`;
     },
-    updateUser(state: any, user: any) {
+    updateUser(state, user) {
       state.user = user;
     },
-    setLogout(state: any) {
+    setLogout(state) {
       state.logged = false;
       state.user = null;
       sessionStorage.clear();

@@ -7,9 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        // primary: '#20889C',
-        primary: '#79C7C6',
+        primary: '#20889C',
+        secondary: '#176878',
         light: '#E7FBFF'
+        // primary: '#79C7C6',
+        // light: '#E7FBFF'
       }
     },
     fontFamily: {
@@ -18,3 +20,4 @@ export default {
   },
   plugins: [],
 }
+

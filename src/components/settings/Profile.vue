@@ -63,13 +63,13 @@
   </div>
 </template>
 
-<script setup type="ts">
+<script setup>
 import Loading from '../utils/Loading.vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 </script>
 
-<script type="ts">
+<script>
 import { watchEffect } from 'vue';
 
 export default {

@@ -165,13 +165,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Loading from '../../utils/Loading.vue';
 import { watchEffect } from 'vue';
 import helper from '../../../helper';
 </script>
 
-<script lang="ts">
+<script>
 export default {
   props: {
     project_id: Number,
@@ -266,7 +266,7 @@ export default {
       let d = new Date(date);
       return `${this.addZero(d.getHours())}:${this.addZero(d.getMinutes())}`;
     },
-    dateFormat(date: any) {
+    dateFormat(date) {
       let d = new Date(date);
       let months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return `${this.addZero(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}`

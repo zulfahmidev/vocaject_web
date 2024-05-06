@@ -106,13 +106,13 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import ProjectListMin from '../base/ProjectListMin.vue';
 import Loading from '../utils/Loading.vue';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   data() {
     return {

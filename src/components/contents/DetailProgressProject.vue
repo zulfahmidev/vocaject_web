@@ -129,7 +129,7 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import ProjectListMin from '../base/ProjectListMin.vue';
 import Proposal from '../cards/Proposal.vue';
 import Target from '../cards/Target.vue';
@@ -140,7 +140,7 @@ import { watchEffect } from 'vue';
 
 </script>
 
-<script lang="ts">
+<script>
 
 export default {
   props: {
@@ -157,12 +157,12 @@ export default {
     }
   },
   methods: {
-    formatDate(date: any) {
+    formatDate(date) {
       let d = new Date(date);
       let months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
     },
-    formatRupiah(number: any) {
+    formatRupiah(number) {
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR"

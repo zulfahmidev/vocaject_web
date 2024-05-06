@@ -28,7 +28,7 @@ import Role from './pages/auth/register/Role.vue';
 import ProfileSetting from './components/settings/Profile.vue';
 
 const router = VueRouter.createRouter({
-  history: VueRouter.createWebHashHistory(),
+  history: VueRouter.createWebHistory(),
   routes: [
     {
       path: '/base',

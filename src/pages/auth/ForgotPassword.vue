@@ -29,11 +29,11 @@
 </template>
 
 
-<script setup lang="ts">
+<script setup>
 import Loading from '../../components/utils/Loading.vue';
 </script>
 
-<script lang="ts">
+<script>
 export default {
   data() {
     return {

@@ -77,13 +77,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Loading from '../utils/Loading.vue';
 import LogbookModal from '../modals/Logbook.vue';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   props: {
     project_data: Object
@@ -112,7 +112,7 @@ export default {
     getMemberSelected() {
       return this.project_data.members[this.selectedMember];
     },
-    dateFormat(date: any) {
+    dateFormat(date) {
       let d = new Date(date);
       let months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return `${this.addZero(d.getDate())} ${months[d.getMonth()]} ${d.getFullYear()}`

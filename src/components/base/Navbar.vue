@@ -26,7 +26,7 @@
   </nav>
 </template>
 
-<script type="ts">
+<script>
 export default {
   methods: {
     formatRupiah(number) {

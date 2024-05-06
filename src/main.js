@@ -3,17 +3,19 @@ import './style.css'
 import App from './App.vue'
 import VueAxios from 'vue-axios'
 import axios from 'axios'
-import router from './router.ts'
-import store from './store.ts'
+import router from './router.js'
+import store from './store.js'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 // axios.defaults.baseURL = 'https://mobile.vocaject.com/api'
 axios.defaults.baseURL = 'http://localhost:8000/api'
 
-createApp(App)
+let app = createApp(App)
 .use(VueSweetalert2)
-.use(store)
 .use(router)
+.use(store)
 .use(VueAxios, axios)
-.mount('#app')
+router.isReady().then(() => {
+  app.mount('#app')
+})

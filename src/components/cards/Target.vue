@@ -30,14 +30,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Loading from '../utils/Loading.vue';
 import AddTarget from '../modals/AddTarget.vue';
 import { watchEffect } from 'vue';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   props: {
     data: Object,

@@ -40,13 +40,13 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import CardProject from '../cards/Project.vue';
 import Loading from '../utils/Loading.vue';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   data() {
     return {

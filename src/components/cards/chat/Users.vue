@@ -49,12 +49,12 @@
   </div>
 </template>
 
-<script setup type=ts>
+<script setup>
 import { watchEffect } from 'vue';
 
 </script>
 
-<script type="ts">
+<script>
 
 export default {
   props: {

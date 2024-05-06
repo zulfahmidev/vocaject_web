@@ -115,13 +115,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Loading from '../utils/Loading.vue';
-import helper from '../../helper.ts';
+import helper from '../../helper';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   props: {
     project_id: Number
@@ -143,7 +143,7 @@ export default {
         this.loadingProposals = false
       })
     },
-    shortenText(text: String, max: number) {
+    shortenText(text, max) {
       let expText = text.split('');
 
       return (expText.length > max) ? expText.slice(0, max).join('') + '...' : expText.join('');
@@ -151,7 +151,7 @@ export default {
     getProposal() {
       return this.proposals[this.selected];
     },
-    approve(proposal: any) {
+    approve(proposal) {
       this.axios.post(`project/${this.project_id}/proposal/${proposal?.id}`)
       .then((result) => {
         this.$swal({

@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
   methods: {
     autoGrow(event) {

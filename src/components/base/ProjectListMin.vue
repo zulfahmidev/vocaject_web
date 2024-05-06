@@ -34,13 +34,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import ProjectMin from '../cards/ProjectMin.vue';
 import Loading from '../utils/Loading.vue';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   data() {
     return {

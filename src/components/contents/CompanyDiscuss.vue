@@ -26,14 +26,14 @@
   </main>
 </template>
 
-<script setup type="ts">
+<script setup>
 import ChatRoom from "../cards/chat/Room.vue";
 import ChatProjects from "../cards/chat/Projects.vue";
 import ChatUsers from "../cards/chat/Users.vue";
 
 </script>
 
-<script type="ts">
+<script>
 export default {
   props: {
     project_id: Number

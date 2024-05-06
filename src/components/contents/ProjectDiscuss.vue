@@ -2,7 +2,7 @@
   <CompanyDiscuss />
 </template>
 
-<script setup lang="ts">
+<script setup>
 import CompanyDiscuss from './CompanyDiscuss.vue';
 
 </script>

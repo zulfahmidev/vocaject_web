@@ -46,12 +46,12 @@
   </div>
 </template>
 
-<script setup type="ts">
+<script setup>
 // import ChatRoom from "Room.vue";
 
 </script>
 
-<script type="ts">
+<script>
 export default {
   props: {
     selectedProject: Number

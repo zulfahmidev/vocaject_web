@@ -26,12 +26,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import CardProject from '../cards/Project.vue'
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   data() {
     return {

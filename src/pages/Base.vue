@@ -10,13 +10,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Navbar from '../components/base/Navbar.vue';
 import Sidebar from '../components/base/Sidebar.vue';
 
 </script>
 
-<script lang="ts">
+<script>
 export default {
   methods: {
     checkLogged() {
