@@ -61,7 +61,6 @@ export default {
     }
   },
   mounted() {
-    console.log(process.env)
     let query = this.$route.query;
     if (query.project_id) {
       this.selectProject(query.project_id)
