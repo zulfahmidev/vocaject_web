@@ -61,10 +61,12 @@ export default {
       })
     },
     checkTarget(item, index) {
-      this.axios.post(`/project/${this.project_data.id}/task/${item.id}/switch`)
-      .then(({data: res}) => {
-        this.targets[index] = res.data
-      })
+      if (this.$store.state.user.role == 'lecture') {
+        this.axios.post(`/project/${this.project_data.id}/task/${item.id}/switch`)
+        .then(({data: res}) => {
+          this.targets[index] = res.data
+        })
+      }
     }
   },
   mounted() {
