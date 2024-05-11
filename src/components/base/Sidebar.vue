@@ -2,7 +2,7 @@
   <aside class="col-span-1 overflow-auto pr-2" style="height: 86vh; margin-top: 4vh;">
 
     <div class="mb-4" v-for="(category, index) in categories" :key="index">
-      <div v-if="category !== 'umum'" class="capitalize text-xs text-slate-500">{{ category }}</div>
+      <div v-if="category !== 'umum'" class="capitalize text-xs mb-2 text-slate-500">{{ category }}</div>
       <router-link 
         :to="{name: item.name}" 
         v-for="(item, index2) in menu[category]" 
@@ -17,7 +17,7 @@
     </div>
 
     <div class="mb-4">
-      <div class="capitalize text-xs text-slate-500">Lainnya</div>
+      <div class="capitalize text-xs text-slate-500 mb-2">Lainnya</div>
       <router-link :to="{name: 'about-us'}" :class="`${$route.name == 'about-us' ? 'button-active' : 'bg-white'} rounded shadow mb-2 cursor-pointer flex items-center button-hover`">
         <div class="w-12 h-12 flex items-center justify-center text-primary text-xl">
           <i :class="`fa fa-info`"></i>
@@ -84,18 +84,18 @@ export default {
             'icon': 'user-cog',
             'roles': '*',
           },
-          {
-            'name': 'setting-password',
-            'text': 'Ganti Password',
-            'icon': 'key',
-            'roles': '*',
-          },
-          {
-            'name': 'setting-preference',
-            'text': 'Preferensi',
-            'icon': 'sun',
-            'roles': '*',
-          },
+          // {
+          //   'name': 'setting-password',
+          //   'text': 'Ganti Password',
+          //   'icon': 'key',
+          //   'roles': '*',
+          // },
+          // {
+          //   'name': 'setting-preference',
+          //   'text': 'Preferensi',
+          //   'icon': 'sun',
+          //   'roles': '*',
+          // },
         ],
       }
     }
