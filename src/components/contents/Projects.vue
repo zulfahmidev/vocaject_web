@@ -3,14 +3,14 @@
 
     <!-- Filter -->
     <div class="grid grid-cols-4 gap-3">
-      <select class="col-span-1 bg-white shadow rounded p-3 outline-none cursor-pointer" @change="getProjects" v-model="status">
+      <select class="col-span-1 bg-white shadow rounded p-3 outline-none cursor-pointer" @change="getProjects(true)" v-model="status">
         <option value="">Semua</option>
         <option value="opened">Buka</option>
         <option value="closed">Tutup</option>
         <option value="completed">Selesai</option>
       </select>
       <div :class="`col-span-${isCompany() ? '2' : '3'} bg-white rounded shadow flex overflow-hidden`">
-        <input type="text" placeholder="Cari proyek..." class="w-full outline-none py-3 px-4" @input="getProjects" v-model="search">
+        <input type="text" placeholder="Cari proyek..." class="w-full outline-none py-3 px-4" @input="getProjects(true)" v-model="search">
         <div class="h-full w-10 flex items-center text-primary">
           <i class="fa fa-fw fa-search"></i>
         </div>
@@ -20,22 +20,22 @@
 
     <!-- Projects -->
     <div class="grid grid-cols-3 gap-3 mt-3">
-      
-      <div class="py-5 text-center col-span-3" v-if="loading">
-        <Loading height="6" />
-      </div>
 
       <div class="py-5 text-center col-span-3" v-if="!loading && projects.length == 0">
         Proyek tidak ditemukan.
       </div>
 
-      <div class="col-span-1" v-for="(item, index) in projects" :key="index" v-if="!loading">
+      <div class="col-span-1" v-for="(item, index) in projects" :key="index">
         <CardProject  :data="item" />        
+      </div>
+      
+      <div class="py-5 text-center col-span-3" v-if="loading">
+        <Loading height="6" />
       </div>
 
     </div>
 
-    <div class="text-primary hover:underline text-center my-3 cursor-pointer" v-if="!loading && projects.length > limit">Muat lebih banyak</div>
+    <div class="text-primary hover:underline text-center my-3 cursor-pointer" v-if="!loading && projects.length >= limit" @click="loadMore()">Muat lebih banyak</div>
 
   </main>
 </template>
@@ -52,7 +52,7 @@ export default {
     return {
       projects: [],
       loading: false,
-      limit: 3,
+      limit: 9,
       search: '',
       status: ''
     }
@@ -61,22 +61,29 @@ export default {
     isCompany() {
       return ['college', 'company'].includes(this.$store.state.user.role);
     },
-    getProjects() {
+    getProjects(reload=false) {
       this.loading = true
       let getBy = `${this.$store.state.user.role}_id`
       if (this.$store.state.user.role == 'college') {
         getBy = `company_id`
       }
-      this.axios.get(`/project?${getBy}=${this.$store.state.user?.id}&title=${this.search}&status=${this.status}`)
+      if (reload) {
+        this.projects = [];
+        this.limit = 9;
+      }
+      this.axios.get(`/project?${getBy}=${this.$store.state.user?.id}&title=${this.search}&status=${this.status}&take=${this.limit}&offset=${!reload ? this.limit-3 : ''}&status=${this.status}`)
       .then((result) => {
-        this.projects = result.data.data;
+        this.projects = [...this.projects, ...result.data.data];
         this.loading = false
-        
       })
+    },
+    loadMore() {
+      this.limit += 3;
+      this.getProjects()
     }
   },
   mounted() {
-      this.getProjects()
+      this.getProjects(true)
   },
 }
 </script>
