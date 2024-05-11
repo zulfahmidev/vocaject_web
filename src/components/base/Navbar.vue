@@ -14,7 +14,7 @@
             {{ $store.state.user.name }}
           </div>
           <div class="text-xs text-slate-500">
-            {{ formatRupiah($store.state.user.balance) }}
+            {{ roles[$store.state.user.role] }}
           </div>
         </div>
         <div class="h-12 w-12 bg-slate-100 rounded-full overflow-hidden">
@@ -28,6 +28,16 @@
 
 <script>
 export default {
+  data() {
+    return {
+      roles: {
+        student: 'Mahasiswa',
+        lecture: 'Dosen',
+        company: 'Industri',
+        campuss: 'Kampus',
+      }
+    }
+  },
   methods: {
     formatRupiah(number) {
       return new Intl.NumberFormat("id-ID", {
