@@ -8,18 +8,30 @@
         Silahkan pilih peran yang akan didaftarkan
       </div>
     </div>
-    <div class="flex justify-around my-8">
-      <router-link :to="{name: 'account', state: {role: 'company'}}" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded hover-comp">
+    <div class="flex flex-wrap justify-evenly gap-3 w-fit my-8">
+      <router-link :to="{name: 'account', state: {role: 'company'}}" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded button-hover">
         <div class="text-5xl text-primary py-2">
           <i class="fa fa-city fa-fw"></i>
         </div>
         <div class="text-sm">Perusahaan</div>
       </router-link>
-      <router-link :to="{name: 'account', state: {role: 'college'}}" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded hover-comp">
+      <router-link :to="{name: 'account', state: {role: 'college'}}" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded button-hover">
         <div class="text-5xl text-primary py-2">
           <i class="fa fa-school-flag fa-fw"></i>
         </div>
         <div class="text-sm">Kampus</div>
+      </router-link>
+      <router-link :to="{name: 'account', state: {role: 'college'}}" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded button-hover">
+        <div class="text-5xl text-primary py-2">
+          <i class="fa fa-user-graduate fa-fw"></i>
+        </div>
+        <div class="text-sm">Kampus</div>
+      </router-link>
+      <router-link :to="{name: 'account', state: {role: 'college'}}" class="w-32 h-32 border border-gray-200 shadow bg-white flex items-center justify-center flex-col rounded button-hover">
+        <div class="text-5xl text-primary py-2">
+          <i class="fa fa-user-tie fa-fw"></i>
+        </div>
+        <div class="text-sm">Dosen</div>
       </router-link>
     </div>
     <div class="my-2">
