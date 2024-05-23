@@ -44,7 +44,12 @@
         <div class="rounded bg-white shadow overflow-hidden mt-3 p-5">
           <div v-if="user?.role == 'student'">
             <div class="font-bold">NIM</div>
-            <p>2020903430056</p>
+            <p>{{ user.nim }}</p>
+            <hr class="my-3">
+          </div>
+          <div v-if="user?.role == 'lecture'">
+            <div class="font-bold">NIDN</div>
+            <p>{{ user.nidn }}</p>
             <hr class="my-3">
           </div>
           <div class=" font-bold">Telepon</div>
@@ -53,8 +58,10 @@
           <div class=" font-bold">Alamat</div>
           <p class="capitalize">{{ user?.address }}</p>
           <hr class="my-3">
-          <div class=" font-bold">Deskripsi</div>
-          <p>{{ user?.description }}</p>
+          <div v-if="['college', 'company'].includes(user.role)">
+            <div class=" font-bold">Deskripsi</div>
+            <p>{{ user?.description }}</p>
+          </div>
         </div>
       </div>
 

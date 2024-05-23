@@ -34,7 +34,7 @@ export default {
         student: 'Mahasiswa',
         lecture: 'Dosen',
         company: 'Industri',
-        campuss: 'Kampus',
+        college: 'Kampus',
       }
     }
   },
