@@ -4,14 +4,15 @@
 
     <!-- Search Project -->
     <div class="p-3">
-      <input type="text" placeholder="Cari proyek..." v-model="search"
+      <input type="text" placeholder="Cari proyek..." v-model="search" @input="filterProjects()"
         class="border border-slate-300 rounded w-full px-3 py-2 outline-none text-sm">
     </div>
 
     <!-- Projects -->
     <div class="text-xs px-3 mb-2 text-slate-500 font-bold">Semua proyek</div>
 
-    <div :class="`p-2 cursor-pointer ${selectedProject == item.id ? 'bg-slate-100' : ''} hover:bg-slate-100 flex gap-3 items-center`"
+    <div
+      :class="`p-2 cursor-pointer ${selectedProject == item.id ? 'bg-slate-100' : ''} hover:bg-slate-100 flex gap-3 items-center`"
       v-for="(item, index) in displayProjects" :key="index" @click="selectProject(item.id)">
 
       <div class="">
@@ -59,17 +60,20 @@ export default {
   data() {
     return {
       projects: [],
+      displayProjects: [],
       search: '',
       selected: null,
       loading: false,
     }
   },
-  computed: {
-    displayProjects() {
-      return this.projects.filter((v) => {
-        return (this.search.trim() > 0) ? v.title.includes(this.search) : true;
+  methods: {
+    filterProjects() {
+      this.displayProjects = this.projects.filter((v) => {
+        return v.title.includes(this.search.trim()) > 0;
       })
-    }
+    },
+  },
+  methods: {
   },
   methods: {
     getProjects() {
@@ -80,6 +84,7 @@ export default {
         .then(({ data: result }) => {
           this.loading = false;
           this.projects = result.data
+          this.filterProjects()
         })
     },
     selectProject(project_id) {
