@@ -1,12 +1,12 @@
 <template>
   <router-link :to="{name: 'progress-project', params: {id: data?.id}}" :class="`block rounded overflow-hidden shadow button-hover ${active ? 'button-active' : 'bg-white'}`">
     <div class="flex gap-2 items-center py-2 px-3">
-      <div class="h-20 w-20 rounded overflow-hidden bg-green-100 flex items-center justify-center">
+      <div class="h-16 w-16 rounded overflow-hidden bg-green-100 flex items-center justify-center">
         <img :src="data.company.picture" alt="category icon">
       </div>
       <div class="py-1">
         <h2 class="capitalize">{{ data?.title }}</h2>
-        <p class="text-slate-500 capitalize">{{ data?.category.name }}</p>
+        <p class="text-sm text-slate-500 capitalize">{{ data?.category.name }}</p>
         <p class="text-xs mt-2 capitalize">By <span class="text-primary">{{ data?.company.name }}</span></p>
       </div>
     </div>

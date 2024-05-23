@@ -26,7 +26,9 @@
         <div class="col-span-1 animate-pulse" v-for="index in 6" :key="index" v-if="loading">
           <div class="w-full rounded bg-slate-200 h-32"></div>
         </div>
+
       </div>
+      <div class="text-primary hover:underline text-center my-5 cursor-pointer" v-if="!loading && projects.length >= limit" @click="loadMore()">Muat lebih banyak</div>
     </div>
   </div>
 </template>
@@ -42,7 +44,7 @@ export default {
     return {
       projects: [],
       loading: false,
-      limit: 3,
+      limit: 0,
       search: '',
     }
   },
@@ -65,7 +67,7 @@ export default {
     }
   },
   mounted() {
-    this.getProjects()
+    this.getProjects(true)
   },
 }
 </script>
