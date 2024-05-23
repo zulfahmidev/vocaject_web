@@ -72,14 +72,11 @@ export default {
         return v.title.includes(this.search.trim()) > 0;
       })
     },
-  },
-  methods: {
-  },
-  methods: {
     getProjects() {
       let id = this.$store.state.user.id;
       this.loading = true;
       let url = this.$store.state.user.role == 'lecture' ? `/project/message/get/lecture/contact/${id}` : `/project?company_id=${id}`;
+      console.log(url)
       this.axios.get(url)
         .then(({ data: result }) => {
           this.loading = false;
