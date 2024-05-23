@@ -155,6 +155,7 @@ const router = VueRouter.createRouter({
         {
           path: '/auth/account',
           name: 'account',
+          props: true,
           components: {
             auth: Account
           }
