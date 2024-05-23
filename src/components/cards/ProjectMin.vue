@@ -6,7 +6,7 @@
       <div v-if="data?.status == 'completed'" class="badge-xs border-blue-300 text-blue-700 bg-blue-200">Selesai</div>
       <div v-if="data?.status == 'closed'" class="badge-xs border-red-300 text-red-700 bg-red-200">Tutup</div>
     </div>
-    <p class="text-xs mt-1 inline text-slate-500">{{ data?.description }}</p>
+    <p class="text-xs mt-1 inline text-slate-500 capitalize">{{ data?.category.name }}</p>
     <div class="mt-3 flex justify-between">
       <div class="text-xs">
         <i class="fa fa-fw fa-money-bill mr-1"></i>

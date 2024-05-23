@@ -1,17 +1,18 @@
 <template>
-  <router-link :to="{name: 'progress-project', params: {id: data?.id}}" :class="`block rounded shadow p-3 button-hover ${active ? 'button-active' : 'bg-white'}`">
-    <div class="flex gap-2">
-      <div class="h-20 w-20 rounded bg-green-100 flex items-center justify-center">
-        <img src="/assets/icondesain.png" class="h-1/2" alt="category icon">
+  <router-link :to="{name: 'progress-project', params: {id: data?.id}}" :class="`block rounded overflow-hidden shadow button-hover ${active ? 'button-active' : 'bg-white'}`">
+    <div class="flex gap-2 items-center py-2 px-3">
+      <div class="h-20 w-20 rounded overflow-hidden bg-green-100 flex items-center justify-center">
+        <img :src="data.company.picture" alt="category icon">
       </div>
       <div class="py-1">
         <h2 class="capitalize">{{ data?.title }}</h2>
-        <p class="text-xs mt-1 inline text-slate-500">{{ data?.description }}</p>
+        <p class="text-slate-500 capitalize">{{ data?.category.name }}</p>
+        <p class="text-xs mt-2 capitalize">By <span class="text-primary">{{ data?.company.name }}</span></p>
       </div>
     </div>
-    <div class="mt-3">
+    <div class="px-3 py-2 bg-slate-100">
       
-      <div class="mt-3 flex justify-between">
+      <div class="flex justify-between">
         <div class="text-xs" v-if="hidePercent">
           <i class="fa fa-fw fa-money-bill mr-1"></i>
           <span>Rp. {{ data?.budget }}</span>
