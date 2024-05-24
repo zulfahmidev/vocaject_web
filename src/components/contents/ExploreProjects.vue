@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="mt-3">
-      <div class="grid grid-cols-3 gap-3">
+      <div class="grid lg:grid-cols-3 gap-3">
         <div class="py-5 text-center col-span-3" v-if="!loading && projects.length == 0">
           Proyek tidak ditemukan.
         </div>
