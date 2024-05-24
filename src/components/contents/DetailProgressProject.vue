@@ -5,7 +5,7 @@
       <Loading height="6" />
     </div>
 
-    <div class="grid grid-cols-3 gap-3" v-if="!loading">
+    <div class="grid lg:grid-cols-3 gap-3" v-if="!loading">
       
 
       <!-- Detail Project -->
@@ -122,7 +122,7 @@
         </div>
 
         <!-- Projects -->
-        <ProjectListMin :class="`${data?.status != 'opened' ? 'mt-3' : ''}`" />
+        <ProjectListMin :class="`${data?.status != 'opened' ? 'mt-3' : ''} hidden lg:block`" />
 
       </div>
     </div>
