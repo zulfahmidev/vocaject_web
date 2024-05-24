@@ -5,10 +5,10 @@
       <Loading height="6" />
     </div>
     
-    <div class="grid grid-cols-3 gap-3" v-if="!loading">
+    <div class="grid md:grid-cols-3 gap-3" v-if="!loading">
 
       <!-- Detail Profile -->
-      <div class="col-span-2">
+      <div class="md:col-span-2">
 
         <div class="rounded bg-white shadow overflow-hidden">
           <div class="relative pt-10">
@@ -66,7 +66,7 @@
       </div>
 
       <!-- Projects -->
-      <ProjectListMin />
+      <ProjectListMin class="hidden md:block" />
     </div>
 
     <!-- Modals -->

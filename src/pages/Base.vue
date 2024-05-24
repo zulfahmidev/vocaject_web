@@ -1,9 +1,9 @@
 <template>
   <div class="bg-slate-50 text-slate-900">
     <Navbar />
-    <section class="container mx-auto grid grid-cols-4 gap-4">
+    <section class="container mx-auto lg:grid lg:grid-cols-4 gap-4">
       <Sidebar />
-      <div class="col-span-3" style="height: 86vh;margin-top: 4vh;">
+      <div class="lg:col-span-3 px-5" style="height: 86vh;margin-top: 4vh;">
         <router-view name="content"></router-view>
       </div>
     </section>

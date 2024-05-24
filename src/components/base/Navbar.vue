@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-white shadow" style="height: 10vh;">
-    <div class="container mx-auto flex justify-between items-center h-full">
+    <div class="container mx-auto flex justify-between items-center h-full px-5">
 
       <!-- Logo -->
       <div class="h-12">

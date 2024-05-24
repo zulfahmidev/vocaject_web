@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 80vh;overflow: auto;" class="pr-2">
+  <div style="height: 80vh;overflow: auto;">
     <!-- Filter -->
     <div class="grid grid-cols-1">
       <div class="col-span-2 bg-white rounded shadow flex mb-3 overflow-hidden">
