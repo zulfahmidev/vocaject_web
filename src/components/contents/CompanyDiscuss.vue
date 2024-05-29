@@ -3,10 +3,16 @@
     <div class="bg-white rounded shadow">
 
       <!-- Header -->
-      <div class="p-3 text-primary font-bold border-b">Diskusi Proyek</div>
+      <div v-if="selectedUser != null" class="lg:hidden p-3 text-primary flex gap-3 items-center cursor-pointer" @click="selectedUser = null">
+        <i class="fa fa-arrow-left"></i>
+        <span>Kembali</span>
+      </div>
+      <div class="flex items-center" v-if="selectedUser == null">
+        <div class="p-3 text-primary font-bold border-b">Diskusi Proyek</div>
+      </div>
 
       <div class="grid lg:grid-cols-3">
-        <ChatProjects v-if="openProject == null" @onSelectProject="selectProject" :selectedProject="selectedProject" />
+        <ChatProjects :class="`${selectedUser == null ? 'block' : 'hidden lg:block'}`" v-if="openProject == null" @onSelectProject="selectProject" :selectedProject="selectedProject" />
         <ChatUsers 
           v-if="openProject !== null" 
           @onSelectUser="selectUser" 
@@ -15,7 +21,7 @@
           @onCloseProject="openProject = null" />
 
         <!-- Chat Room -->
-        <div class="col-span-2 hidden lg:block">
+        <div :class="`col-span-2 ${selectedUser != null ? 'block' : 'hidden'} lg:block`">
           <ChatRoom v-if="selectedUser != null" :project_id="selectedProject" :contact_id="selectedUser" :channel="channel" />
         </div>
         <div class="col-span-2 border-l border-slate-300 h-full relative flex justify-center items-center"
