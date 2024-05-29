@@ -5,7 +5,7 @@
       <!-- Header -->
       <div class="p-3 text-primary font-bold border-b">Diskusi Proyek</div>
 
-      <div class="grid grid-cols-3">
+      <div class="grid lg:grid-cols-3">
         <ChatProjects v-if="openProject == null" @onSelectProject="selectProject" :selectedProject="selectedProject" />
         <ChatUsers 
           v-if="openProject !== null" 
@@ -15,8 +15,9 @@
           @onCloseProject="openProject = null" />
 
         <!-- Chat Room -->
-        <ChatRoom v-if="selectedUser != null" :project_id="selectedProject" :contact_id="selectedUser"
-          :channel="channel" />
+        <div class="col-span-2 hidden lg:block">
+          <ChatRoom v-if="selectedUser != null" :project_id="selectedProject" :contact_id="selectedUser" :channel="channel" />
+        </div>
         <div class="col-span-2 border-l border-slate-300 h-full relative flex justify-center items-center"
           v-if="!selectedUser" style="height: 75vh">
           <span>Kontak belum dipilih</span>

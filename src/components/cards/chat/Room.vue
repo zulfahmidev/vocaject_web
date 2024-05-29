@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="col-span-2 border-l border-slate-300 h-full relative"
+    class="border-l border-slate-300 h-full relative"
     style="
       display: grid;
       grid-template-rows: 4rem auto 4rem;
@@ -183,6 +183,7 @@ export default {
       messages: [],
       contact: null,
       sendLoading: false,
+      sendProgress: 0,
       loadingContact: false,
       loadingMessage: false,
       message: '',
@@ -323,7 +324,15 @@ export default {
 
         this.cancelSelectFile()
 
-        this.axios.post(`/project/${this.project_id}/message/${this.contact_id}/document`, fd)
+        this.axios.post(`/project/${this.project_id}/message/${this.contact_id}/document`, fd, {
+          onUploadProgress: (progressEvent) => {
+              const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
+              console.log("onUploadProgress", totalLength);
+              // if (totalLength !== null) {
+              //     this.updateProgressBarValue(Math.round((progressEvent.loaded * 100) / totalLength));
+              // }
+          }
+        })
         .then(({ data: result }) => {
           this.sendLoading = false;
           this.$refs['input-message'].disable = false;
