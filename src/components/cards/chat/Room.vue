@@ -145,8 +145,11 @@
         :disabled="loadingMessage"
         >
       <button :disabled="loadingMessage" class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer" @click="sendMessage">
+        <div class="h-10 rounded overflow-hidden w-10 border border-primary relative" v-if="sendLoading">
+          <div class="bg-primary/50 h-10" :style="`width: ${parseInt(sendProgress)}%;`"></div>
+          <div class="absolute top-0 left-0 right-0 bottom-0 text-xs flex items-center justify-center text-primary">{{ sendProgress }}%</div>
+        </div>
         <i class="fa fa-fw fa-paper-plane" v-if="!sendLoading"></i>
-        <Loading height="6" v-if="sendLoading" />
       </button>
     </div>
 
@@ -298,6 +301,13 @@ export default {
         this.axios.post(`/project/${this.project_id}/message/${this.contact_id}`, {
           sender: this.getRole(),
           message: this.message,
+        }, {
+          onUploadProgress: (progressEvent) => {
+              const { loaded, total } = progressEvent;
+
+              let percent = Math.floor((loaded * 100) / total);
+              this.sendProgress = percent;
+          }
         })
           .then(({ data: result }) => {
             this.sendLoading = false;
@@ -316,6 +326,7 @@ export default {
     sendDocument() {
       if (this.selectedFile.fileSelected) {
         this.sendLoading = true;
+        this.sendProgress = 0;
         this.$refs['input-message'].disable = true;
 
         let fd = new FormData()
@@ -326,11 +337,10 @@ export default {
 
         this.axios.post(`/project/${this.project_id}/message/${this.contact_id}/document`, fd, {
           onUploadProgress: (progressEvent) => {
-              const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
-              console.log("onUploadProgress", totalLength);
-              // if (totalLength !== null) {
-              //     this.updateProgressBarValue(Math.round((progressEvent.loaded * 100) / totalLength));
-              // }
+              const { loaded, total } = progressEvent;
+
+              let percent = Math.floor((loaded * 100) / total);
+              this.sendProgress = percent;
           }
         })
         .then(({ data: result }) => {
@@ -358,6 +368,7 @@ export default {
       this.getMessages()
       this.getContact()
     })
+
   },
 }
 </script>
