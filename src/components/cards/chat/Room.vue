@@ -89,13 +89,13 @@
               <a href="" class="">
                 <div class="w-8 h-8 rounded flex items-center justify-center text-xl">
                   <!-- <i class="fa fa-download"></i> -->
-                  <i class="fa fa-paperclip"  v-if="!isLoading(item.message.document)"></i>
+                  <i class="fa fa-download"  v-if="!isLoading(item.message.document)"></i>
                   <Loading height="6" v-if="isLoading(item.message.document)" />
                 </div>
               </a>
               <div class="">
                 <div class="font-bold">{{ item.message.document.origin_filename }}</div>
-                <div class="text-xs">14 mb.</div>
+                <div class="text-xs">Klik untuk unduh.</div>
               </div>
             </div>
             <div class="text-xs py-1 text-end text-black">{{ timeFormat(item.created_at) }}</div>
