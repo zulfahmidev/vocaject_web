@@ -1,6 +1,6 @@
 <template>
 
-  <div class="col-span-1 h-full overflow-y-auto">
+  <div class="col-span-1 overflow-y-auto" style="height: 75vh;">
 
     <!-- Search Project -->
     <div class="p-3">

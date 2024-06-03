@@ -2,6 +2,7 @@ import * as VueRouter from 'vue-router'
 import * as Cookies from './Cookies'
 
 // Pages
+import Home from './pages/Home.vue';
 import Base from './pages/Base.vue';
 import Auth from './pages/Auth.vue';
 
@@ -30,6 +31,10 @@ import ProfileSetting from './components/settings/Profile.vue';
 const router = VueRouter.createRouter({
   history: VueRouter.createWebHistory(),
   routes: [
+    {
+      path: '/',
+      component: Home
+    },
     {
       path: '/base',
       component: Base,

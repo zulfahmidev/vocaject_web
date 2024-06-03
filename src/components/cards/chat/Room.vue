@@ -142,7 +142,7 @@
         v-model="message"
         ref="input-message"
         @keydown.enter="sendMessage"
-        :disabled="loadingMessage"
+        :disabled="sendLoading"
         >
       <button :disabled="loadingMessage" class="px-3 text-xl text-primary active:text-emerald-400 cursor-pointer" @click="sendMessage">
         <div class="h-10 rounded overflow-hidden w-10 border border-primary relative" v-if="sendLoading">

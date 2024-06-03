@@ -7,7 +7,7 @@
         <i class="fa fa-arrow-left"></i>
         <span>Kembali</span>
       </div>
-      <div class="flex items-center" v-if="selectedUser == null">
+      <div :class="`flex items-center ${selectedUser == null ? 'block' : 'hidden lg:block'}`">
         <div class="p-3 text-primary font-bold border-b">Diskusi Proyek</div>
       </div>
 
@@ -21,7 +21,7 @@
           @onCloseProject="openProject = null" />
 
         <!-- Chat Room -->
-        <div :class="`col-span-2 ${selectedUser != null ? 'block' : 'hidden'} lg:block`">
+        <div :class="`col-span-2 lg:block`" v-if="selectedUser != null">
           <ChatRoom v-if="selectedUser != null" :project_id="selectedProject" :contact_id="selectedUser" :channel="channel" />
         </div>
         <div class="col-span-2 border-l border-slate-300 h-full relative flex justify-center items-center"
