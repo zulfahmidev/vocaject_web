@@ -249,7 +249,8 @@ export default {
 
       await this.channel.bind('new-message', ({ data }) => {
         if (data.project.id == this.project_id && data.lecture.id == this.contact_id && data.lecture_id != this.$store.state.user.id) {
-          if (data.sender != this.$store.state.user.role) {
+          let sender = (data.sender == 'college') ? 'company' : data.sender;
+          if (sender != this.$store.state.user.role) {
             data.message = JSON.parse(data.message);
             this.messages.push(data);
             setTimeout(() => {
