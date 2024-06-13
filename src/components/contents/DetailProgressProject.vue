@@ -44,8 +44,8 @@
           <!-- Detail Project -->
           <div class="p-3">
             <div class="flex items-center gap-3">
-              <div class="w-14 h-14 bg-slate-100 rounded flex items-center justify-center" :style="{backgroundColor: getColor()}">
-                <img :src="`/assets/${getImage()}`" class="h-10" alt="category icon">
+              <div class="w-14 h-14 border rounded overflow-hidden bg-slate-100 rounded flex items-center justify-center" :style="{backgroundColor: getColor()}">
+                <img :src="data?.company?.picture" alt="category icon">
               </div>
               <div class="">
                 <div class="text-xl font-bold capitalize">{{ data?.title }}</div>
