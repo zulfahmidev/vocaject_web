@@ -1,6 +1,9 @@
 <template>
-  <aside class="lg:col-span-1 lg:static lg:block hidden overflow-auto pr-2" style="height: 86vh; margin-top: 4vh;">
+  <aside class="lg:col-span-1 lg:static lg:block lg:mt-8 overflow-auto pr-2 fixed left-0 top-0 h-screen lg:h-auto z-20 w-64 lg:w-auto bg-slate-200/50 lg:bg-transparent backdrop-blur-sm border-r lg:border-none border-light px-5 lg:p-0">
 
+    <div class="text-primary/80 hover:text-primary text-3xl py-3 cursor-pointer lg:hidden">
+      <i class="fa fa-bars"></i>
+    </div>
     <div class="mb-4" v-for="(category, index) in categories" :key="index">
       <div v-if="category !== 'umum'" class="capitalize text-xs mb-2 text-slate-500">{{ category }}</div>
       <router-link 
