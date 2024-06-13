@@ -32,7 +32,8 @@
 
               <router-link :to="{name: 'project-discuss', query: {
                 project_id: id
-              }}" class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer">
+              }}" class="p-2 text-xs border rounded border-slate-400 text-slate-500 hover:border-slate-900 hover:text-slate-900 cursor-pointer"
+              v-if="$store.state.user.role != 'student'">
                 <i class="far fa-fw fa-message"></i>
                 <span>Diskusi</span>
               </router-link>
